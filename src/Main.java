@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import JeuDeLogique.JeuDeLogique;
+import JeuDeLogique.RecherchePlusMoins;
+
 public class Main 
 {
 
@@ -30,9 +33,16 @@ public class Main
 				RecherchePlusMoins rpm = new RecherchePlusMoins();
 				rpm.choisirMode();
 				break;
+			
+			/*case 2 :
+				Mastermind m = new Mastermind();
+				m.choisirMode();
+				break;
+				*/
 				
 			case 3 :
 				break;
+				
 			default :
 				break;
 				
@@ -41,4 +51,6 @@ public class Main
 		
 		System.out.println("Au revoir ! :)");
 	}
+	
+	
 }
