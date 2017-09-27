@@ -70,10 +70,6 @@ public class JeuDeLogique
 	}
 	
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/	
-	
-	
-	
-	
 	/********************************************************
 	 * Fonction d'initialisation de la variable "mode" : 	*
 	 * - Challenger											*
@@ -102,7 +98,7 @@ public class JeuDeLogique
 				
 			case 2 :
 				RecherchePlusMoins rpm2 = new RecherchePlusMoins();
-				//rpm2.defenseurMode();
+				rpm2.defenseurMode();
 				break;
 			default :
 				break;
@@ -121,24 +117,29 @@ public class JeuDeLogique
 	 * @param proposition												*
 	 * @return true or false											*
 	 *******************************************************************/
-	public String compareTab(int[] combiTab, int[] propositionTab)
+	public String[] compareTab(int[] combiTab, int[] propositionTab)
 	{
 		setTrouve(0);
-		String compa = "";
+		String[] compa = new String[4];
 		for(int i=0; i<4; i++)
 		{
 			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
-			compa +=  compare(combiTab[i], propositionTab[i]); 
+			compa[i]=  compare(combiTab[i], propositionTab[i]); 
 		}
 		return compa;
 		
 	}
 	
-	public boolean analyseTrouve(String comp)
+	/**
+	 * Analyse si le résultat est correct dans son ensemble (= = = =)
+	 * @param comp
+	 * @return true or false
+	 */
+	public boolean analyseTrouve(String[] comp)
 	{
-		for(int i=0; i < comp.length(); i++)
+		for(int i=0; i < 4; i++)
 		{
-			if(comp.charAt(i) == '=')
+			if(comp[i] == "=")
 			{
 				setTrouve(getTrouve() + 1);
 			}

@@ -23,25 +23,25 @@ public class Ordi extends Utilisateur
 			{
 				if(getPropositionTab(cpt) == 9)
 				{
-					setMaxiBorneTab(cpt, 9);
+					this.setMaxiBorneTab(cpt, 9);
 				}else
 				{
-					setMiniBorneTab(cpt, getPropositionTab(cpt) + 1);
+					this.setMiniBorneTab(cpt, getPropositionTab(cpt) + 1);
 				}
 				setChoixSur(cpt, false);
 			}else if(getComparaisonTab(cpt) == "-")
 			{
 				if(getPropositionTab(cpt) == 0)
 				{
-					setMiniBorneTab(cpt, 0);
+					this.setMiniBorneTab(cpt, 0);
 				}else
 				{
-					setMaxiBorneTab(cpt, getPropositionTab(cpt) - 1);;
+					this.setMaxiBorneTab(cpt, getPropositionTab(cpt) - 1);;
 				}
-				setChoixSur(cpt, false);
+				this.setChoixSur(cpt, false);
 			}else if(getComparaisonTab(cpt) == "=")
 			{
-				setChoixSur(cpt, true);
+				this.setChoixSur(cpt, true);
 			}
 		}
 	}
@@ -61,19 +61,18 @@ public class Ordi extends Utilisateur
 	{
 		Random hasard = new Random();
 		
-		//setGagne(compareTab(getPropositionTab(), getCombiTab()));
 		analyse();
 		for(int k = 0 ; k < 4 ; k++)
 		{
-			System.out.println("Limites de proposition[" + k + "] : [" + getMiniBorneTab(k)+ " ; "  + getMaxiBorneTab(k) + "]");
+			System.out.println("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k)+ " ; "  + this.getMaxiBorneTab(k) + "]");
 		}
 		
 		for(int j = 0; j < 4; j++)
 		{
 			if(getChoixSur(j) == false)
 			{
-				setPropositionTab(j, nombreAleatoire(getMiniBorneTab(j), getMaxiBorneTab(j), hasard));
-				System.out.println("Nouveau tirage : [" + j + "] = " + getPropositionTab(j));
+				setPropositionTab(j, nombreAleatoire(this.getMiniBorneTab(j), this.getMaxiBorneTab(j), hasard));
+				System.out.println("Nouveau tirage : [" + j + "] = " + this.getPropositionTab(j));
 				
 			}
 		}
@@ -81,7 +80,7 @@ public class Ordi extends Utilisateur
 		System.out.println("D'après mes calculs, la solution est : " );
 		for(int i = 0; i<4; i++)
 		{
-			System.out.println(getPropositionTab(i));
+			System.out.println(this.getPropositionTab(i));
 		}
 	}
 }

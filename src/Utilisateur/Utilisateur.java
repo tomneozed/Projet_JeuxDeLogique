@@ -106,8 +106,6 @@ public class Utilisateur
 		return this.comparaisonTab[i];
 	}
 	
-	
-	
 	public boolean[] getChoixSur()
 	{
 		return this.choixSur;
@@ -214,6 +212,7 @@ public class Utilisateur
 		initMaxiMiniChoixSur();
 		setCombi(0);
 		setProposition(0);
+		setVie(3);
 	}
 	
 	/****************************************************************************
@@ -327,26 +326,16 @@ public class Utilisateur
 	 * @param proposition												*
 	 * @return true or false											*
 	 *******************************************************************/
-	public boolean compareTab(int[] combi, int[] proposition)
+	public String compareTab(int[] combiTab, int[] propositionTab)
 	{
-		//setTrouve(0);
-		
+		String compa = "";
 		for(int i=0; i<4; i++)
 		{
 			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
-			this.comparaisonTab[i] = compare(combiTab[i], propositionTab[i]); 
-			/*if(compare(combiTab[i], propositionTab[i]) == "=")
-			{
-				this.trouve++;
-			}*/
+			compa +=  compare(combiTab[i], propositionTab[i]); 
 		}
-		System.out.println("");
-		/*if(getTrouve() == 4)
-		{
-			return true;
-		}else
-			return false;*/
-		return false;
+		return compa;
+		
 	}
 	
 	/************************************************

@@ -75,26 +75,30 @@ public class RecherchePlusMoins extends JeuDeLogique
 	/*--------------------------------------------Mode Defenseur-----------------------------------------------*/
 	/****************************************
 	 * Programme de jeu en mode Défenseur	*
-	 ****************************************		
+	 ****************************************/		
 	public void defenseurMode()
 	{
-		System.out.println("Bienvenue dans le Recherche +/- mode Défenseur !");
+		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
+		Scanner scan = new Scanner(System.in);
+		Ordi ordi = new Ordi();
+		Joueur joueur = new Joueur();
 		
 		do
 		{
-			initMaxiMiniChoixSur();
-			joueurCombi();		
-			
+			joueur.combi();
+			setGagne(false);
 			do
-			{
+			{				
 				if(getGagne() == false)
 				{
 					System.out.println("Je cherche ...");	
-					setPropositionTab(decoupageAleatoire());			// 1er proposition de l'ordinateur (aleatoire) 					
-					ordiCherche();
-					this.vie --;
+					ordi.setPropositionTab(ordi.decoupageAleatoire());			// 1er proposition de l'ordinateur (aleatoire) 					
+					setGagne(analyseTrouve(compareTab(joueur.getCombiTab(), ordi.getPropositionTab())));
+					ordi.setComparaisonTab(compareTab(joueur.getCombiTab(), ordi.getPropositionTab()));
+					ordi.cherche();
+					ordi.setVie(ordi.getVie() - 1);;
 				}
-			}while(!getGagne() && getVie() > 0);
+			}while(!getGagne() && ordi.getVie() > 0);
 			
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());	
