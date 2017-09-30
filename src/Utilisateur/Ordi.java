@@ -19,19 +19,19 @@ public class Ordi extends Utilisateur
 	{		
 		for(int cpt = 0; cpt < 4; cpt++)
 		{
-			if(getComparaisonTab(cpt) == "+")
+			if(this.getComparaisonTab(cpt) == "+")
 			{
-				if(getPropositionTab(cpt) == 9)
+				if(this.getPropositionTab(cpt) == 9)
 				{
 					this.setMaxiBorneTab(cpt, 9);
 				}else
 				{
-					this.setMiniBorneTab(cpt, getPropositionTab(cpt) + 1);
+					this.setMiniBorneTab(cpt, this.getPropositionTab(cpt) + 1);
 				}
 				setChoixSur(cpt, false);
-			}else if(getComparaisonTab(cpt) == "-")
+			}else if(this.getComparaisonTab(cpt) == "-")
 			{
-				if(getPropositionTab(cpt) == 0)
+				if(this.getPropositionTab(cpt) == 0)
 				{
 					this.setMiniBorneTab(cpt, 0);
 				}else
@@ -39,7 +39,7 @@ public class Ordi extends Utilisateur
 					this.setMaxiBorneTab(cpt, getPropositionTab(cpt) - 1);;
 				}
 				this.setChoixSur(cpt, false);
-			}else if(getComparaisonTab(cpt) == "=")
+			}else if(this.getComparaisonTab(cpt) == "=")
 			{
 				this.setChoixSur(cpt, true);
 			}

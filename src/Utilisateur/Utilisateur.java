@@ -283,13 +283,13 @@ public class Utilisateur
 		Random hasard = new Random();
 		
 		this.aleatoireTab[0] = nombreAleatoire(0, 9, hasard);
-		System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
+		//System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
 		this.aleatoireTab[1] = nombreAleatoire(0, 9, hasard);
-		System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
+		//System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
 		this.aleatoireTab[2] = nombreAleatoire(0, 9, hasard);
-		System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
+		//System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
 		this.aleatoireTab[3] = nombreAleatoire(0, 9, hasard);
-		System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
+		//System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
 		
 		return aleatoireTab;
 	}
@@ -305,13 +305,13 @@ public class Utilisateur
 		Random hasard = new Random();
 		
 		this.aleatoireTab[0] = nombreAleatoire(mini[0], maxi[0], hasard);
-		System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
+		//System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
 		this.aleatoireTab[1] = nombreAleatoire(mini[1], maxi[1], hasard);
-		System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
+		//System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
 		this.aleatoireTab[2] = nombreAleatoire(mini[2], maxi[2], hasard);
-		System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
+		//System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
 		this.aleatoireTab[3] = nombreAleatoire(mini[3], maxi[3], hasard);
-		System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
+		//System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
 		
 		return aleatoireTab;
 	}

@@ -117,14 +117,14 @@ public class JeuDeLogique
 	 * @param proposition												*
 	 * @return true or false											*
 	 *******************************************************************/
-	public String[] compareTab(int[] combiTab, int[] propositionTab)
+	public String[] compareTab(int[] tab1, int[] tab2)
 	{
 		setTrouve(0);
 		String[] compa = new String[4];
 		for(int i=0; i<4; i++)
 		{
-			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
-			compa[i]=  compare(combiTab[i], propositionTab[i]); 
+			System.out.print(compare(tab1[i], tab2[i]) + " ");
+			compa[i]=  compare(tab1[i], tab2[i]); 
 		}
 		return compa;
 		
@@ -171,8 +171,4 @@ public class JeuDeLogique
 		
 		return comparaison;
 	}
-	
-	
-	
-	
 }

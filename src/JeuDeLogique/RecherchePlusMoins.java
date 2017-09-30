@@ -39,18 +39,32 @@ public class RecherchePlusMoins extends JeuDeLogique
 		do
 		{
 			ordi.combi();	//L'ordi créé un nombre aléatoire
+			/*
+			System.out.println("Combinaison créée par l'ordi : ");
+			System.out.println(ordi.getCombiTab(0)
+						+ " " +ordi.getCombiTab(1)
+						+ " " +ordi.getCombiTab(2)
+						+ " " +ordi.getCombiTab(3));
+			*/
 			
 			do
 			{		
 				System.out.println("Entrez une combinaison de 4 chiffres : ");	//On demande à l'utilisateur une combi
 				
 				joueur.cherche();
+				/*
+				System.out.println("Combinaison proposée par l'utilisateur : ");
+				System.out.println(joueur.getPropositionTab(0)
+							+ " " +joueur.getPropositionTab(1)
+							+ " " +joueur.getPropositionTab(2)
+							+ " " +joueur.getPropositionTab(3));
+				*/
 				
 					
 				setGagne(analyseTrouve(compareTab(ordi.getCombiTab(), joueur.getPropositionTab())));	//On compare les réponses
 				
 				if(getGagne() == false)										//Si c'est faux ...
-					joueur.setVie(-1);											//...l'utilisateur perd 1 essai
+					joueur.setVie(joueur.getVie()-1);						//...l'utilisateur perd 1 essai
 																	
 			}while(!getGagne() && joueur.getVie() > 0);	//On tourne jusqu'a ce que l'utilisateur gagne ou perde toutes ses vies	
 			
@@ -78,24 +92,30 @@ public class RecherchePlusMoins extends JeuDeLogique
 	 ****************************************/		
 	public void defenseurMode()
 	{
-		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
+		System.out.println("Bienvenue dans le Recherche +/- mode Défenseur !");
 		Scanner scan = new Scanner(System.in);
 		Ordi ordi = new Ordi();
 		Joueur joueur = new Joueur();
 		
 		do
 		{
+			ordi.initialisation();
 			joueur.combi();
 			setGagne(false);
 			do
 			{				
 				if(getGagne() == false)
 				{
-					System.out.println("Je cherche ...");	
-					ordi.setPropositionTab(ordi.decoupageAleatoire());			// 1er proposition de l'ordinateur (aleatoire) 					
-					setGagne(analyseTrouve(compareTab(joueur.getCombiTab(), ordi.getPropositionTab())));
+					System.out.println("Je cherche ...");		
+					if(ordi.getVie() == 3)
+					{
+						ordi.setPropositionTab(ordi.decoupageAleatoire());			// 1ere proposition de l'ordinateur (aleatoire)
+					}else
+					{
+						ordi.cherche();												//Autres propositions de l'ordi
+					}
 					ordi.setComparaisonTab(compareTab(joueur.getCombiTab(), ordi.getPropositionTab()));
-					ordi.cherche();
+					setGagne(analyseTrouve(ordi.getComparaisonTab()));
 					ordi.setVie(ordi.getVie() - 1);;
 				}
 			}while(!getGagne() && ordi.getVie() > 0);

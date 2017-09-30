@@ -19,8 +19,9 @@ public class Joueur extends Utilisateur
 	 *******************************************/	
 	public void combi()
 	{
+		super.combi();
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Entrez une combinaison de 4 chiffres : ");	
+		System.out.println("Entrez une combinaison de 4 chiffres (0-9): ");	
 		setCombi(scan.nextInt());
 		setCombiTab(decoupage(getCombi()));
 	}
