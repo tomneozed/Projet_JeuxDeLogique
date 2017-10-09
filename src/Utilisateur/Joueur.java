@@ -31,6 +31,7 @@ public class Joueur extends Utilisateur
 	 ***************************************/
 	public void cherche()
 	{
+		System.out.println("Entrez une combinaison de 4 chiffres (0-9): ");	
 		Scanner scan = new Scanner(System.in);
 		setProposition(scan.nextInt());
 		setPropositionTab(decoupage(getProposition()));

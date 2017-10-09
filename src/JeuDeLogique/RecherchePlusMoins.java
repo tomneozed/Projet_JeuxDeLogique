@@ -24,6 +24,33 @@ public class RecherchePlusMoins extends JeuDeLogique
 	
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/	
 	
+	public void tourDeLOrdi(Ordi o, Joueur j)
+	{
+		do
+		{				
+			if(getGagneOrdi() == false)
+			{
+				System.out.println("Je cherche ...");		
+				if(o.getVie() == 3)
+				{
+					o.setPropositionTab(o.decoupageAleatoire());			// 1ere proposition de l'ordinateur (aleatoire)
+					System.out.println("1ere proposition : " + o.getPropositionTab(0)
+															 + o.getPropositionTab(1)
+															 + o.getPropositionTab(2)
+															 + o.getPropositionTab(3));
+				}else
+				{
+					o.cherche();												//Autres propositions de l'ordi
+				}
+				o.setComparaisonTab(compareTab(j.getCombiTab(), o.getPropositionTab()));
+				setGagneOrdi(analyseTrouve(o.getComparaisonTab()));
+				o.setVie(o.getVie() - 1);;
+			}
+		}while(!getGagneOrdi() && o.getVie() > 0);
+	}
+	
+	
+	
 	
 	/*--------------------------------------------Mode Challenger----------------------------------------------*/
 	/***************************************
@@ -35,6 +62,9 @@ public class RecherchePlusMoins extends JeuDeLogique
 		Scanner scan = new Scanner(System.in);
 		Ordi ordi = new Ordi();
 		Joueur joueur = new Joueur();
+		
+		ordi.initialisation();
+		joueur.initialisation();
 		
 		do
 		{
@@ -61,17 +91,17 @@ public class RecherchePlusMoins extends JeuDeLogique
 				*/
 				
 					
-				setGagne(analyseTrouve(compareTab(ordi.getCombiTab(), joueur.getPropositionTab())));	//On compare les réponses
+				setGagneJoueur(analyseTrouve(compareTab(ordi.getCombiTab(), joueur.getPropositionTab())));	//On compare les réponses
 				
-				if(getGagne() == false)										//Si c'est faux ...
+				if(getGagneJoueur() == false)										//Si c'est faux ...
 					joueur.setVie(joueur.getVie()-1);						//...l'utilisateur perd 1 essai
 																	
-			}while(!getGagne() && joueur.getVie() > 0);	//On tourne jusqu'a ce que l'utilisateur gagne ou perde toutes ses vies	
+			}while(!getGagneJoueur() && joueur.getVie() > 0);	//On tourne jusqu'a ce que l'utilisateur gagne ou perde toutes ses vies	
 			
-			if(getGagne() == true)
+			if(getGagneJoueur() == true)
 			{
 				System.out.println("Bravo ! Vous avez gagné :)");
-			}else if(getGagne() == false)
+			}else if(getGagneJoueur() == false)
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : " 
 						+ ordi.getCombiTab(0)
@@ -93,33 +123,31 @@ public class RecherchePlusMoins extends JeuDeLogique
 	public void defenseurMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Défenseur !");
+		
+		//Création des objets Scanner, Ordi et Joueur dont nous auront besoin:
+		
 		Scanner scan = new Scanner(System.in);
-		Ordi ordi = new Ordi();
+		Ordi ordi = new Ordi();				
 		Joueur joueur = new Joueur();
 		
+		
+		//Début de la boucle "Rejouer"
 		do
 		{
-			ordi.initialisation();
-			joueur.combi();
-			setGagne(false);
-			do
-			{				
-				if(getGagne() == false)
-				{
-					System.out.println("Je cherche ...");		
-					if(ordi.getVie() == 3)
-					{
-						ordi.setPropositionTab(ordi.decoupageAleatoire());			// 1ere proposition de l'ordinateur (aleatoire)
-					}else
-					{
-						ordi.cherche();												//Autres propositions de l'ordi
-					}
-					ordi.setComparaisonTab(compareTab(joueur.getCombiTab(), ordi.getPropositionTab()));
-					setGagne(analyseTrouve(ordi.getComparaisonTab()));
-					ordi.setVie(ordi.getVie() - 1);;
-				}
-			}while(!getGagne() && ordi.getVie() > 0);
+			//On initialialise les attributs de l'ordi et du joueur
+			ordi.initialisation();	
+			joueur.initialisation();
 			
+			//Le joueur enre la combianison à trouver
+			joueur.combi();
+			
+			//On initialise gagneOrdi à false
+			setGagneOrdi(false);
+			
+			//C'est le tour de l'ordi			
+			tourDeLOrdi(ordi, joueur);
+			
+			//Fin de la partie, on demande si le joueur veut rejouer			
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());	
 			
@@ -131,38 +159,54 @@ public class RecherchePlusMoins extends JeuDeLogique
 
 	/****************************************
 	 * Programme de jeu en mode Duel	*
-	 ****************************************		
+	 ***************************************/		
 	public void duelMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Duel !");
+		Ordi ordi = new Ordi();
+		Joueur joueur = new Joueur();
+		
+		ordi.initialisation();
+		joueur.initialisation();
 		
 		do
 		{
-			initMaxiMiniChoixSur();
 			
-			System.out.println("Entrez une combinaison de 4 chiffres : ");	
+			//Le joueur entre sa combinaison :
+			joueur.combi();
 			
-			setCombi(scan.nextInt());
-			setCombiTab(decoupage(this.combi));
 			
-			System.out.println("Je cherche ...");	
-			setPropositionTab(decoupageAleatoire());			// 1er proposition de l'ordinateur (aleatoire) 
+			//L'ordi entre sa combianaison :
+			ordi.combi();
 			
-			do
+			//On regarde les 2 combianaisons :
+			System.out.println("Combinaison joueur : ");
+			for(int i = 0; i<4; i++)
 			{
-				setGagne(compareTab(this.propositionTab, this.combiTab));
-				
-				if(getGagne() == false)
-				{
-					ordiCherche();
-					this.vie --;
-				}
-			}while(!getGagne() && getVie() > 0);
+				System.out.print(joueur.getCombiTab(i));
+			}
 			
-			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
-			setRejouer(scan.nextInt());	
+			System.out.println("\nCombinaison ordi : ");
+			for(int i = 0; i<4; i++)
+			{
+				System.out.print(ordi.getCombiTab(i));
+			}
 			
-		}while(getRejouer() == 1);
+			System.out.println("\n\n");
+			
+			//Le joueur commence
+			joueur.cherche();
+			
+			setGagneJoueur(analyseTrouve(compareTab(ordi.getCombiTab(), joueur.getPropositionTab())));				
+			if(getGagneJoueur() == false)										
+				joueur.setVie(joueur.getVie()-1);
+			
+			//Tour de l'ordinateur:
+			
+			//!\ ERREUR CAR gagneOrdi NON INITIALISEE A FALSE /!\
+			tourDeLOrdi(ordi, joueur);
+			
+			
+		}while(!getGagneOrdi());
 	}
-	*/
 }

@@ -12,7 +12,7 @@ public class JeuDeLogique
 	private int trouve = 0;
 	private int mode = 0;
 	
-	private Boolean gagne;
+	private Boolean gagneOrdi, gagneJoueur;
 	
 	
 	/******* FONCTIONS *****************************************************************************************/
@@ -23,7 +23,8 @@ public class JeuDeLogique
 	{
 		setRejouer(0);
 		setMode(0);
-		setGagne(null);
+		setGagneOrdi(null);
+		setGagneJoueur(null);
 	}
 	
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
@@ -43,9 +44,14 @@ public class JeuDeLogique
 		return mode;
 	}
 	
-	public Boolean getGagne()
+	public Boolean getGagneOrdi()
 	{
-		return this.gagne;
+		return this.gagneOrdi;
+	}
+	
+	public Boolean getGagneJoueur()
+	{
+		return this.gagneJoueur;
 	}
 	
 	/******SETTERS******/
@@ -64,9 +70,14 @@ public class JeuDeLogique
 		this.mode = mode;
 	}
 	
-	public void setGagne(Boolean gg)
+	public void setGagneOrdi(Boolean gg)
 	{
-		this.gagne = gg;
+		this.gagneOrdi = gg;
+	}
+	
+	public void setGagneJoueur(Boolean gg)
+	{
+		this.gagneJoueur = gg;
 	}
 	
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/	
@@ -81,7 +92,7 @@ public class JeuDeLogique
 		Scanner scan = new Scanner(System.in);
 		do
 		{
-			System.out.println("********** Choix du mode **********");
+			System.out.println("\n********** Choix du mode **********");
 			System.out.println("1. Challenger");
 			System.out.println("2. Défenseur");
 			System.out.println("3. Duel");
@@ -99,6 +110,11 @@ public class JeuDeLogique
 			case 2 :
 				RecherchePlusMoins rpm2 = new RecherchePlusMoins();
 				rpm2.defenseurMode();
+				break;
+				
+			case 3 :
+				RecherchePlusMoins rpm3 = new RecherchePlusMoins();
+				rpm3.duelMode();
 				break;
 			default :
 				break;
