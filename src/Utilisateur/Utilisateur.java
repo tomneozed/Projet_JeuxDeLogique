@@ -329,6 +329,7 @@ public class Utilisateur
 	public String compareTab(int[] combiTab, int[] propositionTab)
 	{
 		String compa = "";
+		System.out.println("Comparaison : ");
 		for(int i=0; i<4; i++)
 		{
 			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");

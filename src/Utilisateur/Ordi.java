@@ -61,7 +61,7 @@ public class Ordi extends Utilisateur
 	{
 		Random hasard = new Random();
 		
-		analyse();
+		//analyse();
 		for(int k = 0 ; k < 4 ; k++)
 		{
 			System.out.println("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k)+ " ; "  + this.getMaxiBorneTab(k) + "]");
@@ -72,15 +72,15 @@ public class Ordi extends Utilisateur
 			if(getChoixSur(j) == false)
 			{
 				setPropositionTab(j, nombreAleatoire(this.getMiniBorneTab(j), this.getMaxiBorneTab(j), hasard));
-				System.out.println("Nouveau tirage : [" + j + "] = " + this.getPropositionTab(j));
+				//System.out.println("Nouveau tirage : [" + j + "] = " + this.getPropositionTab(j));
 				
 			}
 		}
 				
-		System.out.println("D'après mes calculs, la solution est : " );
+		System.out.println("Nouvelle proposition : " );
 		for(int i = 0; i<4; i++)
 		{
-			System.out.println(this.getPropositionTab(i));
+			System.out.print(this.getPropositionTab(i));
 		}
 	}
 }
