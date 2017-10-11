@@ -9,7 +9,7 @@ public class Utilisateur
 	
 	private int combiTab[] = new int[4];
 	private int propositionTab[] = new int[4];
-	private int aleatoireTab[] = new int[4];
+	//private int aleatoireTab[] = new int[4];
 	private int miniBorneTab[] = new int[4];
 	private int maxiBorneTab[] = new int[4];
 	
@@ -66,7 +66,7 @@ public class Utilisateur
 		return this.propositionTab[i];
 	}
 	
-	public int[] getAleatoireTab()
+	/*public int[] getAleatoireTab()
 	{
 		return this.aleatoireTab;
 	}
@@ -74,7 +74,7 @@ public class Utilisateur
 	public int getAleatoireTab(int i)
 	{
 		return this.aleatoireTab[i];
-	}
+	}*/
 	
 	public int[] getMiniBorneTab()
 	{
@@ -153,7 +153,7 @@ public class Utilisateur
 		this.propositionTab[indice] = valeur;
 	}
 	
-	public void setAleatoireTab(int[] aleTab)
+	/*public void setAleatoireTab(int[] aleTab)
 	{
 		this.aleatoireTab = aleTab;
 	}
@@ -161,7 +161,7 @@ public class Utilisateur
 	public void setAleatoireTab(int indice, int valeur)
 	{
 		this.aleatoireTab[indice] = valeur;
-	}
+	}*/
 	
 	public void setMiniBorneTab(int[] miniB)
 	{
@@ -275,22 +275,19 @@ public class Utilisateur
 	}
 	
 	/****************************************************
-	 * remplit un tableau de 4 chiffres aléatoirement	*
+	 * remplit un tableau de x chiffres aléatoirement	*
+	 * @param x taille du tableau
 	 * @return combiTab[]								*
 	 ***************************************************/
-	public int[] decoupageAleatoire()
+	public int[] decoupageAleatoire(int x)
 	{
+		int aleatoireTab[] = new int[x];
 		Random hasard = new Random();
 		
-		this.aleatoireTab[0] = nombreAleatoire(0, 9, hasard);
-		//System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
-		this.aleatoireTab[1] = nombreAleatoire(0, 9, hasard);
-		//System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
-		this.aleatoireTab[2] = nombreAleatoire(0, 9, hasard);
-		//System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
-		this.aleatoireTab[3] = nombreAleatoire(0, 9, hasard);
-		//System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
-		
+		for(int i=0; i<x;i++)
+		{
+			aleatoireTab[i] = nombreAleatoire(0, 9, hasard);
+		}		
 		return aleatoireTab;
 	}
 	
@@ -300,19 +297,15 @@ public class Utilisateur
 	 * @param maxi	borne maxi							*
 	 * @return aleatoireTab[]							*
 	 ***************************************************/
-	public int[] decoupageAleatoire(int[] mini, int[] maxi)
+	public int[] decoupageAleatoire(int x, int[] mini, int[] maxi)
 	{
 		Random hasard = new Random();
+		int aleatoireTab[] = new int[x];
 		
-		this.aleatoireTab[0] = nombreAleatoire(mini[0], maxi[0], hasard);
-		//System.out.println("aleatoireTab[0] = " + this.aleatoireTab[0]);
-		this.aleatoireTab[1] = nombreAleatoire(mini[1], maxi[1], hasard);
-		//System.out.println("aleatoireTab[1] = " + this.aleatoireTab[1]);
-		this.aleatoireTab[2] = nombreAleatoire(mini[2], maxi[2], hasard);
-		//System.out.println("aleatoireTab[2] = " + this.aleatoireTab[2]);
-		this.aleatoireTab[3] = nombreAleatoire(mini[3], maxi[3], hasard);
-		//System.out.println("aleatoireTab[3] = " + this.aleatoireTab[3]);
-		
+		for(int i=0; i<x;i++)
+		{
+			aleatoireTab[i] = nombreAleatoire(mini[0], maxi[0], hasard);
+		}		
 		return aleatoireTab;
 	}
 	
@@ -362,7 +355,7 @@ public class Utilisateur
 	/********************************************
 	 * Demande de création d'une combinaison	*
 	 *******************************************/	
-	public void combi()
+	public void combi(int x)
 	{
 		System.out.println("Création de la combinaison à trouver");
 	}

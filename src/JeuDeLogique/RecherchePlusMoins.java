@@ -94,7 +94,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 			
 			//L'ordi créé un nombre aléatoire
-			ordi.combi();	
+			ordi.combi(4);	
 			/*
 			System.out.println("Combinaison créée par l'ordi : ");
 			System.out.println(ordi.getCombiTab(0)
@@ -150,7 +150,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 			
 			//Le joueur enre la combianison à trouver
-			joueur.combi();
+			joueur.combi(4);
 			
 			//C'est le tour de l'ordi	
 			do
@@ -185,10 +185,10 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//Le joueur entre sa combinaison :
-			joueur.combi();
+			joueur.combi(4);
 			
 			//L'ordi entre sa combianaison :
-			ordi.combi();
+			ordi.combi(4);
 			
 			//On regarde les 2 combianaisons :
 			System.out.println("Combinaison joueur : ");

@@ -48,10 +48,11 @@ public class Ordi extends Utilisateur
 	
 	/********************************************
 	 * Demande de création d'une combinaison	*
+	 * @param x taille de la combinaison		*
 	 *******************************************/	
-	public void combi()
+	public void combi(int x)
 	{
-		setCombiTab(decoupageAleatoire());
+		setCombiTab(decoupageAleatoire(x));
 	}
 	
 	/************************************************

@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import JeuDeLogique.JeuDeLogique;
+import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
 
 public class Main 
@@ -31,14 +32,13 @@ public class Main
 			{
 			case 1 :
 				RecherchePlusMoins rpm = new RecherchePlusMoins();
-				rpm.choisirMode();
+				rpm.choisirMode(0);
 				break;
 			
-			/*case 2 :
+			case 2 :
 				Mastermind m = new Mastermind();
-				m.choisirMode();
+				m.choisirMode(1);
 				break;
-				*/
 				
 			case 3 :
 				break;

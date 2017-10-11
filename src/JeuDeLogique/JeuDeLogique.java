@@ -87,7 +87,7 @@ public class JeuDeLogique
 	 * - Défenseur											*
 	 * - Duel												*						
 	********************************************************/
-	public void choisirMode()
+	public void choisirMode(int c)
 	{
 		Scanner scan = new Scanner(System.in);
 		do
@@ -103,18 +103,39 @@ public class JeuDeLogique
 			switch(this.mode)
 			{
 			case 1:
-				RecherchePlusMoins rpm = new RecherchePlusMoins();
-				rpm.challengerMode();
+				if(c == 0)
+				{
+					RecherchePlusMoins rpm = new RecherchePlusMoins();
+					rpm.challengerMode();
+				}else if (c == 1)
+				{
+					Mastermind m = new Mastermind();
+					m.challengerMode();
+				}
 				break;
 				
 			case 2 :
-				RecherchePlusMoins rpm2 = new RecherchePlusMoins();
-				rpm2.defenseurMode();
+				if(c == 0)
+				{
+					RecherchePlusMoins rpm = new RecherchePlusMoins();
+					rpm.defenseurMode();
+				}else if (c == 1)
+				{
+					Mastermind m = new Mastermind();
+					//m.defenseurMode();
+				}
 				break;
 				
 			case 3 :
-				RecherchePlusMoins rpm3 = new RecherchePlusMoins();
-				rpm3.duelMode();
+				if(c == 0)
+				{
+					RecherchePlusMoins rpm = new RecherchePlusMoins();
+					rpm.duelMode();
+				}else if (c == 1)
+				{
+					Mastermind m = new Mastermind();
+					//m.duelMode();
+				}
 				break;
 			default :
 				break;
