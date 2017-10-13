@@ -1,14 +1,15 @@
 package Utilisateur;
+import java.util.LinkedList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Utilisateur 
 {
 	/******* VARIABLES *****************************************************************************************/
 	private int vie, combi, proposition;
+	private String propositionString;
 	
 	private int combiTab[] = new int[4];
-	private int propositionTab[] = new int[4];
+	private int[] propositionTab;
 	//private int aleatoireTab[] = new int[4];
 	private int miniBorneTab[] = new int[4];
 	private int maxiBorneTab[] = new int[4];
@@ -34,6 +35,11 @@ public class Utilisateur
 	public int getCombi()
 	{
 		return this.combi;
+	}
+	
+	public String getPropositionString()
+	{
+		return propositionString;
 	}
 	
 	public int getProposition()
@@ -121,6 +127,11 @@ public class Utilisateur
 	public void setCombi(int comb)
 	{
 		this.combi = comb;
+	}
+	
+	public void setPropositionString(String prop)
+	{
+		this.propositionString = prop;
 	}
 	
 	public void setProposition(int prop)
@@ -256,20 +267,39 @@ public class Utilisateur
 	 ***************************************************************/
 	public static int[] decoupage(int combi)
 	{
-		int a, b, c, d;
-		int combiTab[] = new int[4];
+
+		int a, b, c, d, e, f, g, h, i, j, div = 1;
+		int length = String.valueOf(combi).length();
+		int combiTab[] = new int[length];
+		
+		for(int z = 0; z < length-1; z++)
+		{
+			div = div*10;
+			
+		}
+		System.out.println("div : " +div);
+		
+		combiTab[0] =          combi																																	/  div;
+		combiTab[1] =         (combi%div)																																/ (div/10);
+		combiTab[2] =         (combi%div)%(div/10)																														/ (div/100);
+		combiTab[3] =        ((combi%div)%(div/10))%(div/100)																											/ (div/1000);
+		combiTab[4] =       (((combi%div)%(div/10))%(div/100))%(div/1000)																								/ (div/10000);
+		combiTab[5] =      ((((combi%div)%(div/10))%(div/100))%(div/1000))%(div/10000)																					/ (div/100000);
+		combiTab[6] =     (((((combi%div)%(div/10))%(div/100))%(div/1000))%(div/10000))%(div/100000)																	/ (div/1000000);
+		combiTab[7] =    ((((((combi%div)%(div/10))%(div/100))%(div/1000))%(div/10000))%(div/100000))%(div/1000000)														/ (div/10000000);
+		combiTab[8] =   (((((((combi%div)%(div/10))%(div/100))%(div/1000))%(div/10000))%(div/100000))%(div/1000000))%(div/10000000)										/ (div/100000000);
+		combiTab[9] = (((((((((combi%div)%(div/10))%(div/100))%(div/1000))%(div/10000))%(div/100000))%(div/1000000))%(div/10000000))%(div/100000000))%(div/1000000000);
+		
 		
 		a = combi/1000;
 		b = (combi%1000)/100;
 		c = (combi%1000)%100/10;
 		d = (((combi%1000)%100)%10);
 		
+		
 		//2System.out.println("Combi : " + combi + "\na = " + a + "\tb = " + b + "\tc = " + c + "\td = " + d);
 		
-		combiTab[0] = a;
-		combiTab[1] = b;
-		combiTab[2] = c;
-		combiTab[3] = d;
+		
 		
 		return combiTab;
 	}
