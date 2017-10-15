@@ -1,23 +1,23 @@
 import java.util.Scanner;
 
-import JeuDeLogique.JeuDeLogique;
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
 
-public class Main 
+public class Main
 {
 
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		menu();
-		
+		// test t = new test();
+
 	}
-	
+
 	public static void menu()
 	{
 		int choixMenu = 0;
 		Scanner scan = new Scanner(System.in);
-		
+
 		do
 		{
 			System.out.println("\n\n************************* MENU *************************");
@@ -25,32 +25,31 @@ public class Main
 			System.out.println("\t2. Mastermind");
 			System.out.println("\t3. Quitter");
 			System.out.println("\nVotre choix : ");
-			
+
 			choixMenu = scan.nextInt();
-			
-			switch(choixMenu)
+
+			switch (choixMenu)
 			{
-			case 1 :
+			case 1:
 				RecherchePlusMoins rpm = new RecherchePlusMoins();
 				rpm.choisirMode(0);
 				break;
-			
-			case 2 :
+
+			case 2:
 				Mastermind m = new Mastermind();
 				m.choisirMode(1);
 				break;
-				
-			case 3 :
+
+			case 3:
 				break;
-				
-			default :
+
+			default:
 				break;
-				
+
 			}
-		}while (choixMenu != 3);
-		
+		} while (choixMenu != 3);
+
 		System.out.println("Au revoir ! :)");
 	}
-	
-	
+
 }
