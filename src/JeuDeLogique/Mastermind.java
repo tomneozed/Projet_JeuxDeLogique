@@ -1,21 +1,22 @@
 package JeuDeLogique;
 
-import java.util.Hashtable;
 import java.util.Scanner;
 
 import Utilisateur.Joueur;
 import Utilisateur.Ordi;
-import Utilisateur.Utilisateur;
 
+/**
+ * @author Thomas Pelissier
+ *
+ */
 public class Mastermind extends JeuDeLogique
 {
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
 	private int BP, MP;
-	private int[] compteTable = new int[10];
-	private Hashtable hashCombi = new Hashtable();
-	private Hashtable hashProposition = new Hashtable();
+	private int[] compteTableCombi = new int[10];
+	private int[] compteTableProposition = new int[10];
 	private int[][] masterTable = new int[10][11];
 
 	/*******
@@ -62,22 +63,6 @@ public class Mastermind extends JeuDeLogique
 	{
 		setBP(0);
 		setMP(0);
-	}
-
-	public void initHashCombi(int[] combi)
-	{
-		for (int i = 0; i < combi.length; i++)
-		{
-			hashCombi.put(i, combi[i]);
-		}
-	}
-
-	public void initHashProposition(int[] proposition)
-	{
-		for (int i = 0; i < proposition.length; i++)
-		{
-			hashProposition.put(i, proposition[i]);
-		}
 	}
 
 	public void intToCouleur(int[] c)
@@ -135,9 +120,8 @@ public class Mastermind extends JeuDeLogique
 		}
 	}
 
-	/*
+	/**
 	 * Renvoie le nombre de fois x contenue dans tab
-	 * 
 	 */
 	public int compteCombien(int x, int[] tab)
 	{
@@ -153,7 +137,17 @@ public class Mastermind extends JeuDeLogique
 		return nombre;
 	}
 
-	/*
+	public int[] remplirCompteTable(int[] tableACompter)
+	{
+		int[] cTable = new int[10];
+		for (int i = 0; i < 10; i++)
+		{
+			cTable[i] = compteCombien(i, tableACompter);
+		}
+		return cTable;
+	}
+
+	/**
 	 * Renvoie un tableau contenant les indices des positions de x dans tab
 	 */
 	public int[] getPos(int x, int[] tab)
@@ -171,35 +165,51 @@ public class Mastermind extends JeuDeLogique
 		return posTab;
 	}
 
-	/*
+	/**
+	 * Indique le nombre de ronds noirs(bien placé) et de ronds blancs(mal placés)
 	 * 
+	 * @param combinaison
+	 *            la combinaison à trouver
+	 * 
+	 * @param proposition
+	 *            une proposition de réponse
 	 */
-	public void bienMalPlace(Utilisateur u)
+	public void bienMalPlace(int[] combinaison, int[] proposition)
 	{
-		int nombre = 0;
-		Hashtable hClone = new Hashtable();
-		hClone = (Hashtable) hashCombi.clone();
-		for (int i = 0; i < hClone.size(); i++)
+		initBPMP();
+		int i = 0, j = 0;
+		int r = 0;
+		while (i < 10)
 		{
-			if (hashProposition.contains(hClone.get(i)))
+			r = 0;
+			j = 0;
+			while (r == 0 && j < 10)
 			{
-				nombre = compteCombien((int) hClone.get(i), u.getPropositionTab());
-				if (hClone.get(i) == hashProposition.get(i))
+				if (combinaison[i] == proposition[j])
 				{
-					System.out.println("Rond noir ++");
-					this.BP++;
-					hashProposition.replace(i, -1);
+					if (combinaison[i] == proposition[i])
+					{
+						// System.out.println("Rond NOIR");
+						this.BP++;
+					} else
+					{
+						// System.out.println("Rond BLANC");
+						this.MP++;
+
+						/*
+						 * System.out.println("prop[] : "); for (int x = 0; x < 10; x++) {
+						 * System.out.print(proposition[x] + " "); }
+						 */
+						// System.out.println("\n");
+					}
+					proposition[j] = -1;
+					r = 1;
 				} else
 				{
-					System.out.println("Rond blanc ++");
-					this.MP++;
-					hashProposition.replace(i, -1);
-					System.out.println("Proposition : " + hashProposition);
-					System.out.println("Combinaison : " + hClone);
+					j++;
 				}
-
 			}
-
+			i++;
 		}
 	}
 
@@ -282,7 +292,7 @@ public class Mastermind extends JeuDeLogique
 		Scanner scan = new Scanner(System.in);
 		Ordi ordi = new Ordi();
 		Joueur joueur = new Joueur();
-		int[] c =
+		int[] c = // combinaison de test
 		{ 3, 0, 1, 5, 2, 6, 4, 7, 9, 0 };
 
 		do
@@ -295,7 +305,7 @@ public class Mastermind extends JeuDeLogique
 			// L'ordi créé une combinaison aléatoire
 			// ordi.combi(4);
 			ordi.setCombiTab(c);
-			initHashCombi(ordi.getCombiTab());
+			System.out.println("\n");
 
 			// On traduit la combianison en couleurs
 			intToCouleur(ordi.getCombiTab());
@@ -303,22 +313,34 @@ public class Mastermind extends JeuDeLogique
 			do
 			{
 				// Le joueur propose une réponse
-				joueur.chercheMastermind();
+				joueur.chercheMastermind(10);
 
 				joueur.setPropositionTab(stringToInt(joueur.getPropositionString()));
-				initHashProposition(joueur.getPropositionTab());
 
-				initBPMP();
-				bienMalPlace(joueur);
+				bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
 				System.out.println("BP : " + getBP());
+				System.out.println("MP : " + getMP());
+				if (BP != 10)
+				{
+					joueur.setVie(joueur.getVie() - 1);
+				}
 
-			} while (BP != 10);
+			} while (BP != 10 && joueur.getVie() != 0);
 
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
 
 		} while (getRejouer() == 1);
 	}
+
+	/*--------------------------------------------Mode Defenseur----------------------------------------------*/
+	/***************************************
+	 * Programme de jeu en mode Defenseur *
+	 ***************************************/
+	// public void defenseurMode()
+	// {
+	//
+	// }
 
 	/*
 	 * System.out.println(this.hashCombi); System.out.println(this.hashProposition);

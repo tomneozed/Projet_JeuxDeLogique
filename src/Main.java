@@ -8,8 +8,8 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		menu();
-		// test t = new test();
+		// menu();
+		test t = new test();
 
 	}
 
