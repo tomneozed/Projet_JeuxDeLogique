@@ -9,7 +9,8 @@ public class Main
 	public static void main(String[] args)
 	{
 		// menu();
-		test t = new test();
+		// test t = new test();
+		TestMasterTable tmt = new TestMasterTable();
 
 	}
 
