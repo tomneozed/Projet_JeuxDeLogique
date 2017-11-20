@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
+import Tables.MasterTable;
 
 public class Main
 {
@@ -10,7 +11,9 @@ public class Main
 	{
 		// menu();
 		// test t = new test();
-		TestMasterTable tmt = new TestMasterTable();
+		// TestMasterTable tmt = new TestMasterTable();
+		MasterTable mt1 = new MasterTable(10);
+		mt1.afficheMT();
 
 	}
 

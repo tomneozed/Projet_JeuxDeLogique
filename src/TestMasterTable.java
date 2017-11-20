@@ -84,8 +84,9 @@ public class TestMasterTable
 	}
 
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
-	/*
-	 * 
+
+	/**
+	 * Fonction mode defenseur
 	 */
 	public void tourDeLOrdi()
 	{
@@ -153,13 +154,6 @@ public class TestMasterTable
 			yat = yATrouver(this.masterTable);
 			jat = jATrouver(this.masterTable);
 
-			/*
-			 * while (compteur1ereligne < propo.length && jyMT == -1) { if
-			 * (this.masterTable[0][compteur1ereligne] == iat[0] &&
-			 * this.colonneTerminee[compteur1ereligne] == false) { jyMT = compteur1ereligne;
-			 * } else { compteur1ereligne++; } }
-			 */
-
 			premierNullIT = cherchePremierNull(this.indiceTab);
 			this.propo = propoXY(premierNullIT, iyMT, (jat[1] - 1), this.masterTable);
 
@@ -188,19 +182,6 @@ public class TestMasterTable
 				this.propo = propoXY(premierNullIT, this.masterTable[0][iyMT], (jat[1] - 1), this.masterTable);
 			}
 		}
-
-		/*
-		 * premier tour if (BP == 0 && MP == 0) { yat = yATrouver(this.masterTable); iat
-		 * = indiceATrouver(masterTable);
-		 * 
-		 * premierNullIT = cherchePremierNull(this.indiceTab);
-		 * 
-		 * this.propo = propoX(premierNullIT, this.masterTable); } else if ((BP + MP) >
-		 * 0 && MP == 0) // Si il y a de multiples Bien Placés {
-		 * 
-		 * }
-		 */
-
 	}
 
 	public void initBPMP()
