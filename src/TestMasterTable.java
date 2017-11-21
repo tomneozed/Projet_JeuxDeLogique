@@ -1,6 +1,11 @@
 import java.util.Scanner;
 
-public class TestMasterTable
+import Tables.ColonneTerminee;
+import Tables.IndiceTab;
+import Tables.MasterTable;
+import Tables.Tables;
+
+public class TestMasterTable extends Tables
 {
 	private int BP, MP;
 	private int[] indiceTab = new int[10];
@@ -9,6 +14,10 @@ public class TestMasterTable
 	int[] combi = new int[4];
 	int[] propo = new int[4];
 	boolean[] colonneTerminee = new boolean[4];
+
+	IndiceTab IT = new IndiceTab(10);
+	ColonneTerminee CT = new ColonneTerminee();
+	MasterTable MT = new MasterTable();
 
 	public TestMasterTable()
 	{
@@ -358,27 +367,6 @@ public class TestMasterTable
 	}
 
 	/**
-	 * Renvoie le nombre de x dans tab
-	 * 
-	 * @param x
-	 * @param tab
-	 * @return
-	 */
-	public int compteCombien(int x, int[] tab)
-	{
-		int nombre = 0;
-
-		for (int i = 0; i < tab.length; i++)
-		{
-			if (x == tab[i])
-			{
-				nombre++;
-			}
-		}
-		return nombre;
-	}
-
-	/**
 	 * Renvoie un tableau 2x2 contenant : [X,nbX] [Y,nbY]
 	 * 
 	 * @param propo
@@ -417,23 +405,6 @@ public class TestMasterTable
 				+ " apparait à la position : " + XouXY[1][1]);
 
 		return XouXY;
-	}
-
-	/**
-	 * Renvoie l'indice du premier null (-2) dans tab
-	 * 
-	 * @param tab
-	 * @return
-	 */
-	public int cherchePremierNull(int[] tab)
-	{
-		int x = 0;
-
-		while (tab[x] != -2)
-		{
-			x++;
-		}
-		return x;
 	}
 
 	/**
@@ -684,36 +655,6 @@ public class TestMasterTable
 		// On ajoute l'indice bon qui se trouve au croisement de la ligne et la colonne
 		// susnomées
 		mt[jyMT + 1][iyMT] = (jyMT);
-	}
-
-	/**
-	 * Renvoie le ou les indice(s) de nbr dans tab
-	 * 
-	 * @param nbr
-	 * @param tab
-	 * @return
-	 */
-	public int[] indexOf(int nbr, int[] tab)
-	{
-		int[] index = new int[10];
-		int cpt = 0;
-
-		// On remplit index
-		for (int j = 0; j < 10; j++)
-		{
-			if (tab[j] == nbr)
-			{
-				index[cpt] = j;
-				cpt++;
-			}
-		}
-
-		int[] indexFinal = new int[cpt + 1];
-		for (int cpt2 = 0; cpt2 < cpt; cpt2++)
-		{
-			indexFinal[cpt2] = index[cpt2];
-		}
-		return indexFinal;
 	}
 
 	/**

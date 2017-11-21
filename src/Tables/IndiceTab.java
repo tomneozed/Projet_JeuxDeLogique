@@ -1,27 +1,26 @@
 package Tables;
 
-public class IndiceTab
+public class IndiceTab extends Tables
 {
-	private int taille = 10;
+	private int taille;
 	private int[] IT = new int[taille];
 
 	public IndiceTab()
 	{
+		setTaille(0);
+		initIT();
+	}
+
+	public IndiceTab(int i)
+	{
+		setTaille(i);
 		initIT();
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int getTaille()
-	{
-		return this.taille;
-	}
 
 	/****** SETTERS ******/
-	public void setTaille(int t)
-	{
-		this.taille = t;
-	}
 
 	/*------------------------------------------------Methodes--------------------------------------------------*/
 	/**
@@ -31,7 +30,7 @@ public class IndiceTab
 	{
 		for (int i = 0; i < this.getTaille(); i++)
 		{
-			this.IT[i] = -2; // -2 = null
+			setValeur(-2, i);
 		}
 	}
 
@@ -43,7 +42,7 @@ public class IndiceTab
 		System.out.println("\n\nIndiceTab : ");
 		for (int i = 0; i < this.getTaille(); i++)
 		{
-			System.out.println(i + " : " + this.IT[i]);
+			System.out.println(i + " : " + this.getValeur(i));
 		}
 	}
 
