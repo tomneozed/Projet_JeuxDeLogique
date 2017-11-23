@@ -2,8 +2,8 @@ package Tables;
 
 public abstract class Tables<T>
 {
-	private int taille;
-	private T[] t;
+	protected int taille;
+	protected T[] t;
 
 	public Tables()
 	{
@@ -33,7 +33,7 @@ public abstract class Tables<T>
 		this.taille = t;
 	}
 
-	public void setValeur(T val, int i)
+	public void setValeur(int i, T val)
 	{
 		this.t[i] = val;
 	}
@@ -115,6 +115,18 @@ public abstract class Tables<T>
 			indexFinal[cpt2] = index[cpt2];
 		}
 		return indexFinal;
+	}
+
+	/**
+	 * Affiche la table
+	 */
+	public void affiche()
+	{
+		System.out.println("\n\n" + this.getClass().getSimpleName() + " : ");
+		for (int i = 0; i < this.getTaille(); i++)
+		{
+			System.out.println(i + " : " + this.getValeur(i));
+		}
 	}
 
 }

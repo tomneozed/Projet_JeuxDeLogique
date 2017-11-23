@@ -15,7 +15,7 @@ public class TestMasterTable extends Tables
 	int[] propo = new int[4];
 	boolean[] colonneTerminee = new boolean[4];
 
-	IndiceTab IT = new IndiceTab(10);
+	IndiceTab IT = new IndiceTab();
 	ColonneTerminee CT = new ColonneTerminee();
 	MasterTable MT = new MasterTable();
 
@@ -281,41 +281,6 @@ public class TestMasterTable extends Tables
 		}
 	}
 
-	public void bienMalPlace(int[] comb, int[] prop)
-	{
-		initBPMP();
-		System.out.println("\n");
-		int i = 0, j = 0;
-		int r = 0;
-		while (i < comb.length) // i est l'indice de comb[]
-		{
-			r = 0;
-			j = 0;
-			while (r == 0 && j < prop.length) // j est l'indice de prop[]
-			{
-				if (comb[i] == prop[j]) // Si la valeur de comb à la position i est égale à une valeur de prop position
-										 // j
-				{
-					if (comb[i] == prop[i]) // Si i = j
-					{
-						// System.out.println("Rond NOIR");
-						this.BP++;
-					} else
-					{
-						// System.out.println("Rond BLANC");
-						this.MP++;
-					}
-					prop[j] = -1;
-					r = 1;
-				} else
-				{
-					j++;
-				}
-			}
-			i++;
-		}
-	}
-
 	/**
 	 * Renvoie un tableau rempli de x
 	 * 
@@ -379,14 +344,15 @@ public class TestMasterTable extends Tables
 		int[][] XouXY = new int[2][2];
 		int x = -1;
 		int y = -1;
-		int idk;
+		int idk = 0;
 
 		XouXY[1][0] = y;
 		XouXY[1][1] = -1;
 
 		for (int i = 0; i < propo.length; i++)
 		{
-			idk = compteCombien(propo[i], propo); // On compte le nombre de fois que propo[i] apparaît dans propo
+			// idk = compteCombien(propo[i], propo); // On compte le nombre de fois que
+			// propo[i] apparaît dans propo
 
 			if (idk == 1) // Si il apparaît 1 fois, alors propo[i] = y
 			{

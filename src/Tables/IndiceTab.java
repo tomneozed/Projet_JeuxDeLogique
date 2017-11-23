@@ -1,20 +1,11 @@
 package Tables;
 
-public class IndiceTab extends Tables
+public class IndiceTab extends Tables<Integer>
 {
-	private int taille;
-	private int[] IT = new int[taille];
-
 	public IndiceTab()
 	{
-		setTaille(0);
-		initIT();
-	}
-
-	public IndiceTab(int i)
-	{
-		setTaille(i);
-		initIT();
+		setTaille(10);
+		init();
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
@@ -26,11 +17,12 @@ public class IndiceTab extends Tables
 	/**
 	 * Initialise l'indiceTab à -2 partout
 	 */
-	public void initIT()
+	public void init()
 	{
+		this.t = new Integer[this.getTaille()];
 		for (int i = 0; i < this.getTaille(); i++)
 		{
-			setValeur(-2, i);
+			setValeur(i, -2);
 		}
 	}
 

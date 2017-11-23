@@ -1,6 +1,6 @@
 package Tables;
 
-public class MasterTable extends Tables
+public class MasterTable extends Tables<Integer>
 {
 	private int[][] mt;
 	private int largeur, longueur;
@@ -185,7 +185,7 @@ public class MasterTable extends Tables
 	 * 
 	 * @return jAT
 	 */
-	public int[] jATrouver(boolean[] colonneTerminee)
+	public int[] jATrouver(Boolean[] b)
 	{
 		// Si il n'y a pas d'indice à trouver, on renvoie [-1,-1]
 		int[] jAT =
@@ -196,7 +196,7 @@ public class MasterTable extends Tables
 		{
 			// Si Y est compris dans [0,9], on cherche le premier "null" de sa colonne
 
-			if (mt[0][i] >= 0 && mt[0][i] <= 9 && colonneTerminee[i] == false)
+			if (mt[0][i] >= 0 && mt[0][i] <= 9 && b[i] == false)
 			{
 				jAT[0] = i;
 				jAT[1] = cherchePremierNullIndiceMT(jAT[0]);

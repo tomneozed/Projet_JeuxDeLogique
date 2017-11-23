@@ -5,13 +5,14 @@ import java.util.Scanner;
 public class TestTables
 {
 	private int BP, MP;
-	int[][] XouXY;
+	// int[][] XouXY;
 	int[] combi = new int[4];
-	int[] propo = new int[4];
+	// int[] propo = new int[4];
 
-	IndiceTab IndiceTable = new IndiceTab(10);
-	ColonneTerminee ColonneTerminee = new ColonneTerminee();
-	MasterTable MasterTable = new MasterTable();
+	IndiceTab indiceTable = new IndiceTab();
+	ColonneTerminee colonneTerminee = new ColonneTerminee();
+	MasterTable masterTable = new MasterTable();
+	Propo propo = new Propo(4);
 
 	public TestTables()
 	{
@@ -28,13 +29,8 @@ public class TestTables
 		this.combi[2] = 5;
 		this.combi[3] = 3;
 
-		for (int i = 0; i < this.propo.length; i++)
-		{
-			this.propo[i] = 0;
-		}
-
-		MasterTable.afficheMT();
-		IndiceTable.afficheIT();
+		masterTable.afficheMT();
+		indiceTable.afficheIT();
 
 		do
 		{
@@ -42,8 +38,8 @@ public class TestTables
 					+ "***************************************");
 
 			tourDeLOrdi();
-			MasterTable.afficheMT();
-			IndiceTable.afficheIT();
+			masterTable.afficheMT();
+			indiceTable.afficheIT();
 
 			// System.out.println("\n\n\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			// rejouer = scan.nextInt();
@@ -82,10 +78,10 @@ public class TestTables
 	public void tourDeLOrdi()
 	{
 		boolean yat;
-		int[] jat = MasterTable.jATrouver(ColonneTerminee.getCT());
+		int[] jat = masterTable.jATrouver(colonneTerminee.getT());
 		int premierNullIT = -1;
-		XouXY = propoXouXY(this.propo);
-		bienMalPlace(this.combi, this.propo);
+		propo.propoXouXY();
+		bienMalPlace(this.combi, (int[]) propo.getT());
 		int X = XouXY[0][0];
 		int Y = XouXY[1][0];
 		int jyPropo = XouXY[1][1];
@@ -173,6 +169,47 @@ public class TestTables
 				this.propo = propoXY(premierNullIT, this.masterTable[0][iyMT], (jat[1] - 1), this.masterTable);
 			}
 		}
+	}
+
+	public void bienMalPlace(int[] comb, int[] prop)
+	{
+		initBPMP();
+		System.out.println("\n");
+		int i = 0, j = 0;
+		int r = 0;
+		while (i < comb.length) // i est l'indice de comb[]
+		{
+			r = 0;
+			j = 0;
+			while (r == 0 && j < prop.length) // j est l'indice de prop[]
+			{
+				if (comb[i] == prop[j]) // Si la valeur de comb à la position i est égale à une valeur de prop position
+										 // j
+				{
+					if (comb[i] == prop[i]) // Si i = j
+					{
+						// System.out.println("Rond NOIR");
+						this.BP++;
+					} else
+					{
+						// System.out.println("Rond BLANC");
+						this.MP++;
+					}
+					prop[j] = -1;
+					r = 1;
+				} else
+				{
+					j++;
+				}
+			}
+			i++;
+		}
+	}
+
+	public void initBPMP()
+	{
+		setBP(0);
+		setMP(0);
 	}
 
 }

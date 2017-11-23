@@ -1,64 +1,45 @@
 package Tables;
 
-public class ColonneTerminee extends Tables
+public class ColonneTerminee extends Tables<Boolean>
 {
-	private int taille;
-	private boolean[] CT;
-
 	public ColonneTerminee()
 	{
 		setTaille(0);
-		initCT();
+		init();
 	}
 
 	public ColonneTerminee(int t)
 	{
 		setTaille(t);
-		initCT();
+		init();
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int getTaille()
-	{
-		return this.taille;
-	}
-
-	public Object getValeur(int i)
-	{
-		return this.CT[i];
-	}
-
-	public boolean[] getCT()
-	{
-		return this.CT;
-	}
-
 	/****** SETTERS ******/
-	public void setTaille(int t)
-	{
-		this.taille = t;
-	}
-
-	public void setValeur(boolean val, int i)
-	{
-		this.CT[i] = val;
-	}
-
-	public void setCT(boolean[] ct)
-	{
-		this.CT = ct;
-	}
 
 	/*------------------------------------------------Methodes--------------------------------------------------*/
 	/**
 	 * Initialisation de CT à false
 	 */
-	public void initCT()
+	public void init()
 	{
-		for (int i = 0; i < this.CT.length; i++)
+		this.t = new Boolean[this.getTaille()];
+		for (int i = 0; i < this.t.length; i++)
 		{
-			this.setValeur(false, i);
+			this.setValeur(i, false);
+		}
+	}
+
+	/**
+	 * Affiche colonneTerminee
+	 */
+	public void afficheCT()
+	{
+		System.out.println("\n\nColonneTerminee : ");
+		for (int i = 0; i < this.getTaille(); i++)
+		{
+			System.out.println(i + " : " + this.getValeur(i));
 		}
 	}
 
