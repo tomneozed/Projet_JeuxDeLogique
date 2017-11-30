@@ -38,6 +38,11 @@ public class MasterTable extends Tables<Integer>
 		return this.mt[j][i];
 	}
 
+	public int[][] getMT()
+	{
+		return this.mt;
+	}
+
 	/****** SETTERS ******/
 	public void setLongeur(int l)
 	{
@@ -52,6 +57,11 @@ public class MasterTable extends Tables<Integer>
 	public void setValeur(int val, int i, int j)
 	{
 		this.mt[j][i] = val;
+	}
+
+	public void setMT(int[][] mt)
+	{
+		this.mt = mt;
 	}
 
 	/*------------------------------------------------Methodes--------------------------------------------------*/
@@ -124,7 +134,7 @@ public class MasterTable extends Tables<Integer>
 		do
 		{
 			j++;
-		} while (this.mt[j][colonne] != -2 && j <= this.getLargeur());
+		} while (j < this.getLargeur() && this.mt[j][colonne] != -2);
 
 		indiceATester = j;
 
@@ -185,7 +195,7 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @return jAT
 	 */
-	public int[] jATrouver(Boolean[] b)
+	public int[] jATrouver(Boolean[] colonneTerminee)
 	{
 		// Si il n'y a pas d'indice à trouver, on renvoie [-1,-1]
 		int[] jAT =
@@ -196,7 +206,7 @@ public class MasterTable extends Tables<Integer>
 		{
 			// Si Y est compris dans [0,9], on cherche le premier "null" de sa colonne
 
-			if (mt[0][i] >= 0 && mt[0][i] <= 9 && b[i] == false)
+			if (this.getValeur(i, 0) >= 0 && this.getValeur(i, 0) <= 9 && colonneTerminee[i] == false)
 			{
 				jAT[0] = i;
 				jAT[1] = cherchePremierNullIndiceMT(jAT[0]);
@@ -218,7 +228,8 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void indiceARayer(int iyMT, int jyMT)
 	{
-		this.setValeur(-1, iyMT, jyMT + 1);
+		this.setValeur(-1, iyMT, jyMT);
+		majMT();
 	}
 
 	/**
@@ -229,7 +240,7 @@ public class MasterTable extends Tables<Integer>
 	 * @param nbr
 	 * @param mt
 	 */
-	public void initPremiereLigneMT(int[] IT)
+	public void initPremiereLigneMT(Integer[] integers)
 	{
 		for (int i = 0; i < this.getLongueur(); i++)
 		{
@@ -239,10 +250,10 @@ public class MasterTable extends Tables<Integer>
 		for (int cpt = 0; cpt < 10; cpt++)
 		{
 			// Si une valeur de l'indiceTable est comprise entre 1 et 9
-			if (IT[cpt] > 0 && IT[cpt] < 10)
+			if (integers[cpt] > 0 && integers[cpt] < 10)
 			{
 				// Alors on remplit 1 à 9 fois la premiere ligne de MT avec la valeur cpt
-				for (int cpt2 = 0; cpt2 < IT[cpt]; cpt2++)
+				for (int cpt2 = 0; cpt2 < integers[cpt]; cpt2++)
 				{
 					// On parcourt donc notre premiere ligne de la masterTable à la recherche du 1er
 					// null (-2)
@@ -266,23 +277,31 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @param mt
 	 */
-	public void completeHorizontal(int[][] mt)
+	public void completeHorizontal()
 	{
 		int compteMoins1 = 0;
+		int autre = 0;
 		int i = 0;
-		for (int j = 1; j < (mt.length + 2); j++)
+		for (int j = 1; j < this.getLargeur(); j++)
 		{
-			for (i = 0; i < mt.length; i++)
+			compteMoins1 = 0;
+			for (i = 0; i < this.getLongueur(); i++)
 			{
-				if (mt[i][j] == -1)
+				if (mt[j][i] == -1)
 				{
 					compteMoins1++;
+				} else
+				{
+					autre = mt[j][i];
 				}
 			}
-			if (compteMoins1 == (mt.length - 1))
+			if (compteMoins1 == (this.getLongueur() - 1))
 			{
-				// mt[cherchePremierNull(mt[j])][j] = j - 1;
-				indiceBon(cherchePremierNull(mt[j]), j - 1);
+				if (autre == -2)
+				{
+					// mt[cherchePremierNull(mt[j])][j] = j - 1;
+					indiceBon(cherchePremierNull(mt[j]), j);
+				}
 			}
 		}
 	}
@@ -292,44 +311,55 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @param mt
 	 */
-	public void completeVertical(int[][] mt)
+	public void completeVertical()
 	{
 		int compteMoins1 = 0;
-		for (int i = 0; i < mt.length; i++)
+		int autre = 0;
+		for (int i = 0; i < this.getLongueur(); i++)
 		{
-			for (int j = 1; j < (mt.length + 2); j++)
+			compteMoins1 = 0;
+			for (int j = 1; j < this.getLargeur(); j++)
 			{
-				if (mt[i][j] == -1)
+				if (mt[j][i] == -1)
 				{
 					compteMoins1++;
+				} else
+				{
+					autre = mt[j][i];
 				}
 			}
-			if (compteMoins1 == (mt.length - 2))
+			if (compteMoins1 == (this.getLongueur() - 1))
 			{
-				// mt[i][cherchePremierNull(mt[i])] = cherchePremierNull(mt[i]) - 1;
-				indiceBon(i, cherchePremierNull(mt[i]) - 1);
+				if (autre == -2)
+				{
+					// mt[i][cherchePremierNull(mt[i])] = cherchePremierNull(mt[i]) - 1;
+					indiceBon(i, cherchePremierNullIndiceMT(i));
+				}
 			}
 		}
 	}
 
 	public void indiceBon(int iyMT, int jyMT)
 	{
-
-		// On "raye" la ligne d'indice j = jy
-		for (int i = 0; i < this.getLongueur(); i++)
+		//On vérifie que les indices soient possibles (contenus dans [0,10])
+		if (iyMT > -1 && iyMT < 11 && jyMT > -1 && jyMT < 11)
 		{
-			mt[jyMT + 1][i] = -1;
-		}
+			// On "raye" la ligne d'indice j = jy
+			for (int i = 0; i < this.getLongueur(); i++)
+			{
+				mt[jyMT][i] = -1;
+			}
 
-		// On "raye" la colonne d'indice i = ix
-		for (int j = 1; j < this.getLargeur(); j++)
-		{
-			mt[j][iyMT] = -1;
-		}
+			// On "raye" la colonne d'indice i = iy
+			for (int j = 1; j < this.getLargeur(); j++)
+			{
+				mt[j][iyMT] = -1;
+			}
 
-		// On ajoute l'indice bon qui se trouve au croisement de la ligne et la colonne
-		// susnomées
-		mt[jyMT + 1][iyMT] = (jyMT);
+			// On ajoute l'indice bon qui se trouve au croisement de la ligne et la colonne
+			// susnomées
+			mt[jyMT][iyMT] = (jyMT);
+		}
 	}
 
 	/**
@@ -342,7 +372,7 @@ public class MasterTable extends Tables<Integer>
 	{
 		int x = 0;
 
-		while (tab[x] != -2)
+		while (x < tab.length && tab[x] != -2)
 		{
 			x++;
 		}
@@ -354,19 +384,17 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @param mt
 	 */
-	public void majMT(int[][] mt)
+	public void majMT()
 	{
-		completeHorizontal(mt);
-		completeVertical(mt);
+		completeHorizontal();
+		completeVertical();
 	}
 
 	/**
 	 * 
 	 */
-	public boolean[] majColonneTerminee()
+	public Boolean[] majColonneTerminee(Boolean[] colonneTerminee)
 	{
-		boolean[] colonneTerminee = new boolean[this.getLongueur()];
-
 		// On parcourt la premiere ligne de la masterTable ...
 		for (int i = 0; i < this.getLongueur(); i++)
 		{
@@ -374,7 +402,7 @@ public class MasterTable extends Tables<Integer>
 			if (this.getValeur(i, 0) > -1 && this.getValeur(i, 0) < 10)
 			{
 				// ... On parcourt sa colonne ...
-				for (int j = 1; j < this.getLongueur(); j++)
+				for (int j = 1; j < this.getLargeur(); j++)
 				{
 					// ... et si il a un indice bon (compris entre 0 et 9) ...
 					if (this.getValeur(i, j) > -1 && this.getValeur(i, j) < 10)

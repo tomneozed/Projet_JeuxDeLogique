@@ -73,14 +73,13 @@ public abstract class Tables<T>
 	/**
 	 * Renvoie l'indice du premier null (-2) dans tab
 	 * 
-	 * @param tab
 	 * @return
 	 */
-	public int cherchePremierNull(int[] tab)
+	public int cherchePremierNull()
 	{
 		int x = 0;
 
-		while (tab[x] != -2)
+		while (x < t.length && (int) t[x] != -2)
 		{
 			x++;
 		}

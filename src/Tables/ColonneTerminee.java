@@ -43,4 +43,26 @@ public class ColonneTerminee extends Tables<Boolean>
 		}
 	}
 
+	/**
+	 * Retourne true si toutes les cases sont 'true' Retourne false sinon
+	 */
+	public Boolean terminee()
+	{
+		Boolean t = false;
+		int cpt = 0;
+		for (int i = 0; i < this.getTaille(); i++)
+		{
+			if (this.getValeur(i) == true)
+			{
+				cpt++;
+			}
+
+			if (cpt == this.getTaille())
+			{
+				t = true;
+			}
+		}
+		return t;
+	}
+
 }

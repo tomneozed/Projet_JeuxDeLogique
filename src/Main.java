@@ -2,9 +2,7 @@ import java.util.Scanner;
 
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
-import Tables.ColonneTerminee;
-import Tables.IndiceTab;
-import Tables.Propo;
+import Tables.TestTables;
 
 public class Main
 {
@@ -16,32 +14,7 @@ public class Main
 		// TestMasterTable tmt = new TestMasterTable();
 		// MasterTable mt1 = new MasterTable(10);
 		// mt1.afficheMT();
-
-		Propo p = new Propo(4);
-		IndiceTab IT = new IndiceTab();
-		ColonneTerminee CT = new ColonneTerminee(4);
-
-		p.init();
-
-		p.affiche();
-
-		p.setValeur(0, 2);
-		p.setValeur(1, 3);
-		p.setValeur(2, 4);
-		p.setValeur(3, 5);
-
-		p.affiche();
-
-		CT.init();
-
-		CT.affiche();
-
-		CT.setValeur(0, true);
-		CT.setValeur(1, true);
-		CT.setValeur(2, false);
-		CT.setValeur(3, true);
-
-		CT.affiche();
+		TestTables tt = new TestTables();
 
 	}
 

@@ -10,7 +10,7 @@ public class TestTables
 	// int[] propo = new int[4];
 
 	IndiceTab indiceTable = new IndiceTab();
-	ColonneTerminee colonneTerminee = new ColonneTerminee();
+	ColonneTerminee colonneTerminee = new ColonneTerminee(4);
 	MasterTable masterTable = new MasterTable();
 	Propo propo = new Propo(4);
 
@@ -29,6 +29,13 @@ public class TestTables
 		this.combi[2] = 5;
 		this.combi[3] = 3;
 
+		/*
+		 * this.combi[0] = 9; this.combi[1] = 1; this.combi[2] = 3; this.combi[3] = 2;
+		 * 
+		 */
+		indiceTable.setTotal(4);
+
+		propo.init(0);
 		masterTable.afficheMT();
 		indiceTable.afficheIT();
 
@@ -37,14 +44,27 @@ public class TestTables
 			System.out.println("\n\n***************************************TOUR " + tour
 					+ "***************************************");
 
+			propo.affichePropo();
 			tourDeLOrdi();
 			masterTable.afficheMT();
 			indiceTable.afficheIT();
+			colonneTerminee.afficheCT();
+			System.out.println("\n\tNouvelle proposition : ");
+			propo.affichePropo();
 
 			// System.out.println("\n\n\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			// rejouer = scan.nextInt();
 			tour++;
-		} while (tour < 10);
+
+			bienMalPlace(this.combi, propo.getT());
+
+		} while (BP != combi.length && tour < 10);
+
+		if (BP == combi.length)
+		{
+			System.out.println("Bravo ordi, vous avez gagné !");
+		}
+
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
@@ -81,46 +101,51 @@ public class TestTables
 		int[] jat = masterTable.jATrouver(colonneTerminee.getT());
 		int premierNullIT = -1;
 		propo.propoXouXY();
-		bienMalPlace(this.combi, (int[]) propo.getT());
-		int X = XouXY[0][0];
-		int Y = XouXY[1][0];
-		int jyPropo = XouXY[1][1];
+		bienMalPlace(this.combi, propo.getT());
+		int X = propo.getX();
+		int Y = propo.getY();
+		int iyPropo = propo.getIY();
 		int iyMT = jat[0];
 		int jyMT = jat[1];
 
 		// On regarde si la proposition est de type X ou XY
-		if (XouXY[1][0] != -1)	// propoXY
+		if (Y != -1 && propo.XouXY[0][1] == propo.getTaille() - 1)	// propoXY
 		{
 			// 1er cas : BP > 0 & MP = 0
 			if (this.BP >= 1 && this.MP == 0)
 			{
-				MasterTable.indiceBon(iyMT, iyMT);
-				majColonneTerminee();
+				masterTable.indiceBon(iyMT, jyMT);
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
-				setIT(X, ((BP + MP) - 1));						// On remplit IT à la position X(XouXY[0][0])
-																	// '(BP+MP)-1' fois (1 étant Y dont on sait qu'il
-																	// existe 1 fois)
-				initPremiereLigneMT();		// On remplit la premiere ligne de MT 'getIT(X)'
-												// fois, càd
-				// de '0 à mt.length' fois
-				afficheMT();
+				indiceTable.setValeur(X, ((BP + MP) - 1));			// On remplit IT à la position X(XouXY[0][0])
+				// '(BP+MP)-1' fois (1 étant Y dont on sait
+				// qu'il
+				// existe 1 fois)
+				masterTable.initPremiereLigneMT(indiceTable.getT());		// On remplit la premiere ligne de MT
+				// 'getIT(X)'
+				// fois, càd de '0 à mt.length' fois
+				// masterTable.affiche();
 			} else
 
 			// 2eme cas : BP = 0 & MP = 1
 			if (this.BP == 0 && this.MP == 1)
 			{
-				indiceARayer(iyMT, jyMT, this.masterTable);
-				setIT(X, ((BP + MP) - 1));
+				masterTable.indiceARayer(iyMT, jyMT);
+				indiceTable.setValeur(X, ((BP + MP) - 1));
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
 			} else
 
 			// 3eme cas : BP = 0 & MP = 2
 			if (this.BP == 0 && this.MP == 2)
 			{
-				setIT(X, 1);
-				initPremiereLigneMT();		// On remplit la premiere ligne de MT 'getIT(X)'
-												// fois, càd
+				indiceTable.setValeur(X, 1);
+				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
+				// fois, càd
 				// de '0 à mt.length' fois
-				indiceBon(iyMT, jyMT, this.masterTable);
+				masterTable.indiceARayer(iyMT, jyMT);
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+				// masterTable.indiceBon(iyMT, jyMT);
 
 			} else
 
@@ -130,49 +155,118 @@ public class TestTables
 			// -> c) BP > 1 & MP > 1 ]2[
 			if (BP == 1 && MP == 1)
 			{
-				setIT(X, (BP + MP) - 1);
-				initPremiereLigneMT();		// On remplit la premiere ligne de MT 'getIT(X)'
-												// fois, càd
+				indiceTable.setValeur(X, ((BP + MP) - 1));
+				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
+				// fois, càd
 				// de '0 à mt.length' fois
-				indiceARayer(iyMT, jyMT, this.masterTable);
+				masterTable.indiceARayer(iyMT, jyMT);
+
+				int iy2MT = 0;
+				while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
+				{
+					if (this.masterTable.getValeur(iy2MT, 0) == X)
+					{
+						masterTable.indiceARayer(iy2MT, jyMT);
+					}
+					iy2MT++;
+				}
+
 				// indiceARayer(X, jy, this.masterTable);
 			}
 
-			yat = yATrouver(this.masterTable);
-			jat = jATrouver(this.masterTable);
+			/*
+			 * Mettre une fonction qui teste si la masterTable est terminéé Si oui ->
+			 * propoFinale()
+			 */
+			if (combiTrouvee() == true)
+			{
+				this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
 
-			premierNullIT = cherchePremierNull(this.indiceTab);
-			this.propo = propoXY(premierNullIT, iyMT, (jat[1] - 1), this.masterTable);
+			} else if (indiceBon() == true)
+			{
+				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
+			} else
+			{
+
+				jat = masterTable.jATrouver(colonneTerminee.getT());
+				yat = masterTable.yATrouver();
+
+				premierNullIT = indiceTable.cherchePremierNull();
+				this.propo.setT(propo.propoXY(premierNullIT, this.masterTable.getValeur(jat[0], 0), (jat[1] - 1),
+						this.masterTable.getMT()));
+			}
+
+		} else if (Y == X && propo.XouXY[0][1] != propo.getTaille() - 1)	//PropoChercheY
+		{
+			if (this.BP == propo.getTaille() - 1 && this.MP == 0)
+			{
+				indiceTable.setValeur(indiceTable.cherchePremierNull(), 0);
+			}
+
+			if (combiTrouvee() == true)
+			{
+				this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
+
+			} else if (indiceBon() == true)
+			{
+				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
+			} else
+			{
+
+				jat = masterTable.jATrouver(colonneTerminee.getT());
+				yat = masterTable.yATrouver();
+
+				premierNullIT = indiceTable.cherchePremierNull();
+				this.propo.setT(propo.propoXY(premierNullIT, this.masterTable.getValeur(jat[0], 0), (jat[1] - 1),
+						this.masterTable.getMT()));
+			}
 
 		} else	// propoX
 		{
-
 			if (BP == 0)
 			{
-				setIT(X, 0); 						// On remplit IT à la position X(XouXY[0][0]) 0 fois
+				indiceTable.setValeur(X, 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
 
-				yat = yATrouver(this.masterTable);
-				jat = jATrouver(this.masterTable);
+				jat = masterTable.jATrouver(colonneTerminee.getT());
+				yat = masterTable.yATrouver();
 
-				premierNullIT = cherchePremierNull(this.indiceTab);
+				premierNullIT = indiceTable.cherchePremierNull();
 
-				this.propo = propoX(premierNullIT, this.masterTable);
+				this.propo.setT(propo.propoX(premierNullIT));
 			} else if (BP > 0)
 			{
-				setIT(X, BP); 									// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
-				initPremiereLigneMT();
+				indiceTable.setValeur(X, BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
+				this.masterTable.initPremiereLigneMT(indiceTable.getT());
 
-				yat = yATrouver(this.masterTable);
-				jat = jATrouver(this.masterTable);
+				jat = this.masterTable.jATrouver(colonneTerminee.getT());
+				System.out.println("jat : " + jat[0] + ", " + jat[1]);
+				yat = this.masterTable.yATrouver();
 
-				premierNullIT = cherchePremierNull(this.indiceTab);
-				this.propo = propoXY(premierNullIT, this.masterTable[0][iyMT], (jat[1] - 1), this.masterTable);
+				premierNullIT = indiceTable.cherchePremierNull();
+				this.propo.setT(propo.propoXY(premierNullIT, this.masterTable.getValeur(0, jat[0]), (jat[1] - 1),
+						this.masterTable.getMT()));
 			}
 		}
 	}
 
-	public void bienMalPlace(int[] comb, int[] prop)
+	/**
+	 * Compare les 2 tables en entrée et incrémente BP(rond noir) et MP(rond blanc)
+	 * selon la comparaison
+	 * 
+	 * @param comb
+	 *            combinaison
+	 * @param prop
+	 *            proposition
+	 */
+	public void bienMalPlace(int[] comb, Integer[] prop)
 	{
+		Integer[] copieProp = new Integer[prop.length];
+
+		copieProp[0] = prop[0];
+		copieProp[1] = prop[1];
+		copieProp[2] = prop[2];
+		copieProp[3] = prop[3];
+
 		initBPMP();
 		System.out.println("\n");
 		int i = 0, j = 0;
@@ -181,12 +275,12 @@ public class TestTables
 		{
 			r = 0;
 			j = 0;
-			while (r == 0 && j < prop.length) // j est l'indice de prop[]
+			while (r == 0 && j < copieProp.length) // j est l'indice de prop[]
 			{
-				if (comb[i] == prop[j]) // Si la valeur de comb à la position i est égale à une valeur de prop position
-										 // j
+				if (comb[i] == copieProp[j]) // Si la valeur de comb à la position i est égale à une valeur de prop position
+				// j
 				{
-					if (comb[i] == prop[i]) // Si i = j
+					if (comb[i] == copieProp[i]) // Si i = j
 					{
 						// System.out.println("Rond NOIR");
 						this.BP++;
@@ -195,7 +289,7 @@ public class TestTables
 						// System.out.println("Rond BLANC");
 						this.MP++;
 					}
-					prop[j] = -1;
+					copieProp[j] = -1;
 					r = 1;
 				} else
 				{
@@ -210,6 +304,51 @@ public class TestTables
 	{
 		setBP(0);
 		setMP(0);
+	}
+
+	/**
+	 * Renvoie 'true' si : - la table 'colonneTerminee' est remplie de 'true' ET -
+	 * il n'y a plus de Y à trouver (si la 1ere ligne de la MT est complète)
+	 * 
+	 */
+	public Boolean combiTrouvee()
+	{
+		Boolean ct = false;
+
+		if (this.colonneTerminee.terminee() == true && this.masterTable.yATrouver() == false)
+		{
+			ct = true;
+		}
+		return ct;
+	}
+
+	/**
+	 * Renvoie 'true' si tous les indices ont étés trouvés
+	 * 
+	 * @return
+	 */
+	public Boolean indiceBon()
+	{
+		Boolean ib = false;
+		int compte = 0;
+		for (int i = 0; i < this.masterTable.getLongueur(); i++)
+		{
+			for (int j = 1; j < this.masterTable.getLargeur(); j++)
+			{
+				if (this.masterTable.getValeur(i, j) > 0 && this.masterTable.getValeur(i, j) < 11)
+				{
+					compte++;
+				}
+			}
+		}
+
+		if (compte == this.masterTable.getLongueur())
+		{
+			ib = true;
+		}
+
+		return ib;
+
 	}
 
 }
