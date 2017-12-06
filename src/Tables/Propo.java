@@ -145,17 +145,11 @@ public class Propo extends Tables<Integer>
 	{
 		Integer[] propo = new Integer[this.getTaille()];
 
-		// System.out.println("\n***** PropoXY() *****");
-
 		for (int i = 0; i < this.getTaille(); i++)
 		{
 			propo[i] = x;
 		}
 		propo[jy] = y;
-		// for (int cpt = 0; cpt < this.getTaille(); cpt++)
-		// {
-		// System.out.print(propo[cpt] + " | ");
-		// }
 		return propo;
 	}
 
@@ -296,12 +290,13 @@ public class Propo extends Tables<Integer>
 
 		} else if (chiffresDifferents == 2) // PropoXY
 		{
+			j = 0;
 			while (j < 10 && chiffresDifferents > 0)
 			{
 				if (tableComptage[j] == 1)
 				{
-					XouXY[1][0] = this.getValeur(j); // Y
-					XouXY[1][1] = j; // jy
+					XouXY[1][0] = j; // Y
+					XouXY[1][1] = this.getPosition(j); // jy
 					chiffresDifferents--;
 				} else if (tableComptage[j] > 1)
 				{
@@ -315,9 +310,9 @@ public class Propo extends Tables<Integer>
 		{
 			while (j < 10 && chiffresDifferents > 0)
 			{
-				XouXY[0][0] = this.getValeur(j); // X
+				XouXY[0][0] = j; // X
 				XouXY[0][1] = tableComptage[j]; // nbx
-				XouXY[1][0] = this.getValeur(j); // Y
+				XouXY[1][0] = j; // Y
 				XouXY[1][1] = tableComptage[j]; // jy
 
 				chiffresDifferents--;

@@ -134,7 +134,7 @@ public class MasterTable extends Tables<Integer>
 		do
 		{
 			j++;
-		} while (j < this.getLargeur() && this.mt[j][colonne] != -2);
+		} while (j < this.getLongueur() && this.mt[j][colonne] != -2);
 
 		indiceATester = j;
 

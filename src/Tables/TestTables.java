@@ -21,8 +21,7 @@ public class TestTables
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
 		Scanner scan = new Scanner(System.in);
 
-		int[] c = // combinaison de test : Exemple 2
-		{ 3, 7, 5, 3 };
+		int[] c;// combinaison de test : Exemple 2
 
 		this.combi[0] = 3;
 		this.combi[1] = 7;
@@ -30,8 +29,7 @@ public class TestTables
 		this.combi[3] = 3;
 
 		/*
-		 * this.combi[0] = 9; this.combi[1] = 1; this.combi[2] = 3; this.combi[3] = 2;
-		 * 
+		 * this.combi[0] = 9; this.combi[1] = 8; this.combi[2] = 7; this.combi[3] = 6;
 		 */
 		indiceTable.setTotal(4);
 
@@ -58,7 +56,7 @@ public class TestTables
 
 			bienMalPlace(this.combi, propo.getT());
 
-		} while (BP != combi.length && tour < 10);
+		} while (BP != combi.length);
 
 		if (BP == combi.length)
 		{
@@ -162,16 +160,19 @@ public class TestTables
 				masterTable.indiceARayer(iyMT, jyMT);
 
 				int iy2MT = 0;
-				while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
+
+				if (iy2MT < masterTable.getTaille())
 				{
-					if (this.masterTable.getValeur(iy2MT, 0) == X)
+					while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
 					{
-						masterTable.indiceARayer(iy2MT, jyMT);
+						if (this.masterTable.getValeur(iy2MT, 0) == X)
+						{
+							masterTable.indiceARayer(iy2MT, jyMT);
+						}
 					}
 					iy2MT++;
 				}
-
-				// indiceARayer(X, jy, this.masterTable);
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 			}
 
 			/*
@@ -212,7 +213,7 @@ public class TestTables
 				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
 			} else
 			{
-
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 				jat = masterTable.jATrouver(colonneTerminee.getT());
 				yat = masterTable.yATrouver();
 

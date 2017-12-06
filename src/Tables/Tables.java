@@ -27,6 +27,21 @@ public abstract class Tables<T>
 		return this.t;
 	}
 
+	public int getPosition(T x)
+	{
+		int pos = -1;
+
+		for (int i = 0; i < this.getTaille(); i++)
+		{
+			if (this.getValeur(i) == x)
+			{
+				pos = i;
+			}
+		}
+
+		return pos;
+	}
+
 	/****** SETTERS ******/
 	public void setTaille(int t)
 	{
@@ -81,8 +96,15 @@ public abstract class Tables<T>
 
 		while (x < t.length && (int) t[x] != -2)
 		{
+			System.out.println(t.length);
 			x++;
 		}
+
+		if (x > 9)
+		{
+			x = 9;
+		}
+
 		return x;
 	}
 
