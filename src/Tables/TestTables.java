@@ -23,10 +23,10 @@ public class TestTables
 
 		int[] c;// combinaison de test : Exemple 2
 
-		this.combi[0] = 3;
-		this.combi[1] = 7;
-		this.combi[2] = 5;
-		this.combi[3] = 3;
+		this.combi[0] = 9;
+		this.combi[1] = 8;
+		this.combi[2] = 9;
+		this.combi[3] = 7;
 
 		/*
 		 * this.combi[0] = 9; this.combi[1] = 8; this.combi[2] = 7; this.combi[3] = 6;
@@ -147,7 +147,18 @@ public class TestTables
 
 			} else
 
-			// 4eme cas : BP = 1 & MP = 1
+			//4eme cas : BP = 1 & MP = 2
+			if (BP == 1 && MP == 2)
+			{
+				indiceTable.setValeur(X, (BP + MP - 1));
+				masterTable.initPremiereLigneMT(indiceTable.getT());
+
+				masterTable.indiceBon(masterTable.indexOfY(X), propo.indexOf(Y) + 1);
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
+			}
+
+			// 5eme cas : BP = 1 & MP = 1
 			// -> a) BP > 1 & MP = 1
 			// -> b) BP = 1 & MP > 1 ]2[
 			// -> c) BP > 1 & MP > 1 ]2[
@@ -168,12 +179,19 @@ public class TestTables
 						if (this.masterTable.getValeur(iy2MT, 0) == X)
 						{
 							masterTable.indiceARayer(iy2MT, jyMT);
+						} else
+						{
+							break;
 						}
 					}
 					iy2MT++;
 				}
 				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 			}
+
+			masterTable.majMT();
+			indiceTable.majIT();
+			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
 			/*
 			 * Mettre une fonction qui teste si la masterTable est terminéé Si oui ->
@@ -188,7 +206,6 @@ public class TestTables
 				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
 			} else
 			{
-
 				jat = masterTable.jATrouver(colonneTerminee.getT());
 				yat = masterTable.yATrouver();
 
@@ -222,6 +239,10 @@ public class TestTables
 						this.masterTable.getMT()));
 			}
 
+			masterTable.majMT();
+			indiceTable.majIT();
+			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
 		} else	// propoX
 		{
 			if (BP == 0)
@@ -248,6 +269,10 @@ public class TestTables
 						this.masterTable.getMT()));
 			}
 		}
+
+		masterTable.majMT();
+		indiceTable.majIT();
+		colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 	}
 
 	/**
@@ -262,43 +287,66 @@ public class TestTables
 	public void bienMalPlace(int[] comb, Integer[] prop)
 	{
 		Integer[] copieProp = new Integer[prop.length];
+		Integer[] copieComb = new Integer[prop.length];
 
 		copieProp[0] = prop[0];
 		copieProp[1] = prop[1];
 		copieProp[2] = prop[2];
 		copieProp[3] = prop[3];
 
+		copieComb[0] = comb[0];
+		copieComb[1] = comb[1];
+		copieComb[2] = comb[2];
+		copieComb[3] = comb[3];
+
 		initBPMP();
 		System.out.println("\n");
 		int i = 0, j = 0;
 		int r = 0;
+
+		for (i = 0; i < comb.length; i++)//check BP
+		{
+			if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[i] > -1 && copieProp[i] < 10)
+			{
+				if (copieComb[i] == copieProp[i])
+				{
+					System.out.println("Combi[" + i + "] : " + copieComb[i] + " | Propo[" + i + "] : " + copieProp[i]);
+					this.BP++;
+					copieProp[i] = -1;
+					copieComb[i] = -1;
+				}
+			}
+		}
+		i = 0;
 		while (i < comb.length) // i est l'indice de comb[]
 		{
-			r = 0;
-			j = 0;
-			while (r == 0 && j < copieProp.length) // j est l'indice de prop[]
+			//r = 0;
+			//j = 0;
+
+			for (j = 0; j < copieComb.length; j++)
 			{
-				if (comb[i] == copieProp[j]) // Si la valeur de comb à la position i est égale à une valeur de prop position
-				// j
+				if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[j] > -1 && copieProp[j] < 10)
 				{
-					if (comb[i] == copieProp[i]) // Si i = j
+					if (copieComb[i] == copieProp[j])
 					{
-						// System.out.println("Rond NOIR");
-						this.BP++;
-					} else
-					{
-						// System.out.println("Rond BLANC");
+						System.out.println(
+								"Combi[" + i + "] : " + copieComb[i] + " | Propo[" + j + "] : " + copieProp[j]);
 						this.MP++;
+						copieProp[j] = -1;
+						copieComb[i] = -1;
 					}
-					copieProp[j] = -1;
-					r = 1;
-				} else
-				{
-					j++;
 				}
 			}
 			i++;
 		}
+		/*
+		 * while (r == 0 && j < copieProp.length) // j est l'indice de prop[] { if
+		 * (comb[i] == copieProp[j]) // Si la valeur de comb à la position i est égale à
+		 * une valeur de prop position // j { if (comb[i] == copieProp[i]) // Si i = j {
+		 * // System.out.println("Rond NOIR"); this.BP++; } else { //
+		 * System.out.println("Rond BLANC"); this.MP++; } copieProp[j] = -1; r = 1; }
+		 * else { j++; } }
+		 */
 	}
 
 	public void initBPMP()

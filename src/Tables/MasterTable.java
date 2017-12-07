@@ -2,64 +2,69 @@ package Tables;
 
 public class MasterTable extends Tables<Integer>
 {
-	private int[][] mt;
-	private int largeur, longueur;
+	private Integer[][] mt;
+	private Integer largeur, longueur;
 
 	public MasterTable()
 	{
 		setLongeur(4);
 		setLargeur(4 + 1);
-		mt = new int[this.getLargeur()][this.getLongueur()];
+		mt = new Integer[this.getLargeur()][this.getLongueur()];
 		initMT();
 	}
 
-	public MasterTable(int l)
+	public MasterTable(Integer l)
 	{
 		setLongeur(l);
 		setLargeur(l + 1);
-		mt = new int[this.getLargeur()][this.getLongueur()];
+		mt = new Integer[this.getLargeur()][this.getLongueur()];
 		initMT();
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int getLargeur()
+	public Integer getLargeur()
 	{
 		return this.largeur;
 	}
 
-	public int getLongueur()
+	public Integer getLongueur()
 	{
 		return this.longueur;
 	}
 
-	public int getValeur(int i, int j)
+	public Integer getValeur(Integer i, Integer j)
 	{
 		return this.mt[j][i];
 	}
 
-	public int[][] getMT()
+	public Integer[][] getMT()
 	{
 		return this.mt;
 	}
 
+	public Integer[] getMT(Integer ligne)
+	{
+		return this.mt[ligne];
+	}
+
 	/****** SETTERS ******/
-	public void setLongeur(int l)
+	public void setLongeur(Integer l)
 	{
 		this.longueur = l;
 	}
 
-	public void setLargeur(int l)
+	public void setLargeur(Integer l)
 	{
 		this.largeur = l;
 	}
 
-	public void setValeur(int val, int i, int j)
+	public void setValeur(Integer val, Integer i, Integer j)
 	{
 		this.mt[j][i] = val;
 	}
 
-	public void setMT(int[][] mt)
+	public void setMT(Integer[][] mt)
 	{
 		this.mt = mt;
 	}
@@ -121,15 +126,32 @@ public class MasterTable extends Tables<Integer>
 	}
 
 	/**
+	 * Renvoie l'indice du premier Y de la premiere ligne de MT
+	 * 
+	 * @param aTrouver
+	 * @return
+	 */
+	public Integer indexOfY(Integer y)
+	{
+		Integer i = 0;
+
+		while (i < this.getLongueur() && mt[0][i] != y)
+		{
+			i++;
+		}
+		return i;
+	}
+
+	/**
 	 * Renvoie l'indice du premier null (-2) de la colonne de la masterTable
 	 * 
 	 * @param mt
 	 * @param Y
 	 * @return
 	 */
-	public int cherchePremierNullIndiceMT(int colonne)
+	public Integer cherchePremierNullIndiceMT(Integer colonne)
 	{
-		int indiceATester = -1;
+		Integer indiceATester = -1;
 		int j = 0;
 		do
 		{
@@ -148,10 +170,10 @@ public class MasterTable extends Tables<Integer>
 	 * @param jyPropo
 	 * @return
 	 */
-	public int chercheIYMT(int jyP, int[] p, boolean[] colonneTerminee)
+	public Integer chercheIYMT(Integer jyP, Integer[] p, boolean[] colonneTerminee)
 	{
 		int compteur1ereligne = 0;
-		int iyMT = -1;
+		Integer iyMT = -1;
 		while (compteur1ereligne < this.getLargeur() && iyMT == -1)
 		{
 			if (this.mt[0][compteur1ereligne] == p[jyP] && colonneTerminee[compteur1ereligne] == false)
@@ -226,7 +248,7 @@ public class MasterTable extends Tables<Integer>
 	 * @param jy
 	 * @param mt
 	 */
-	public void indiceARayer(int iyMT, int jyMT)
+	public void indiceARayer(Integer iyMT, Integer jyMT)
 	{
 		this.setValeur(-1, iyMT, jyMT);
 		majMT();
@@ -339,19 +361,28 @@ public class MasterTable extends Tables<Integer>
 		}
 	}
 
-	public void indiceBon(int iyMT, int jyMT)
+	/**
+	 * Déclare que le nombre mt[jyMT][iyMT] est le bon indice de mt[0][iyMT] et raye
+	 * sa colonne ainsi que sa ligne
+	 * 
+	 * @param iyMT
+	 *            colonne de MT
+	 * @param jyMT
+	 *            ligne de MT
+	 */
+	public void indiceBon(Integer iyMT, Integer jyMT)
 	{
 		//On vérifie que les indices soient possibles (contenus dans [0,10])
 		if (iyMT > -1 && iyMT < 11 && jyMT > -1 && jyMT < 11)
 		{
 			// On "raye" la ligne d'indice j = jy
-			for (int i = 0; i < this.getLongueur(); i++)
+			for (Integer i = 0; i < this.getLongueur(); i++)
 			{
 				mt[jyMT][i] = -1;
 			}
 
 			// On "raye" la colonne d'indice i = iy
-			for (int j = 1; j < this.getLargeur(); j++)
+			for (Integer j = 1; j < this.getLargeur(); j++)
 			{
 				mt[j][iyMT] = -1;
 			}
@@ -368,9 +399,9 @@ public class MasterTable extends Tables<Integer>
 	 * @param tab
 	 * @return
 	 */
-	public int cherchePremierNull(int[] tab)
+	public Integer cherchePremierNull(Integer[] tab)
 	{
-		int x = 0;
+		Integer x = 0;
 
 		while (x < tab.length && tab[x] != -2)
 		{

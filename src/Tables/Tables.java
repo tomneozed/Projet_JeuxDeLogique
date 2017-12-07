@@ -7,12 +7,12 @@ public abstract class Tables<T>
 
 	public Tables()
 	{
-
+		setTaille(4);
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int getTaille()
+	public Integer getTaille()
 	{
 		return this.taille;
 	}
@@ -27,9 +27,9 @@ public abstract class Tables<T>
 		return this.t;
 	}
 
-	public int getPosition(T x)
+	public Integer getPosition(T x)
 	{
-		int pos = -1;
+		Integer pos = -1;
 
 		for (int i = 0; i < this.getTaille(); i++)
 		{
@@ -43,7 +43,7 @@ public abstract class Tables<T>
 	}
 
 	/****** SETTERS ******/
-	public void setTaille(int t)
+	public void setTaille(Integer t)
 	{
 		this.taille = t;
 	}
@@ -71,9 +71,9 @@ public abstract class Tables<T>
 	 * @param tab
 	 * @return
 	 */
-	public int compteCombien(T x, T[] tab)
+	public Integer compteCombien(T x, T[] tab)
 	{
-		int nombre = 0;
+		Integer nombre = 0;
 
 		for (int i = 0; i < tab.length; i++)
 		{
@@ -90,13 +90,36 @@ public abstract class Tables<T>
 	 * 
 	 * @return
 	 */
-	public int cherchePremierNull()
+	public Integer cherchePremierNull()
 	{
-		int x = 0;
+		Integer x = 0;
 
 		while (x < t.length && (int) t[x] != -2)
 		{
-			System.out.println(t.length);
+			//System.out.println(t.length);
+			x++;
+		}
+
+		if (x > 9)
+		{
+			x = 9;
+		}
+
+		return x;
+	}
+
+	/**
+	 * Renvoie l'indice du premier a dans tab
+	 * 
+	 * @return
+	 */
+	public Integer cherchePremier(Integer a)
+	{
+		Integer x = 0;
+
+		while (x < t.length && (int) t[x] != a)
+		{
+			//System.out.println(t.length);
 			x++;
 		}
 
@@ -115,9 +138,9 @@ public abstract class Tables<T>
 	 * @param tab
 	 * @return
 	 */
-	public int[] indexOf(T nbr, T[] tab)
+	public Integer[] indexOf(T nbr, T[] tab)
 	{
-		int[] index = new int[10];
+		Integer[] index = new Integer[10];
 		int cpt = 0;
 
 		// On remplit index
@@ -130,7 +153,7 @@ public abstract class Tables<T>
 			}
 		}
 
-		int[] indexFinal = new int[cpt + 1];
+		Integer[] indexFinal = new Integer[cpt + 1];
 		for (int cpt2 = 0; cpt2 < cpt; cpt2++)
 		{
 			indexFinal[cpt2] = index[cpt2];

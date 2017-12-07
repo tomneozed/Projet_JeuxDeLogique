@@ -2,7 +2,7 @@ package Tables;
 
 public class Propo extends Tables<Integer>
 {
-	int[][] XouXY = new int[2][2];
+	Integer[][] XouXY = new Integer[2][2];
 
 	public Propo()
 	{
@@ -10,7 +10,7 @@ public class Propo extends Tables<Integer>
 		init();
 	}
 
-	public Propo(int i)
+	public Propo(Integer i)
 	{
 		setTaille(i);
 		init();
@@ -18,53 +18,53 @@ public class Propo extends Tables<Integer>
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int[][] getXouXY()
+	public Integer[][] getXouXY()
 	{
 		return XouXY;
 	}
 
-	public int getXouXY(int i, int j)
+	public Integer getXouXY(Integer i, Integer j)
 	{
 		return this.XouXY[j][i];
 	}
 
-	public int getX()
+	public Integer getX()
 	{
 		return this.XouXY[0][0];
 	}
 
-	public int getY()
+	public Integer getY()
 	{
 		return this.XouXY[1][0];
 	}
 
-	public int getIY()
+	public Integer getIY()
 	{
 		return this.XouXY[1][1];
 	}
 
 	/****** SETTERS ******/
-	public void setXouXY(int[][] xouXY)
+	public void setXouXY(Integer[][] xouXY)
 	{
 		XouXY = xouXY;
 	}
 
-	public void setXouXY(int i, int j, int val)
+	public void setXouXY(Integer i, Integer j, Integer val)
 	{
 		this.XouXY[j][i] = val;
 	}
 
-	public void setX(int x)
+	public void setX(Integer x)
 	{
 		this.XouXY[0][0] = x;
 	}
 
-	public void setY(int y)
+	public void setY(Integer y)
 	{
 		this.XouXY[1][0] = y;
 	}
 
-	public void setIY(int iy)
+	public void setIY(Integer iy)
 	{
 		this.XouXY[1][1] = iy;
 	}
@@ -86,7 +86,7 @@ public class Propo extends Tables<Integer>
 	/**
 	 * Initialise propo à x partout
 	 */
-	public void init(int x)
+	public void init(Integer x)
 	{
 		this.t = new Integer[this.getTaille()];
 		for (int i = 0; i < this.getTaille(); i++)
@@ -115,7 +115,7 @@ public class Propo extends Tables<Integer>
 	 * @param x
 	 * @return propo
 	 */
-	public Integer[] propoX(int x)
+	public Integer[] propoX(Integer x)
 	{
 		Integer[] propo = new Integer[this.getTaille()];
 
@@ -141,7 +141,7 @@ public class Propo extends Tables<Integer>
 	 *            position de Y à tester
 	 * @return propo
 	 */
-	public Integer[] propoXY(int x, int y, int jy, int[][] mt)
+	public Integer[] propoXY(Integer x, Integer y, Integer jy, Integer[][] mt)
 	{
 		Integer[] propo = new Integer[this.getTaille()];
 
@@ -159,7 +159,7 @@ public class Propo extends Tables<Integer>
 	 * @param table
 	 * @return
 	 */
-	public Integer[] propoFinale(int[][] table)
+	public Integer[] propoFinale(Integer[][] table)
 	{
 		Integer[] pf = new Integer[table.length - 1];
 		int i = 0;
@@ -199,7 +199,7 @@ public class Propo extends Tables<Integer>
 	 * @param it
 	 * @return
 	 */
-	public Integer[] propoChercheY(int[][] table, Tables it)
+	public Integer[] propoChercheY(Integer[][] table, Tables it)
 	{
 		Integer[] pcy = new Integer[this.getTaille()];
 		int i = 0;
@@ -327,6 +327,23 @@ public class Propo extends Tables<Integer>
 				System.out.println("La proposition contient : " + tableComptage[l] + " fois " + l);
 			}
 		}
+	}
+
+	/**
+	 * Renvoie l'indice du premier Y de propo
+	 * 
+	 * @param aTrouver
+	 * @return
+	 */
+	public Integer indexOf(Integer y)
+	{
+		Integer i = 0;
+
+		while (i < this.t.length && this.t[i] != y)
+		{
+			i++;
+		}
+		return i;
 	}
 
 }

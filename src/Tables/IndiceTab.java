@@ -85,7 +85,6 @@ public class IndiceTab extends Tables<Integer>
 				}
 			}
 		}
-
 	}
 
 }
