@@ -23,10 +23,10 @@ public class TestTables
 
 		int[] c;// combinaison de test : Exemple 2
 
-		this.combi[0] = 9;
-		this.combi[1] = 8;
-		this.combi[2] = 9;
-		this.combi[3] = 7;
+		this.combi[0] = 3;
+		this.combi[1] = 7;
+		this.combi[2] = 5;
+		this.combi[3] = 3;
 
 		/*
 		 * this.combi[0] = 9; this.combi[1] = 8; this.combi[2] = 7; this.combi[3] = 6;
@@ -109,94 +109,84 @@ public class TestTables
 		// On regarde si la proposition est de type X ou XY
 		if (Y != -1 && propo.XouXY[0][1] == propo.getTaille() - 1)	// propoXY
 		{
-			// 1er cas : BP > 0 & MP = 0
-			if (this.BP >= 1 && this.MP == 0)
-			{
-				masterTable.indiceBon(iyMT, jyMT);
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
-				indiceTable.setValeur(X, ((BP + MP) - 1));			// On remplit IT à la position X(XouXY[0][0])
-				// '(BP+MP)-1' fois (1 étant Y dont on sait
-				// qu'il
-				// existe 1 fois)
-				masterTable.initPremiereLigneMT(indiceTable.getT());		// On remplit la premiere ligne de MT
-				// 'getIT(X)'
-				// fois, càd de '0 à mt.length' fois
-				// masterTable.affiche();
+			indiceTable.setValeur(X, ((BP + MP) - 1));
+
+			// 1er cas : BP > 0 & MP = 0
+			if (this.MP == 0)
+			{
+				if (this.BP >= 1)
+				{
+					masterTable.indiceBon(iyMT, jyMT);
+					colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
+					// On remplit IT à la position X(XouXY[0][0])
+					// '(BP+MP)-1' fois (1 étant Y dont on sait
+					// qu'il
+					// existe 1 fois)
+					masterTable.initPremiereLigneMT(indiceTable.getT());
+					// On remplit la premiere ligne de MT 'getIT(X)'
+					// fois, càd de '0 à mt.length' fois
+				}
+
 			} else
 
 			// 2eme cas : BP = 0 & MP = 1
-			if (this.BP == 0 && this.MP == 1)
+			if (this.MP == 1)
 			{
 				masterTable.indiceARayer(iyMT, jyMT);
-				indiceTable.setValeur(X, ((BP + MP) - 1));
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
-			} else
-
-			// 3eme cas : BP = 0 & MP = 2
-			if (this.BP == 0 && this.MP == 2)
-			{
-				indiceTable.setValeur(X, 1);
-				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
-				// fois, càd
-				// de '0 à mt.length' fois
-				masterTable.indiceARayer(iyMT, jyMT);
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
-				// masterTable.indiceBon(iyMT, jyMT);
-
-			} else
-
-			//4eme cas : BP = 1 & MP = 2
-			if (BP == 1 && MP == 2)
-			{
-				indiceTable.setValeur(X, (BP + MP - 1));
-				masterTable.initPremiereLigneMT(indiceTable.getT());
-
-				masterTable.indiceBon(masterTable.indexOfY(X), propo.indexOf(Y) + 1);
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
-
-			}
-
-			// 5eme cas : BP = 1 & MP = 1
-			// -> a) BP > 1 & MP = 1
-			// -> b) BP = 1 & MP > 1 ]2[
-			// -> c) BP > 1 & MP > 1 ]2[
-			if (BP == 1 && MP == 1)
-			{
-				indiceTable.setValeur(X, ((BP + MP) - 1));
-				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
-				// fois, càd
-				// de '0 à mt.length' fois
-				masterTable.indiceARayer(iyMT, jyMT);
-
-				int iy2MT = 0;
-
-				if (iy2MT < masterTable.getTaille())
+				if (this.BP == 1)
 				{
-					while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
+
+					masterTable.initPremiereLigneMT(indiceTable.getT());
+					// On remplit la premiere ligne de MT 'getIT(X)' fois, càd
+					// de '0 à mt.length' fois
+
+					masterTable.indiceARayer(masterTable.indexOfY(X), propo.indexOf(Y) + 1);
+
+					int iy2MT = 0;
+
+					if (iy2MT < masterTable.getTaille())
 					{
-						if (this.masterTable.getValeur(iy2MT, 0) == X)
+						while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
 						{
-							masterTable.indiceARayer(iy2MT, jyMT);
-						} else
-						{
-							break;
+							if (this.masterTable.getValeur(iy2MT, 0) == X)
+							{
+								masterTable.indiceARayer(iy2MT, jyMT);
+							} else
+							{
+								break;
+							}
 						}
+						iy2MT++;
 					}
-					iy2MT++;
+				} else
+				{
+
 				}
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
+			} else
+
+			if (this.MP == 2)
+			{
+				masterTable.indiceBon(masterTable.indexOfY(X), propo.indexOf(Y) + 1);
+
+				if (this.BP == 0)
+				{
+					masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
+					// fois, càd
+					// de '0 à mt.length' fois
+					masterTable.indiceARayer(iyMT, jyMT);
+				}
 			}
 
 			masterTable.majMT();
 			indiceTable.majIT();
+			masterTable.initPremiereLigneMT(indiceTable.getT());
 			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+			//On teste les tables pour savoir si la MT a été déchiffrée
 
-			/*
-			 * Mettre une fonction qui teste si la masterTable est terminéé Si oui ->
-			 * propoFinale()
-			 */
 			if (combiTrouvee() == true)
 			{
 				this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
@@ -206,6 +196,8 @@ public class TestTables
 				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
 			} else
 			{
+				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+
 				jat = masterTable.jATrouver(colonneTerminee.getT());
 				yat = masterTable.yATrouver();
 
@@ -238,11 +230,6 @@ public class TestTables
 				this.propo.setT(propo.propoXY(premierNullIT, this.masterTable.getValeur(jat[0], 0), (jat[1] - 1),
 						this.masterTable.getMT()));
 			}
-
-			masterTable.majMT();
-			indiceTable.majIT();
-			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
-
 		} else	// propoX
 		{
 			if (BP == 0)
@@ -272,6 +259,7 @@ public class TestTables
 
 		masterTable.majMT();
 		indiceTable.majIT();
+		masterTable.initPremiereLigneMT(indiceTable.getT());
 		colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 	}
 
@@ -339,6 +327,8 @@ public class TestTables
 			}
 			i++;
 		}
+
+		System.out.println("BP : " + getBP() + "\nMP : " + getMP() + "\n");
 		/*
 		 * while (r == 0 && j < copieProp.length) // j est l'indice de prop[] { if
 		 * (comb[i] == copieProp[j]) // Si la valeur de comb à la position i est égale à

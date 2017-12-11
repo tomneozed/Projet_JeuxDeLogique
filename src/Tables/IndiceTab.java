@@ -45,6 +45,9 @@ public class IndiceTab extends Tables<Integer>
 		{
 			setValeur(i, -2);
 		}
+
+		setTotal(this.t.length);
+
 	}
 
 	/**
@@ -85,6 +88,23 @@ public class IndiceTab extends Tables<Integer>
 				}
 			}
 		}
+
+		int caseARemplir = 0;
+
+		for (int k = 0; k < getTaille(); k++)
+		{
+			if (getValeur(k) == -2)
+			{
+				caseARemplir += 1;
+			}
+
+			if (k == 9 && caseARemplir == 1)
+			{
+				setValeur(9, getTotal() - somme);
+			}
+
+		}
+
 	}
 
 }
