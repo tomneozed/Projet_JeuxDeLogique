@@ -2,36 +2,56 @@ package Tables;
 
 import java.util.Scanner;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+
 public class TestTables
 {
+	static Logger logger = Logger.getLogger(TestTables.class);
+	ConsoleAppender appender = (ConsoleAppender) logger.getAppender("console");
+
+	Configuration c = ConfigJeu.loadConfig();
+
+	Integer NB_CASES_COMBI = c.getNombreCasesCombi();
+	Integer NB_ESSAIS = c.getEssais();
+	Integer NB_COULEURS = c.getNombreCouleurs();
+
 	private int BP, MP;
 	// int[][] XouXY;
-	int[] combi = new int[4];
+	int[] combi = new int[NB_CASES_COMBI];
 	// int[] propo = new int[4];
 
 	IndiceTab indiceTable = new IndiceTab();
-	ColonneTerminee colonneTerminee = new ColonneTerminee(4);
-	MasterTable masterTable = new MasterTable();
-	Propo propo = new Propo(4);
+	ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI);
+	MasterTable masterTable = new MasterTable(NB_CASES_COMBI);
+	Propo propo = new Propo(NB_CASES_COMBI);
 
 	public TestTables()
 	{
-		int rejouer = -1, tour = 0;
+
+		logger.addAppender(appender);
+
+		int rejouer = -1, essai = 0;
 
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
 		Scanner scan = new Scanner(System.in);
 
 		int[] c;// combinaison de test : Exemple 2
 
-		this.combi[0] = 3;
+		this.combi[0] = 9;
 		this.combi[1] = 7;
-		this.combi[2] = 5;
-		this.combi[3] = 3;
+		this.combi[2] = 8;
+		this.combi[3] = 2;
+		this.combi[4] = 2;
+		this.combi[5] = 2;
+		this.combi[6] = 1;
+		this.combi[7] = 1;
+		this.combi[8] = 8;
 
 		/*
 		 * this.combi[0] = 9; this.combi[1] = 8; this.combi[2] = 7; this.combi[3] = 6;
 		 */
-		indiceTable.setTotal(4);
+		indiceTable.setTotal(NB_CASES_COMBI);
 
 		propo.init(0);
 		masterTable.afficheMT();
@@ -39,7 +59,7 @@ public class TestTables
 
 		do
 		{
-			System.out.println("\n\n***************************************TOUR " + tour
+			System.out.println("\n\n***************************************TOUR " + essai
 					+ "***************************************");
 
 			propo.affichePropo();
@@ -47,16 +67,17 @@ public class TestTables
 			masterTable.afficheMT();
 			indiceTable.afficheIT();
 			colonneTerminee.afficheCT();
+
 			System.out.println("\n\tNouvelle proposition : ");
 			propo.affichePropo();
 
 			// System.out.println("\n\n\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			// rejouer = scan.nextInt();
-			tour++;
+			essai++;
 
 			bienMalPlace(this.combi, propo.getT());
-
-		} while (BP != combi.length);
+			logger.debug("Fin du tour");
+		} while (BP != combi.length && essai != NB_ESSAIS);
 
 		if (BP == combi.length)
 		{
@@ -109,14 +130,21 @@ public class TestTables
 		// On regarde si la proposition est de type X ou XY
 		if (Y != -1 && propo.XouXY[0][1] == propo.getTaille() - 1)	// propoXY
 		{
+			logger.debug("PropoXY");
 
 			indiceTable.setValeur(X, ((BP + MP) - 1));
+
+			masterTable.majMT();
+			indiceTable.majIT();
+			masterTable.initPremiereLigneMT(indiceTable.getT());
+			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
 			// 1er cas : BP > 0 & MP = 0
 			if (this.MP == 0)
 			{
 				if (this.BP >= 1)
 				{
+					logger.debug("MP = 0	BP >= 1");
 					masterTable.indiceBon(iyMT, jyMT);
 					colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 
@@ -135,9 +163,12 @@ public class TestTables
 			if (this.MP == 1)
 			{
 				masterTable.indiceARayer(iyMT, jyMT);
+				masterTable.nombreARayer(Y, jyMT);
+				masterTable.nombreARayer(X, jyMT);
 
 				if (this.BP == 1)
 				{
+					logger.debug("MP = 1	BP = 1");
 
 					masterTable.initPremiereLigneMT(indiceTable.getT());
 					// On remplit la premiere ligne de MT 'getIT(X)' fois, càd
@@ -161,9 +192,6 @@ public class TestTables
 						}
 						iy2MT++;
 					}
-				} else
-				{
-
 				}
 
 			} else
@@ -174,12 +202,15 @@ public class TestTables
 
 				if (this.BP == 0)
 				{
+					logger.debug("MP = 2	BP = 0");
 					masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
 					// fois, càd
 					// de '0 à mt.length' fois
 					masterTable.indiceARayer(iyMT, jyMT);
 				}
 			}
+
+			logger.debug("__MAJ TABLES__");
 
 			masterTable.majMT();
 			indiceTable.majIT();
@@ -208,6 +239,7 @@ public class TestTables
 
 		} else if (Y == X && propo.XouXY[0][1] != propo.getTaille() - 1)	//PropoChercheY
 		{
+			logger.debug("PropoChercheY");
 			if (this.BP == propo.getTaille() - 1 && this.MP == 0)
 			{
 				indiceTable.setValeur(indiceTable.cherchePremierNull(), 0);
@@ -232,8 +264,11 @@ public class TestTables
 			}
 		} else	// propoX
 		{
+
+			logger.debug("PropoX");
 			if (BP == 0)
 			{
+				logger.debug("BP = 0");
 				indiceTable.setValeur(X, 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
 
 				jat = masterTable.jATrouver(colonneTerminee.getT());
@@ -244,6 +279,7 @@ public class TestTables
 				this.propo.setT(propo.propoX(premierNullIT));
 			} else if (BP > 0)
 			{
+				logger.debug("BP > 0");
 				indiceTable.setValeur(X, BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
 				this.masterTable.initPremiereLigneMT(indiceTable.getT());
 
@@ -256,6 +292,8 @@ public class TestTables
 						this.masterTable.getMT()));
 			}
 		}
+
+		logger.debug("__MAJ TABLES__");
 
 		masterTable.majMT();
 		indiceTable.majIT();
@@ -274,18 +312,15 @@ public class TestTables
 	 */
 	public void bienMalPlace(int[] comb, Integer[] prop)
 	{
+		logger.debug("bienMalPlace()");
 		Integer[] copieProp = new Integer[prop.length];
 		Integer[] copieComb = new Integer[prop.length];
 
-		copieProp[0] = prop[0];
-		copieProp[1] = prop[1];
-		copieProp[2] = prop[2];
-		copieProp[3] = prop[3];
-
-		copieComb[0] = comb[0];
-		copieComb[1] = comb[1];
-		copieComb[2] = comb[2];
-		copieComb[3] = comb[3];
+		for (int i = 0; i < prop.length; i++)
+		{
+			copieProp[i] = prop[i];
+			copieComb[i] = comb[i];
+		}
 
 		initBPMP();
 		System.out.println("\n");
@@ -327,16 +362,6 @@ public class TestTables
 			}
 			i++;
 		}
-
-		System.out.println("BP : " + getBP() + "\nMP : " + getMP() + "\n");
-		/*
-		 * while (r == 0 && j < copieProp.length) // j est l'indice de prop[] { if
-		 * (comb[i] == copieProp[j]) // Si la valeur de comb à la position i est égale à
-		 * une valeur de prop position // j { if (comb[i] == copieProp[i]) // Si i = j {
-		 * // System.out.println("Rond NOIR"); this.BP++; } else { //
-		 * System.out.println("Rond BLANC"); this.MP++; } copieProp[j] = -1; r = 1; }
-		 * else { j++; } }
-		 */
 	}
 
 	public void initBPMP()
@@ -358,6 +383,7 @@ public class TestTables
 		{
 			ct = true;
 		}
+		logger.debug("combiTrouvee() -> " + ct);
 		return ct;
 	}
 
@@ -368,6 +394,7 @@ public class TestTables
 	 */
 	public Boolean indiceBon()
 	{
+		logger.debug("indiceBon()");
 		Boolean ib = false;
 		int compte = 0;
 		for (int i = 0; i < this.masterTable.getLongueur(); i++)

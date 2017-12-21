@@ -16,6 +16,18 @@ public class Main
 		// mt1.afficheMT();
 		TestTables tt = new TestTables();
 
+		//System.out.println(ConfigJeu.loadConfig());
+
+		//Configuration c = ConfigJeu.loadConfig();
+
+		//c.setEssais(5);
+
+		//ConfigJeu.saveConfig(c);
+
+		//System.out.println(ConfigJeu.loadConfig());
+
+		//ModeDeveloppeur mdv = new ModeDeveloppeur();
+
 	}
 
 	public static void menu()

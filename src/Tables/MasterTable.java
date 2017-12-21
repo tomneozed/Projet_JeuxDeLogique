@@ -76,6 +76,7 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void initMT()
 	{
+		logger.debug("InitMT() : -2");
 		for (int i = 0; i < this.getLargeur(); i++)
 		{
 			for (int j = 0; j < this.getLongueur(); j++)
@@ -139,6 +140,8 @@ public class MasterTable extends Tables<Integer>
 		{
 			i++;
 		}
+		logger.debug("indexOfY(" + y.intValue() + ") -> " + i.intValue());
+
 		return i;
 	}
 
@@ -159,7 +162,7 @@ public class MasterTable extends Tables<Integer>
 		} while (j < this.getLongueur() && this.mt[j][colonne] != -2);
 
 		indiceATester = j;
-
+		logger.debug("cherchePremierNullIndiceMT(" + colonne.intValue() + ") -> " + indiceATester.intValue());
 		return indiceATester;
 	}
 
@@ -167,7 +170,11 @@ public class MasterTable extends Tables<Integer>
 	 * Renvoie la position de Y dans la premiere ligne de MT pour lequel
 	 * colonneTerminee est fausse
 	 * 
-	 * @param jyPropo
+	 * @param jyP
+	 *            position de Y
+	 * @param p
+	 *            premiere ligne MT
+	 * @param colonneTerminee
 	 * @return
 	 */
 	public Integer chercheIYMT(Integer jyP, Integer[] p, boolean[] colonneTerminee)
@@ -184,7 +191,7 @@ public class MasterTable extends Tables<Integer>
 				compteur1ereligne++;
 			}
 		}
-
+		logger.debug("chercheIYMT() -> " + iyMT.intValue());
 		return iyMT;
 	}
 
@@ -209,6 +216,7 @@ public class MasterTable extends Tables<Integer>
 				i++;
 			}
 		} while (i < this.getLongueur() && yAT == false);
+		logger.debug(" yATrouver() -> " + yAT);
 		return yAT;
 	}
 
@@ -237,7 +245,7 @@ public class MasterTable extends Tables<Integer>
 				i++;
 			}
 		} while (i < this.getLongueur() && jAT[0] == -1);
-
+		logger.debug(" jATrouver() -> " + jAT[0] + ", " + jAT[1]);
 		return jAT;
 	}
 
@@ -252,6 +260,22 @@ public class MasterTable extends Tables<Integer>
 	{
 		this.setValeur(-1, iyMT, jyMT);
 		majMT();
+		logger.debug(" indiceARayer() -> [" + iyMT.intValue() + ", " + jyMT.intValue() + "]");
+	}
+
+	/**
+	 * On raye (-1) les cases de valeur 'nombre' à l'indice jyMT
+	 */
+	public void nombreARayer(Integer nombre, Integer jyMT)
+	{
+		for (int i = 0; i < this.getLongueur(); i++)
+		{
+			if (this.getValeur(i, 0) == nombre)
+			{
+				this.setValeur(-1, i, jyMT);
+			}
+		}
+		logger.debug(" nombreARayer() -> " + nombre.intValue() + " " + jyMT.intValue());
 	}
 
 	/**
@@ -390,6 +414,9 @@ public class MasterTable extends Tables<Integer>
 			// On ajoute l'indice bon qui se trouve au croisement de la ligne et la colonne
 			// susnomées
 			mt[jyMT][iyMT] = (jyMT);
+
+			logger.debug(" indiceBon() -> [" + iyMT.intValue() + ", " + jyMT.intValue() + "]");
+
 		}
 	}
 
@@ -407,6 +434,7 @@ public class MasterTable extends Tables<Integer>
 		{
 			x++;
 		}
+		logger.debug(" cherchePremierNull() -> [" + x.intValue());
 		return x;
 	}
 
@@ -435,8 +463,8 @@ public class MasterTable extends Tables<Integer>
 				// ... On parcourt sa colonne ...
 				for (int j = 1; j < this.getLargeur(); j++)
 				{
-					// ... et si il a un indice bon (compris entre 0 et 9) ...
-					if (this.getValeur(i, j) > -1 && this.getValeur(i, j) < 10)
+					// ... et si il a un indice bon (compris entre 1 et 10) ...
+					if (this.getValeur(i, j) > 0 && this.getValeur(i, j) < 11)
 					{
 						// ... alors la colonne est terminée !
 						colonneTerminee[i] = true;
@@ -444,6 +472,7 @@ public class MasterTable extends Tables<Integer>
 				}
 			}
 		}
+		logger.debug(" majColonneTerminee() ");
 		return colonneTerminee;
 	}
 

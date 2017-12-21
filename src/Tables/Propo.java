@@ -75,6 +75,7 @@ public class Propo extends Tables<Integer>
 	 */
 	public void init()
 	{
+		logger.debug("Init propo : -2");
 		this.t = new Integer[this.getTaille()];
 		for (int i = 0; i < this.getTaille(); i++)
 		{
@@ -88,6 +89,7 @@ public class Propo extends Tables<Integer>
 	 */
 	public void init(Integer x)
 	{
+		logger.debug("Init propo : " + x.intValue());
 		this.t = new Integer[this.getTaille()];
 		for (int i = 0; i < this.getTaille(); i++)
 		{
@@ -118,15 +120,11 @@ public class Propo extends Tables<Integer>
 	public Integer[] propoX(Integer x)
 	{
 		Integer[] propo = new Integer[this.getTaille()];
-
-		// System.out.println("\n***** PropoX() *****");
-
 		for (int i = 0; i < this.getTaille(); i++)
 		{
 			propo[i] = x;
-			// System.out.print(x + " | ");
-		}
 
+		}
 		return propo;
 	}
 
@@ -143,6 +141,7 @@ public class Propo extends Tables<Integer>
 	 */
 	public Integer[] propoXY(Integer x, Integer y, Integer jy, Integer[][] mt)
 	{
+		logger.debug("PropoXY -> X = " + x.intValue() + " | Y = " + y.intValue() + " position " + jy.intValue());
 		Integer[] propo = new Integer[this.getTaille()];
 
 		for (int i = 0; i < this.getTaille(); i++)
@@ -205,9 +204,14 @@ public class Propo extends Tables<Integer>
 		int i = 0;
 		int j = 1;
 
-		while (table[0][i] != -2)
+		while (i < this.getTaille() && table[0][i] != -2)
 		{
 			i++;
+		}
+
+		if (i > 9)
+		{
+			i = 9;
 		}
 
 		if (table[0][i] == -2)
@@ -242,7 +246,6 @@ public class Propo extends Tables<Integer>
 				}
 			}
 		}
-
 		return pcy;
 
 	}
@@ -319,12 +322,15 @@ public class Propo extends Tables<Integer>
 				j++;
 			}
 		}
+		logger.debug("propoXouXY()");
+		logger.debug(XouXY[0][0] + " | " + XouXY[0][1]);
+		logger.debug(XouXY[1][0] + " | " + XouXY[1][1]);
 
 		for (int l = 0; l < 10; l++)
 		{
 			if (tableComptage[l] > 0)
 			{
-				System.out.println("La proposition contient : " + tableComptage[l] + " fois " + l);
+				logger.debug("La proposition contient : " + tableComptage[l] + " fois " + l);
 			}
 		}
 	}
@@ -343,6 +349,8 @@ public class Propo extends Tables<Integer>
 		{
 			i++;
 		}
+
+		logger.debug("indexOf(" + y.intValue() + ") -> " + i.intValue());
 		return i;
 	}
 

@@ -46,6 +46,8 @@ public class IndiceTab extends Tables<Integer>
 			setValeur(i, -2);
 		}
 
+		logger.debug("Init IndiceTab : -2");
+
 		setTotal(this.t.length);
 
 	}

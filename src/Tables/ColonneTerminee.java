@@ -62,6 +62,8 @@ public class ColonneTerminee extends Tables<Boolean>
 				t = true;
 			}
 		}
+
+		logger.debug("terminee() -> " + t.booleanValue());
 		return t;
 	}
 
