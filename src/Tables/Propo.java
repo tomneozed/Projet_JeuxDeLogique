@@ -1,8 +1,11 @@
 package Tables;
 
+import org.apache.log4j.Logger;
+
 public class Propo extends Tables<Integer>
 {
 	Integer[][] XouXY = new Integer[2][2];
+	private static Logger logger = Logger.getLogger(Propo.class);
 
 	public Propo()
 	{

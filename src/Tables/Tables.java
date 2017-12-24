@@ -1,15 +1,9 @@
 package Tables;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-
 public abstract class Tables<T>
 {
 	protected int taille;
 	protected T[] t;
-
-	static Logger logger = Logger.getLogger(TestTables.class);
-	ConsoleAppender appender = (ConsoleAppender) logger.getAppender("console");
 
 	public Tables()
 	{

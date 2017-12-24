@@ -1,9 +1,15 @@
 package Tables;
 
+import org.apache.log4j.Logger;
+
 public class MasterTable extends Tables<Integer>
 {
 	private Integer[][] mt;
 	private Integer largeur, longueur;
+	private Integer[] jAT =
+	{ -1, -1 };
+
+	private static Logger logger = Logger.getLogger(MasterTable.class);
 
 	public MasterTable()
 	{
@@ -48,6 +54,11 @@ public class MasterTable extends Tables<Integer>
 		return this.mt[ligne];
 	}
 
+	public Integer[] getjAT()
+	{
+		return jAT;
+	}
+
 	/****** SETTERS ******/
 	public void setLongeur(Integer l)
 	{
@@ -67,6 +78,11 @@ public class MasterTable extends Tables<Integer>
 	public void setMT(Integer[][] mt)
 	{
 		this.mt = mt;
+	}
+
+	public void setjAT(Integer[] jAT)
+	{
+		this.jAT = jAT;
 	}
 
 	/*------------------------------------------------Methodes--------------------------------------------------*/
@@ -304,11 +320,11 @@ public class MasterTable extends Tables<Integer>
 					// On parcourt donc notre premiere ligne de la masterTable à la recherche du 1er
 					// null (-2)
 					int i = 0;
-					while (this.getValeur(i, 0) != -2 && i < this.getLongueur())
+					while (i < this.getLongueur() && this.getValeur(i, 0) != -2)
 					{
 						i++;
 					}
-					if (this.getValeur(i, 0) == -2)
+					if (i < this.getLongueur() && this.getValeur(i, 0) == -2)
 					{
 						this.setValeur(cpt, i, 0);
 					}

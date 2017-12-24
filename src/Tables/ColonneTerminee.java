@@ -1,7 +1,12 @@
 package Tables;
 
+import org.apache.log4j.Logger;
+
 public class ColonneTerminee extends Tables<Boolean>
 {
+
+	private static Logger logger = Logger.getLogger(ColonneTerminee.class);
+
 	public ColonneTerminee()
 	{
 		setTaille(0);

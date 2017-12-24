@@ -1,12 +1,21 @@
 package Tables;
 
+import org.apache.log4j.Logger;
+
 public class IndiceTab extends Tables<Integer>
 {
-	private int total;
+	private int total, premierNullIT;
+	private static Logger logger = Logger.getLogger(IndiceTab.class);
 
 	public IndiceTab()
 	{
 		setTaille(10);
+		init();
+	}
+
+	public IndiceTab(int x)
+	{
+		setTaille(x);
 		init();
 	}
 
@@ -18,11 +27,21 @@ public class IndiceTab extends Tables<Integer>
 		return this.total;
 	}
 
+	public int getPremierNullIT()
+	{
+		return this.premierNullIT;
+	}
+
 	/****** SETTERS ******/
 
 	public void setTotal(int t)
 	{
 		this.total = t;
+	}
+
+	public void setPremierNullIT(int premierNull)
+	{
+		this.premierNullIT = premierNull;
 	}
 
 	public void setValeur(int i, Integer val)
@@ -40,15 +59,17 @@ public class IndiceTab extends Tables<Integer>
 	 */
 	public void init()
 	{
-		this.t = new Integer[this.getTaille()];
-		for (int i = 0; i < this.getTaille(); i++)
+		this.t = new Integer[getTaille()];
+		for (int i = 0; i < getTaille(); i++)
 		{
 			setValeur(i, -2);
 		}
 
+		setPremierNullIT(-1);
+
 		logger.debug("Init IndiceTab : -2");
 
-		setTotal(this.t.length);
+		setTotal(getTaille());
 
 	}
 
