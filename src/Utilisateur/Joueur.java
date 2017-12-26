@@ -22,7 +22,7 @@ public class Joueur extends Utilisateur
 	/********************************************
 	 * Demande de création d'une combinaison *
 	 *******************************************/
-	public void combi(int x)
+	public void combi(Integer x)
 	{
 		super.combi(x);
 		Scanner scan = new Scanner(System.in);
@@ -42,7 +42,7 @@ public class Joueur extends Utilisateur
 		// setPropositionTab(decoupage(getProposition()));
 	}
 
-	public void chercheMastermind(int x)
+	public void chercheMastermind(Integer x)
 	{
 		do
 		{

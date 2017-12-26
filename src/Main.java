@@ -32,7 +32,7 @@ public class Main
 
 	public static void menu()
 	{
-		int choixMenu = 0;
+		Integer choixMenu = 0;
 		Scanner scan = new Scanner(System.in);
 
 		do

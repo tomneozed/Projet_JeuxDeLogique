@@ -9,7 +9,7 @@ public class ModeDeveloppeur
 
 	public ModeDeveloppeur()
 	{
-		int choixMenu = 0;
+		Integer choixMenu = 0;
 		Scanner scan = new Scanner(System.in);
 
 		do

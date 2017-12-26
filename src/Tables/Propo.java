@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class Propo extends Tables<Integer>
 {
-	Integer[][] XouXY = new Integer[2][2];
+	private Integer[][] XouXY = new Integer[2][2];
 	private static Logger logger = Logger.getLogger(Propo.class);
 
 	public Propo()
@@ -80,7 +80,7 @@ public class Propo extends Tables<Integer>
 	{
 		logger.debug("Init propo : -2");
 		this.t = new Integer[this.getTaille()];
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			setValeur(i, -2);
 		}
@@ -94,7 +94,7 @@ public class Propo extends Tables<Integer>
 	{
 		logger.debug("Init propo : " + x.intValue());
 		this.t = new Integer[this.getTaille()];
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			setValeur(i, x);
 		}
@@ -107,7 +107,7 @@ public class Propo extends Tables<Integer>
 	public void affichePropo()
 	{
 		System.out.println("\nPropo : ");
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			System.out.print(this.getValeur(i) + " | ");
 		}
@@ -123,7 +123,7 @@ public class Propo extends Tables<Integer>
 	public Integer[] propoX(Integer x)
 	{
 		Integer[] propo = new Integer[this.getTaille()];
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			propo[i] = x;
 
@@ -147,7 +147,7 @@ public class Propo extends Tables<Integer>
 		logger.debug("PropoXY -> X = " + x.intValue() + " | Y = " + y.intValue() + " position " + jy.intValue());
 		Integer[] propo = new Integer[this.getTaille()];
 
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			propo[i] = x;
 		}
@@ -164,13 +164,13 @@ public class Propo extends Tables<Integer>
 	public Integer[] propoFinale(Integer[][] table)
 	{
 		Integer[] pf = new Integer[table.length - 1];
-		int i = 0;
-		int j = 1;
+		Integer i = 0;
+		Integer j = 1;
 
-		int cpt = 1;
+		Integer cpt = 1;
 
 		//Remplissage via les lignes 'indice'
-		for (int k = 0; k < table.length - 1; k++)
+		for (Integer k = 0; k < table.length - 1; k++)
 		{
 			i = 0;
 			while (table[j][i] != cpt)
@@ -204,8 +204,8 @@ public class Propo extends Tables<Integer>
 	public Integer[] propoChercheY(Integer[][] table, Tables it)
 	{
 		Integer[] pcy = new Integer[this.getTaille()];
-		int i = 0;
-		int j = 1;
+		Integer i = 0;
+		Integer j = 1;
 
 		while (i < this.getTaille() && table[0][i] != -2)
 		{
@@ -219,10 +219,10 @@ public class Propo extends Tables<Integer>
 
 		if (table[0][i] == -2)
 		{
-			int cpt = 1;
+			Integer cpt = 1;
 
 			//Remplissage via les lignes 'indice'
-			for (int k = 0; k < table.length - 1; k++)
+			for (Integer k = 0; k < table.length - 1; k++)
 			{
 				i = 0;
 				while (table[j][i] != cpt)
@@ -261,14 +261,14 @@ public class Propo extends Tables<Integer>
 	@SuppressWarnings("null")
 	public void propoXouXY()
 	{
-		int x = -1;
-		int y = -1;
-		int idk = 0;
-		int chiffresDifferents = 0;
-		int j = 0;
+		Integer x = -1;
+		Integer y = -1;
+		Integer idk = 0;
+		Integer chiffresDifferents = 0;
+		Integer j = 0;
 
 		int[] tableComptage = new int[10];
-		for (int k = 0; k < 10; k++)
+		for (Integer k = 0; k < 10; k++)
 		{
 			tableComptage[k] = 0;
 		}
@@ -278,7 +278,7 @@ public class Propo extends Tables<Integer>
 		this.XouXY[0][0] = 0;
 		this.XouXY[0][1] = 0;
 
-		for (int i = 0; i < 10; i++)
+		for (Integer i = 0; i < 10; i++)
 		{
 			idk = compteCombien(i, this.t); // On compte le nombre de fois que
 			// propo[i] apparaît dans propo
@@ -329,7 +329,7 @@ public class Propo extends Tables<Integer>
 		logger.debug(XouXY[0][0] + " | " + XouXY[0][1]);
 		logger.debug(XouXY[1][0] + " | " + XouXY[1][1]);
 
-		for (int l = 0; l < 10; l++)
+		for (Integer l = 0; l < 10; l++)
 		{
 			if (tableComptage[l] > 0)
 			{

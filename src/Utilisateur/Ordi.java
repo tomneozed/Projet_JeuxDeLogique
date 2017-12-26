@@ -57,7 +57,7 @@ public class Ordi extends Utilisateur
 	 * @param x
 	 *            taille de la combinaison *
 	 *******************************************/
-	public void combi(int x)
+	public void combi(Integer x)
 	{
 		setCombiTab(decoupageAleatoire(x));
 	}
@@ -70,13 +70,13 @@ public class Ordi extends Utilisateur
 		Random hasard = new Random();
 
 		// analyse();
-		for (int k = 0; k < 4; k++)
+		for (Integer k = 0; k < 4; k++)
 		{
 			System.out.println("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k) + " ; "
 					+ this.getMaxiBorneTab(k) + "]");
 		}
 
-		for (int j = 0; j < 4; j++)
+		for (Integer j = 0; j < 4; j++)
 		{
 			if (getChoixSur(j) == false)
 			{
@@ -88,7 +88,7 @@ public class Ordi extends Utilisateur
 		}
 
 		System.out.println("Nouvelle proposition : ");
-		for (int i = 0; i < 4; i++)
+		for (Integer i = 0; i < 4; i++)
 		{
 			System.out.print(this.getPropositionTab(i));
 		}

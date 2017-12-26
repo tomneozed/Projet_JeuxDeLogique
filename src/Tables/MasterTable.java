@@ -93,9 +93,9 @@ public class MasterTable extends Tables<Integer>
 	public void initMT()
 	{
 		logger.debug("InitMT() : -2");
-		for (int i = 0; i < this.getLargeur(); i++)
+		for (Integer i = 0; i < this.getLargeur(); i++)
 		{
-			for (int j = 0; j < this.getLongueur(); j++)
+			for (Integer j = 0; j < this.getLongueur(); j++)
 			{
 				this.mt[i][j] = -2; // -2 = null
 			}
@@ -109,13 +109,13 @@ public class MasterTable extends Tables<Integer>
 	{
 		System.out.println("\n\nMasterTab : " + this.getLongueur() + "x" + this.getLargeur() + "\n");
 		System.out.print("  ");
-		for (int i = 0; i < this.getLongueur(); i++)
+		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
 			System.out.print("  " + i + " ");
 		}
 		System.out.print("\n");
 
-		for (int i = 0; i < this.getLargeur(); i++)
+		for (Integer i = 0; i < this.getLargeur(); i++)
 		{
 			if (i < 10 && i > -1)
 			{
@@ -125,7 +125,7 @@ public class MasterTable extends Tables<Integer>
 				System.out.print(i);
 			}
 
-			for (int j = 0; j < this.getLongueur(); j++)
+			for (Integer j = 0; j < this.getLongueur(); j++)
 			{
 				if (this.mt[i][j] == -2)
 				{
@@ -171,7 +171,7 @@ public class MasterTable extends Tables<Integer>
 	public Integer cherchePremierNullIndiceMT(Integer colonne)
 	{
 		Integer indiceATester = -1;
-		int j = 0;
+		Integer j = 0;
 		do
 		{
 			j++;
@@ -195,7 +195,7 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public Integer chercheIYMT(Integer jyP, Integer[] p, boolean[] colonneTerminee)
 	{
-		int compteur1ereligne = 0;
+		Integer compteur1ereligne = 0;
 		Integer iyMT = -1;
 		while (compteur1ereligne < this.getLargeur() && iyMT == -1)
 		{
@@ -221,7 +221,7 @@ public class MasterTable extends Tables<Integer>
 	public boolean yATrouver()
 	{
 		boolean yAT = false;
-		int i = 0;
+		Integer i = 0;
 		do
 		{
 			if (mt[0][i] == -2)
@@ -241,12 +241,12 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @return jAT
 	 */
-	public int[] jATrouver(Boolean[] colonneTerminee)
+	public Integer[] jATrouver(Boolean[] colonneTerminee)
 	{
 		// Si il n'y a pas d'indice à trouver, on renvoie [-1,-1]
-		int[] jAT =
+		Integer[] jAT =
 		{ -1, -1 };
-		int i = 0;
+		Integer i = 0;
 
 		do
 		{
@@ -284,7 +284,7 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void nombreARayer(Integer nombre, Integer jyMT)
 	{
-		for (int i = 0; i < this.getLongueur(); i++)
+		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
 			if (this.getValeur(i, 0) == nombre)
 			{
@@ -304,22 +304,22 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void initPremiereLigneMT(Integer[] integers)
 	{
-		for (int i = 0; i < this.getLongueur(); i++)
+		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
 			this.setValeur(-2, i, 0);
 		}
 		// On parcourt la table IT
-		for (int cpt = 0; cpt < 10; cpt++)
+		for (Integer cpt = 0; cpt < 10; cpt++)
 		{
 			// Si une valeur de l'indiceTable est comprise entre 1 et 9
 			if (integers[cpt] > 0 && integers[cpt] < 10)
 			{
 				// Alors on remplit 1 à 9 fois la premiere ligne de MT avec la valeur cpt
-				for (int cpt2 = 0; cpt2 < integers[cpt]; cpt2++)
+				for (Integer cpt2 = 0; cpt2 < integers[cpt]; cpt2++)
 				{
 					// On parcourt donc notre premiere ligne de la masterTable à la recherche du 1er
 					// null (-2)
-					int i = 0;
+					Integer i = 0;
 					while (i < this.getLongueur() && this.getValeur(i, 0) != -2)
 					{
 						i++;
@@ -341,10 +341,10 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void completeHorizontal()
 	{
-		int compteMoins1 = 0;
-		int autre = 0;
-		int i = 0;
-		for (int j = 1; j < this.getLargeur(); j++)
+		Integer compteMoins1 = 0;
+		Integer autre = 0;
+		Integer i = 0;
+		for (Integer j = 1; j < this.getLargeur(); j++)
 		{
 			compteMoins1 = 0;
 			for (i = 0; i < this.getLongueur(); i++)
@@ -375,12 +375,12 @@ public class MasterTable extends Tables<Integer>
 	 */
 	public void completeVertical()
 	{
-		int compteMoins1 = 0;
-		int autre = 0;
-		for (int i = 0; i < this.getLongueur(); i++)
+		Integer compteMoins1 = 0;
+		Integer autre = 0;
+		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
 			compteMoins1 = 0;
-			for (int j = 1; j < this.getLargeur(); j++)
+			for (Integer j = 1; j < this.getLargeur(); j++)
 			{
 				if (mt[j][i] == -1)
 				{
@@ -471,13 +471,13 @@ public class MasterTable extends Tables<Integer>
 	public Boolean[] majColonneTerminee(Boolean[] colonneTerminee)
 	{
 		// On parcourt la premiere ligne de la masterTable ...
-		for (int i = 0; i < this.getLongueur(); i++)
+		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
 			// ... Si un indice de la premiere ligne est compris entre 0 et 9 ...
 			if (this.getValeur(i, 0) > -1 && this.getValeur(i, 0) < 10)
 			{
 				// ... On parcourt sa colonne ...
-				for (int j = 1; j < this.getLargeur(); j++)
+				for (Integer j = 1; j < this.getLargeur(); j++)
 				{
 					// ... et si il a un indice bon (compris entre 1 et 10) ...
 					if (this.getValeur(i, j) > 0 && this.getValeur(i, j) < 11)

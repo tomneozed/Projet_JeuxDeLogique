@@ -2,7 +2,7 @@ package Tables;
 
 public abstract class Tables<T>
 {
-	protected int taille;
+	protected Integer taille;
 	protected T[] t;
 
 	public Tables()
@@ -17,7 +17,7 @@ public abstract class Tables<T>
 		return this.taille;
 	}
 
-	public T getValeur(int i)
+	public T getValeur(Integer i)
 	{
 		return this.t[i];
 	}
@@ -31,7 +31,7 @@ public abstract class Tables<T>
 	{
 		Integer pos = -1;
 
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			if (this.getValeur(i) == x)
 			{
@@ -48,7 +48,7 @@ public abstract class Tables<T>
 		this.taille = t;
 	}
 
-	public void setValeur(int i, T val)
+	public void setValeur(Integer i, T val)
 	{
 		this.t[i] = val;
 	}
@@ -75,7 +75,7 @@ public abstract class Tables<T>
 	{
 		Integer nombre = 0;
 
-		for (int i = 0; i < tab.length; i++)
+		for (Integer i = 0; i < tab.length; i++)
 		{
 			if (x == tab[i])
 			{
@@ -141,10 +141,10 @@ public abstract class Tables<T>
 	public Integer[] indexOf(T nbr, T[] tab)
 	{
 		Integer[] index = new Integer[10];
-		int cpt = 0;
+		Integer cpt = 0;
 
 		// On remplit index
-		for (int j = 0; j < 10; j++)
+		for (Integer j = 0; j < 10; j++)
 		{
 			if (tab[j] == nbr)
 			{
@@ -154,7 +154,7 @@ public abstract class Tables<T>
 		}
 
 		Integer[] indexFinal = new Integer[cpt + 1];
-		for (int cpt2 = 0; cpt2 < cpt; cpt2++)
+		for (Integer cpt2 = 0; cpt2 < cpt; cpt2++)
 		{
 			indexFinal[cpt2] = index[cpt2];
 		}
@@ -167,7 +167,7 @@ public abstract class Tables<T>
 	public void affiche()
 	{
 		System.out.println("\n\n" + this.getClass().getSimpleName() + " : ");
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			System.out.println(i + " : " + this.getValeur(i));
 		}

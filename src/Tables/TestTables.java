@@ -31,9 +31,6 @@ public class TestTables
 	//Constructeur
 	public TestTables()
 	{
-
-		//logger.addAppender(appender);
-
 		int rejouer = -1, essai = 0;
 
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
@@ -71,9 +68,6 @@ public class TestTables
 
 			System.out.println("\n\tNouvelle proposition : ");
 			propo.affichePropo();
-
-			// System.out.println("\n\n\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
-			// rejouer = scan.nextInt();
 			essai++;
 
 			bienMalPlace(this.combi, propo.getT());
@@ -117,15 +111,8 @@ public class TestTables
 	 */
 	public void tourDeLOrdi()
 	{
-		//boolean yat;
-		//int[] jat = masterTable.jATrouver(colonneTerminee.getT());
-
 		propo.propoXouXY();
 		bienMalPlace(this.combi, propo.getT());
-		//int X = propo.getX();
-		//int Y = propo.getY();
-		//int iyMT = jat[0];
-		//int jyMT = jat[1];
 
 		// On regarde si la proposition est de type X ou XY ou chercheY
 		if (propo.getY() != -1 && propo.XouXY[0][1] == propo.getTaille() - 1)	// propoXY
@@ -134,69 +121,78 @@ public class TestTables
 
 		} else if (propo.getY() == propo.getX() && propo.XouXY[0][1] != propo.getTaille() - 1)	//PropoChercheY
 		{
-			logger.debug("PropoChercheY");
-			if (this.BP == propo.getTaille() - 1 && this.MP == 0)
-			{
-				indiceTable.setValeur(indiceTable.cherchePremierNull(), 0);
-			}
+			propoChercheY();
 
-			if (combiTrouvee() == true)
-			{
-				this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
-
-			} else if (indiceBon() == true)
-			{
-				this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
-			} else
-			{
-				colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
-				jat = masterTable.jATrouver(colonneTerminee.getT());
-				//yat = masterTable.yATrouver();
-
-				indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
-				this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(jat[0], 0),
-						(jat[1] - 1), this.masterTable.getMT()));
-			}
 		} else	// propoX
 		{
+			propoX();
+		}
+		MAJTables();
+	}
 
-			logger.debug("PropoX");
-			if (BP == 0)
-			{
-				logger.debug("BP = 0");
-				indiceTable.setValeur(propo.getX(), 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
+	/**
+	 * Fonction si propo = propoX
+	 */
+	public void propoX()
+	{
+		logger.debug("PropoX");
+		if (BP == 0)
+		{
+			logger.debug("BP = 0");
+			indiceTable.setValeur(propo.getX(), 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
 
-				jat = masterTable.jATrouver(colonneTerminee.getT());
-				//yat = masterTable.yATrouver();
+			jat = masterTable.jATrouver(colonneTerminee.getT());
 
-				indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
+			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
 
-				this.propo.setT(propo.propoX(indiceTable.getPremierNullIT()));
-			} else if (BP > 0)
-			{
-				logger.debug("BP > 0");
-				indiceTable.setValeur(propo.getX(), BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
-				this.masterTable.initPremiereLigneMT(indiceTable.getT());
+			this.propo.setT(propo.propoX(indiceTable.getPremierNullIT()));
+		} else if (BP > 0)
+		{
+			logger.debug("BP > 0");
+			indiceTable.setValeur(propo.getX(), BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
+			this.masterTable.initPremiereLigneMT(indiceTable.getT());
 
-				jat = this.masterTable.jATrouver(colonneTerminee.getT());
-				System.out.println("jat : " + jat[0] + ", " + jat[1]);
-				//yat = this.masterTable.yATrouver();
+			jat = this.masterTable.jATrouver(colonneTerminee.getT());
+			System.out.println("jat : " + jat[0] + ", " + jat[1]);
 
-				indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
-				this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(0, jat[0]),
-						(jat[1] - 1), this.masterTable.getMT()));
-			}
+			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
+			this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(0, jat[0]),
+					(jat[1] - 1), this.masterTable.getMT()));
+		}
+	}
+
+	/**
+	 * Fonction si propo = propoChercheY
+	 */
+	public void propoChercheY()
+	{
+		logger.debug("PropoChercheY");
+		if (this.BP == propo.getTaille() - 1 && this.MP == 0)
+		{
+			indiceTable.setValeur(indiceTable.cherchePremierNull(), 0);
 		}
 
-		logger.debug("__MAJ TABLES__");
+		if (combiTrouvee() == true)
+		{
+			this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
 
-		MAJTables();
+		} else if (indiceBon() == true)
+		{
+			this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
+		} else
+		{
+			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+			jat = masterTable.jATrouver(colonneTerminee.getT());
+
+			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
+			this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(jat[0], 0),
+					(jat[1] - 1), this.masterTable.getMT()));
+		}
 	}
 
 	/**
 	 * Fonction si propo = propoXY
 	 * 
-	 * @param mp
 	 */
 	public void propoXY()
 	{
@@ -269,8 +265,7 @@ public class TestTables
 			{
 				logger.debug("MP = 2	BP = 0");
 				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
-				// fois, càd
-				// de '0 à mt.length' fois
+				// fois, càd de '0 à mt.length' fois
 				masterTable.indiceARayer(jat[0], jat[1]);
 			}
 		}

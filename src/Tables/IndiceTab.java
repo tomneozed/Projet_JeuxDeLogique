@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class IndiceTab extends Tables<Integer>
 {
-	private int total, premierNullIT;
+	private Integer total, premierNullIT;
 	private static Logger logger = Logger.getLogger(IndiceTab.class);
 
 	public IndiceTab()
@@ -13,7 +13,7 @@ public class IndiceTab extends Tables<Integer>
 		init();
 	}
 
-	public IndiceTab(int x)
+	public IndiceTab(Integer x)
 	{
 		setTaille(x);
 		init();
@@ -22,29 +22,29 @@ public class IndiceTab extends Tables<Integer>
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
 
-	public int getTotal()
+	public Integer getTotal()
 	{
 		return this.total;
 	}
 
-	public int getPremierNullIT()
+	public Integer getPremierNullIT()
 	{
 		return this.premierNullIT;
 	}
 
 	/****** SETTERS ******/
 
-	public void setTotal(int t)
+	public void setTotal(Integer t)
 	{
 		this.total = t;
 	}
 
-	public void setPremierNullIT(int premierNull)
+	public void setPremierNullIT(Integer premierNull)
 	{
 		this.premierNullIT = premierNull;
 	}
 
-	public void setValeur(int i, Integer val)
+	public void setValeur(Integer i, Integer val)
 	{
 		this.t[i] = val;
 		if (val != -2)
@@ -60,7 +60,7 @@ public class IndiceTab extends Tables<Integer>
 	public void init()
 	{
 		this.t = new Integer[getTaille()];
-		for (int i = 0; i < getTaille(); i++)
+		for (Integer i = 0; i < getTaille(); i++)
 		{
 			setValeur(i, -2);
 		}
@@ -79,7 +79,7 @@ public class IndiceTab extends Tables<Integer>
 	public void afficheIT()
 	{
 		System.out.println("\n\nIndiceTab : ");
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			System.out.println(i + " : " + this.getValeur(i));
 		}
@@ -90,8 +90,8 @@ public class IndiceTab extends Tables<Integer>
 	 */
 	public void majIT()
 	{
-		int somme = 0;
-		int i = 0;
+		Integer somme = 0;
+		Integer i = 0;
 		while (somme != getTotal() && i < 10)		// tant que la somme est < au total
 		{
 			if (getValeur(i) > -1 && getValeur(i) < 10)	// si la valeur est comprise dans [0;10]
@@ -103,7 +103,7 @@ public class IndiceTab extends Tables<Integer>
 
 		if (somme == getTotal())						// Si la somme est égale au total
 		{
-			for (int j = 0; j < getTaille(); j++)
+			for (Integer j = 0; j < getTaille(); j++)
 			{
 				if (getValeur(j) == -2)
 				{
@@ -112,9 +112,9 @@ public class IndiceTab extends Tables<Integer>
 			}
 		}
 
-		int caseARemplir = 0;
+		Integer caseARemplir = 0;
 
-		for (int k = 0; k < getTaille(); k++)
+		for (Integer k = 0; k < getTaille(); k++)
 		{
 			if (getValeur(k) == -2)
 			{

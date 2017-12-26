@@ -13,7 +13,7 @@ public class ColonneTerminee extends Tables<Boolean>
 		init();
 	}
 
-	public ColonneTerminee(int t)
+	public ColonneTerminee(Integer t)
 	{
 		setTaille(t);
 		init();
@@ -30,7 +30,7 @@ public class ColonneTerminee extends Tables<Boolean>
 	public void init()
 	{
 		this.t = new Boolean[this.getTaille()];
-		for (int i = 0; i < this.t.length; i++)
+		for (Integer i = 0; i < this.t.length; i++)
 		{
 			this.setValeur(i, false);
 		}
@@ -42,7 +42,7 @@ public class ColonneTerminee extends Tables<Boolean>
 	public void afficheCT()
 	{
 		System.out.println("\n\nColonneTerminee : ");
-		for (int i = 0; i < this.getTaille(); i++)
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			System.out.println(i + " : " + this.getValeur(i));
 		}
@@ -54,8 +54,8 @@ public class ColonneTerminee extends Tables<Boolean>
 	public Boolean terminee()
 	{
 		Boolean t = false;
-		int cpt = 0;
-		for (int i = 0; i < this.getTaille(); i++)
+		Integer cpt = 0;
+		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			if (this.getValeur(i) == true)
 			{
