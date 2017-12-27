@@ -2,23 +2,32 @@ package Utilisateur;
 
 import java.util.Random;
 
+import Tables.ConfigJeu;
+import Tables.Configuration;
+
 public class Utilisateur
 {
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
+	//Attributs des properties
+	Configuration config = ConfigJeu.loadConfig();
+	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
+	Integer NB_ESSAIS = config.getEssais();
+	Integer NB_COULEURS = config.getNombreCouleurs();
+
 	private Integer vie, combi, proposition;
 	private String propositionString;
 
-	private Integer combiTab[] = new Integer[4];
-	private Integer[] propositionTab;
+	private Integer combiTab[] = new Integer[NB_CASES_COMBI];
+	private Integer propositionTab[] = new Integer[NB_CASES_COMBI];
 
-	private Integer miniBorneTab[] = new Integer[4];
-	private Integer maxiBorneTab[] = new Integer[4];
+	private Integer miniBorneTab[] = new Integer[NB_CASES_COMBI];
+	private Integer maxiBorneTab[] = new Integer[NB_CASES_COMBI];
 
-	private String comparaisonTab[] = new String[4];
+	private String comparaisonTab[] = new String[NB_CASES_COMBI];
 
-	private boolean choixSur[] = new boolean[4];
+	private boolean choixSur[] = new boolean[NB_CASES_COMBI];
 
 	/*******
 	 * FONCTIONS
@@ -205,7 +214,7 @@ public class Utilisateur
 		initMaxiMiniChoixSur();
 		setCombi(0);
 		setProposition(0);
-		setVie(3);
+		setVie(NB_ESSAIS);
 	}
 
 	/****************************************************************************
@@ -281,13 +290,6 @@ public class Utilisateur
 				% (div / 100000)) % (div / 1000000)) % (div / 10000000) / (div / 100000000);
 		combiTab[9] = (((((((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000))
 				% (div / 100000)) % (div / 1000000)) % (div / 10000000)) % (div / 100000000)) % (div / 1000000000);
-
-		a = combi / 1000;
-		b = (combi % 1000) / 100;
-		c = (combi % 1000) % 100 / 10;
-		d = (((combi % 1000) % 100) % 10);
-
-		//2System.out.println("Combi : " + combi + "\na = " + a + "\tb = " + b + "\tc = " + c + "\td = " + d);
 
 		return combiTab;
 	}

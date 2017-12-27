@@ -2,8 +2,6 @@ package Tables;
 
 import java.util.Scanner;
 
-import org.apache.log4j.Logger;
-
 public class TestTables
 {
 	//Attributs de classe
@@ -16,7 +14,7 @@ public class TestTables
 	Integer NB_COULEURS = c.getNombreCouleurs();
 
 	//Logger
-	private static Logger logger = Logger.getLogger(TestTables.class);
+	//private static Logger logger = Logger.getLogger(TestTables.class);
 
 	//Ajout des objets tables
 	IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());

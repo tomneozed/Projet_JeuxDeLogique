@@ -2,19 +2,18 @@ import java.util.Scanner;
 
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
-import Tables.TestTables;
 
 public class Main
 {
 
 	public static void main(String[] args)
 	{
-		// menu();
+		menu();
 		// test t = new test();
 		// TestMasterTable tmt = new TestMasterTable();
 		// MasterTable mt1 = new MasterTable(10);
 		// mt1.afficheMT();
-		TestTables tt = new TestTables();
+		//TestTables tt = new TestTables();
 
 		//System.out.println(ConfigJeu.loadConfig());
 

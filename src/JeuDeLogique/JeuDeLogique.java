@@ -98,14 +98,14 @@ public class JeuDeLogique
 
 			setMode(scan.nextInt());
 
-			switch (this.mode)
+			switch (c)
 			{
 			case 1:
-				if (c == 0)
+				if (getMode() == 0)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.challengerMode();
-				} else if (c == 1)
+				} else if (getMode() == 1)
 				{
 					Mastermind m = new Mastermind();
 					m.challengerMode();
@@ -113,23 +113,23 @@ public class JeuDeLogique
 				break;
 
 			case 2:
-				if (c == 0)
+				if (getMode() == 0)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.defenseurMode();
-				} else if (c == 1)
+				} else if (getMode() == 1)
 				{
 					Mastermind m = new Mastermind();
-					//m.defenseurMode();
+					m.defenseurMode();
 				}
 				break;
 
 			case 3:
-				if (c == 0)
+				if (getMode() == 0)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.duelMode();
-				} else if (c == 1)
+				} else if (getMode() == 1)
 				{
 					Mastermind m = new Mastermind();
 					//m.duelMode();

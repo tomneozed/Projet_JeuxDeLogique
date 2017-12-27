@@ -23,11 +23,14 @@ public class Mastermind extends JeuDeLogique
 	//Attributs de classe
 	private int BP, MP;
 
+	Ordi ordi = new Ordi();
+	Joueur joueur = new Joueur();
+
 	//Attributs des properties
-	Configuration c = ConfigJeu.loadConfig();
-	Integer NB_CASES_COMBI = c.getNombreCasesCombi();
-	Integer NB_ESSAIS = c.getEssais();
-	Integer NB_COULEURS = c.getNombreCouleurs();
+	Configuration config = ConfigJeu.loadConfig();
+	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
+	Integer NB_ESSAIS = config.getEssais();
+	Integer NB_COULEURS = config.getNombreCouleurs();
 
 	//Logger
 	private static Logger logger = Logger.getLogger(TestTables.class);
@@ -78,30 +81,24 @@ public class Mastermind extends JeuDeLogique
 	public void challengerMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
-		Scanner scan = new Scanner(System.in);
-		Ordi ordi = new Ordi();
-		Joueur joueur = new Joueur();
-		Integer[] c = // combinaison de test
-		{ 3, 0, 1, 5, 2, 6, 4, 7, 9, 0 };
+		System.out.println("Paramètres : " + config.toString());
 
+		Scanner scan = new Scanner(System.in);
 		do
 		{
 			// On initialise les objets joueur et ordi
 			ordi.initialisation();
 			joueur.initialisation();
-			joueur.setVie(10);
+			joueur.setVie(NB_ESSAIS);
 
 			// L'ordi créé une combinaison aléatoire
-			// ordi.combi(4);
-			ordi.setCombiTab(c);
+			ordi.combi(NB_CASES_COMBI);
 			System.out.println("\n");
 
 			do
 			{
 				// Le joueur propose une réponse
-				joueur.chercheMastermind(10);
-
-				joueur.setPropositionTab(joueur.getPropositionTab());
+				joueur.chercheMastermind(NB_CASES_COMBI.intValue());
 
 				bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
 				System.out.println("BP : " + getBP());

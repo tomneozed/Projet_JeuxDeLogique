@@ -35,12 +35,6 @@ public class RecherchePlusMoins extends JeuDeLogique
 	public void tourDuJoueur(Ordi o, Joueur j)
 	{
 		j.cherche();
-		/*
-		 * System.out.println("Combinaison proposée par l'utilisateur : ");
-		 * System.out.println(joueur.getPropositionTab(0) + " "
-		 * +joueur.getPropositionTab(1) + " " +joueur.getPropositionTab(2) + " "
-		 * +joueur.getPropositionTab(3));
-		 */
 
 		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropositionTab())));	//On compare les réponses
 
@@ -54,20 +48,8 @@ public class RecherchePlusMoins extends JeuDeLogique
 	public void tourDeLOrdi(Ordi o, Joueur j)
 	{
 		System.out.println("Je cherche ...");
-		//if(o.getVie() == 3)
-		//{
-		// 1ere proposition de l'ordinateur (aleatoire)
-		//o.setPropositionTab(o.decoupageAleatoire());		
 
-		//System.out.println("1ere proposition : " + o.getPropositionTab(0)
-		// + o.getPropositionTab(1)
-		// + o.getPropositionTab(2)
-		// + o.getPropositionTab(3));
-		//}else
-		//{
-		//Autres propositions de l'ordi
 		o.cherche();
-		//}
 		o.setComparaisonTab(compareTab(j.getCombiTab(), o.getPropositionTab()));
 		setGagneOrdi(analyseTrouve(o.getComparaisonTab()));
 		o.analyse();
