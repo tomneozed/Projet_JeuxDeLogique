@@ -2,6 +2,9 @@ package Tables;
 
 import java.util.Scanner;
 
+import Configurations.ConfigJeu;
+import Configurations.Configuration;
+
 public class TestTables
 {
 	//Attributs de classe

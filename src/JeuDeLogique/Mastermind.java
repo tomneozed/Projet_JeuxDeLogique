@@ -4,12 +4,11 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import Configurations.ConfigMMD;
+import Configurations.ConfigurationMMD;
 import Tables.ColonneTerminee;
-import Tables.ConfigJeu;
-import Tables.Configuration;
 import Tables.IndiceTab;
 import Tables.MasterTable;
-import Tables.Propo;
 import Tables.TestTables;
 import Utilisateur.Joueur;
 import Utilisateur.Ordi;
@@ -27,7 +26,7 @@ public class Mastermind extends JeuDeLogique
 	Joueur joueur = new Joueur();
 
 	//Attributs des properties
-	Configuration config = ConfigJeu.loadConfig();
+	ConfigurationMMD config = ConfigMMD.loadConfig();
 	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
 	Integer NB_ESSAIS = config.getEssais();
 	Integer NB_COULEURS = config.getNombreCouleurs();
@@ -39,7 +38,7 @@ public class Mastermind extends JeuDeLogique
 	IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
 	ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
 	MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
-	Propo propo = new Propo(NB_CASES_COMBI.intValue());
+	//Propo propo = new Propo(NB_CASES_COMBI.intValue());
 
 	//Divers
 	Integer[] combi = new Integer[NB_CASES_COMBI.intValue()];
@@ -80,7 +79,7 @@ public class Mastermind extends JeuDeLogique
 	 ***************************************/
 	public void challengerMode()
 	{
-		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
+		System.out.println("Bienvenue dans le Mastermind mode Challenger !");
 		System.out.println("Paramètres : " + config.toString());
 
 		Scanner scan = new Scanner(System.in);
@@ -97,18 +96,9 @@ public class Mastermind extends JeuDeLogique
 
 			do
 			{
-				// Le joueur propose une réponse
-				joueur.chercheMastermind(NB_CASES_COMBI.intValue());
-
-				bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
-				System.out.println("BP : " + getBP());
-				System.out.println("MP : " + getMP());
-				if (BP != 10)
-				{
-					joueur.setVie(joueur.getVie() - 1);
-				}
-
-			} while (BP != 10 && joueur.getVie() != 0);
+				tourDuJoueur(joueur, ordi);
+				System.out.println("\nNombre d'essais restants : " + joueur.getVie());
+			} while (BP != NB_CASES_COMBI && joueur.getVie() != 0);
 
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
@@ -122,51 +112,69 @@ public class Mastermind extends JeuDeLogique
 	 ***************************************/
 	public void defenseurMode()
 	{
-		int essai = 0;
-		System.out.println("Bienvenue dans le Recherche +/- mode Defenseur !");
+		System.out.println("Bienvenue dans le Mastermind mode Defenseur !");
 		Scanner scan = new Scanner(System.in);
-
-		this.combi[0] = 9;
-		this.combi[1] = 7;
-		this.combi[2] = 8;
-		this.combi[3] = 2;
-		this.combi[4] = 2;
-		this.combi[5] = 2;
-		this.combi[6] = 1;
-		this.combi[7] = 1;
-		this.combi[8] = 8;
-
-		propo.init(0);
-		masterTable.afficheMT();
-		indiceTable.afficheIT();
-
+		Integer[] tab = new Integer[NB_CASES_COMBI];
 		do
 		{
-			System.out.println("\n\n***************************************TOUR " + essai
-					+ "***************************************");
+			// On initialise les objets joueur et ordi
+			ordi.initialisation();
+			joueur.initialisation();
+			ordi.setVie(NB_ESSAIS);
 
-			propo.affichePropo();
-			jat = masterTable.jATrouver(colonneTerminee.getT());
-			tourDeLOrdi();
-			masterTable.afficheMT();
-			indiceTable.afficheIT();
-			colonneTerminee.afficheCT();
+			//On demande à l'utilisateur de créer une combi
+			joueur.combi(NB_CASES_COMBI);
 
-			System.out.println("\n\tNouvelle proposition : ");
-			propo.affichePropo();
-			essai++;
+			for (int i = 0; i < NB_CASES_COMBI; i++)
+			{
+				tab[i] = 0;
+			}
+			ordi.getPropoTab().setT(tab);
 
-			bienMalPlace(this.combi, propo.getT());
-			logger.debug("Fin du tour");
-		} while (BP != combi.length && essai != NB_ESSAIS);
+			//masterTable.afficheMT();
+			//indiceTable.afficheIT();
 
-		if (BP == combi.length)
-		{
-			System.out.println("Bravo ordi, vous avez gagné !");
-		}
+			do
+			{
+				jat = masterTable.jATrouver(colonneTerminee.getT());
+				tourDeLOrdi();
+
+				System.out.println("\n\tNouvelle proposition : ");
+				ordi.getPropoTab().affichePropo();
+				//bienMalPlace(this.combi, propo.getT());
+				logger.debug("Fin du tour");
+			} while (BP != NB_CASES_COMBI && ordi.getVie() != 0);
+
+			if (BP == NB_CASES_COMBI)
+			{
+				System.out.println("Bravo ordi, vous avez gagné !");
+			}
+		} while (getRejouer() == 1);
+
 	}
 
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
+
+	/**
+	 * Tour du joueur
+	 * 
+	 * @param j
+	 *            objet joueur
+	 * @param o
+	 *            objet Ordi
+	 */
+	public void tourDuJoueur(Joueur j, Ordi o)
+	{
+		joueur.chercheMastermind(NB_CASES_COMBI.intValue());
+
+		bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
+		System.out.println("BP : " + getBP());
+		System.out.println("MP : " + getMP());
+		if (BP != NB_CASES_COMBI)
+		{
+			joueur.setVie(joueur.getVie() - 1);
+		}
+	}
 
 	/**
 	 * Renvoie le nombre de fois x contenue dans tab
@@ -204,19 +212,21 @@ public class Mastermind extends JeuDeLogique
 	}
 
 	/**
-	 * Fonction mode defenseur
+	 * Tour de l'ordi
 	 */
 	public void tourDeLOrdi()
 	{
-		propo.propoXouXY();
-		bienMalPlace(this.combi, propo.getT());
+
+		ordi.getPropoTab().propoXouXY();
+		bienMalPlace(joueur.getCombiTab(), ordi.getPropoTab().getT());
 
 		// On regarde si la proposition est de type X ou XY ou chercheY
-		if (propo.getY() != -1 && propo.getXouXY(0, 1) == propo.getTaille() - 1)	// propoXY
+		if (ordi.getPropoTab().getY() != -1 && ordi.getPropoTab().getXouXY(0, 1) == ordi.getPropoTab().getTaille() - 1)	// propoXY
 		{
 			propoXY();
 
-		} else if (propo.getY() == propo.getX() && propo.getXouXY(0, 1) != propo.getTaille() - 1)	//PropoChercheY
+		} else if (ordi.getPropoTab().getY() == ordi.getPropoTab().getX()
+				&& ordi.getPropoTab().getXouXY(0, 1) != ordi.getPropoTab().getTaille() - 1)	//PropoChercheY
 		{
 			propoChercheY();
 
@@ -225,6 +235,14 @@ public class Mastermind extends JeuDeLogique
 			propoX();
 		}
 		MAJTables();
+
+		System.out.println("BP : " + getBP());
+		System.out.println("MP : " + getMP());
+		if (BP != NB_CASES_COMBI)
+		{
+			ordi.setVie(joueur.getVie() - 1);
+		}
+
 	}
 
 	/**
@@ -236,25 +254,25 @@ public class Mastermind extends JeuDeLogique
 		if (BP == 0)
 		{
 			logger.debug("BP = 0");
-			indiceTable.setValeur(propo.getX(), 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
+			indiceTable.setValeur(ordi.getPropoTab().getX(), 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
 
 			jat = masterTable.jATrouver(colonneTerminee.getT());
 
 			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
 
-			this.propo.setT(propo.propoX(indiceTable.getPremierNullIT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoX(indiceTable.getPremierNullIT()));
 		} else if (BP > 0)
 		{
 			logger.debug("BP > 0");
-			indiceTable.setValeur(propo.getX(), BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
+			indiceTable.setValeur(ordi.getPropoTab().getX(), BP);		// On remplit IT à la position X(XouXY[0][0]) 'BP' fois
 			this.masterTable.initPremiereLigneMT(indiceTable.getT());
 
 			jat = this.masterTable.jATrouver(colonneTerminee.getT());
 			System.out.println("jat : " + jat[0] + ", " + jat[1]);
 
 			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
-			this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(0, jat[0]),
-					(jat[1] - 1), this.masterTable.getMT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoXY(indiceTable.getPremierNullIT(),
+					this.masterTable.getValeur(0, jat[0]), (jat[1] - 1), this.masterTable.getMT()));
 		}
 	}
 
@@ -264,26 +282,26 @@ public class Mastermind extends JeuDeLogique
 	public void propoChercheY()
 	{
 		logger.debug("PropoChercheY");
-		if (this.BP == propo.getTaille() - 1 && this.MP == 0)
+		if (this.BP == ordi.getPropoTab().getTaille() - 1 && this.MP == 0)
 		{
 			indiceTable.setValeur(indiceTable.cherchePremierNull(), 0);
 		}
 
 		if (combiTrouvee() == true)
 		{
-			this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoFinale(this.masterTable.getMT()));
 
 		} else if (indiceBon() == true)
 		{
-			this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoChercheY(masterTable.getMT(), indiceTable));
 		} else
 		{
 			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 			jat = masterTable.jATrouver(colonneTerminee.getT());
 
 			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
-			this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(jat[0], 0),
-					(jat[1] - 1), this.masterTable.getMT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoXY(indiceTable.getPremierNullIT(),
+					this.masterTable.getValeur(jat[0], 0), (jat[1] - 1), this.masterTable.getMT()));
 		}
 	}
 
@@ -295,7 +313,7 @@ public class Mastermind extends JeuDeLogique
 	{
 		logger.debug("PropoXY");
 
-		indiceTable.setValeur(propo.getX(), ((BP + MP) - 1));
+		indiceTable.setValeur(ordi.getPropoTab().getX(), ((BP + MP) - 1));
 
 		MAJTables();
 
@@ -321,8 +339,8 @@ public class Mastermind extends JeuDeLogique
 		if (this.MP == 1)
 		{
 			masterTable.indiceARayer(jat[0], jat[1]);
-			masterTable.nombreARayer(propo.getY(), jat[1]);
-			masterTable.nombreARayer(propo.getX(), jat[1]);
+			masterTable.nombreARayer(ordi.getPropoTab().getY(), jat[1]);
+			masterTable.nombreARayer(ordi.getPropoTab().getX(), jat[1]);
 
 			if (this.BP == 1)
 			{
@@ -332,7 +350,8 @@ public class Mastermind extends JeuDeLogique
 				// On remplit la premiere ligne de MT 'getIT(X)' fois, càd
 				// de '0 à mt.length' fois
 
-				masterTable.indiceARayer(masterTable.indexOfY(propo.getX()), propo.indexOf(propo.getY()) + 1);
+				masterTable.indiceARayer(masterTable.indexOfY(ordi.getPropoTab().getX()),
+						ordi.getPropoTab().indexOf(ordi.getPropoTab().getY()) + 1);
 
 				int iy2MT = 0;
 
@@ -340,7 +359,7 @@ public class Mastermind extends JeuDeLogique
 				{
 					while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
 					{
-						if (this.masterTable.getValeur(iy2MT, 0) == propo.getX())
+						if (this.masterTable.getValeur(iy2MT, 0) == ordi.getPropoTab().getX())
 						{
 							masterTable.indiceARayer(iy2MT, jat[1]);
 						} else
@@ -356,7 +375,8 @@ public class Mastermind extends JeuDeLogique
 
 		if (this.MP == 2)
 		{
-			masterTable.indiceBon(masterTable.indexOfY(propo.getX()), propo.indexOf(propo.getY()) + 1);
+			masterTable.indiceBon(masterTable.indexOfY(ordi.getPropoTab().getX()),
+					ordi.getPropoTab().indexOf(ordi.getPropoTab().getY()) + 1);
 
 			if (this.BP == 0)
 			{
@@ -375,11 +395,11 @@ public class Mastermind extends JeuDeLogique
 
 		if (combiTrouvee() == true)
 		{
-			this.propo.setT(propo.propoFinale(this.masterTable.getMT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoFinale(this.masterTable.getMT()));
 
 		} else if (indiceBon() == true)
 		{
-			this.propo.setT(propo.propoChercheY(masterTable.getMT(), indiceTable));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoChercheY(masterTable.getMT(), indiceTable));
 		} else
 		{
 			colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
@@ -387,8 +407,8 @@ public class Mastermind extends JeuDeLogique
 			jat = masterTable.jATrouver(colonneTerminee.getT());
 
 			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
-			this.propo.setT(propo.propoXY(indiceTable.getPremierNullIT(), this.masterTable.getValeur(jat[0], 0),
-					(jat[1] - 1), this.masterTable.getMT()));
+			ordi.getPropoTab().setT(ordi.getPropoTab().propoXY(indiceTable.getPremierNullIT(),
+					this.masterTable.getValeur(jat[0], 0), (jat[1] - 1), this.masterTable.getMT()));
 		}
 	}
 
@@ -415,10 +435,10 @@ public class Mastermind extends JeuDeLogique
 	public void bienMalPlace(Integer[] comb, Integer[] prop)
 	{
 		logger.debug("bienMalPlace()");
-		Integer[] copieProp = new Integer[prop.length];
-		Integer[] copieComb = new Integer[prop.length];
+		Integer[] copieProp = new Integer[NB_CASES_COMBI];
+		Integer[] copieComb = new Integer[NB_CASES_COMBI];
 
-		for (int i = 0; i < prop.length; i++)
+		for (int i = 0; i < NB_CASES_COMBI; i++)
 		{
 			copieProp[i] = prop[i];
 			copieComb[i] = comb[i];
@@ -429,9 +449,9 @@ public class Mastermind extends JeuDeLogique
 		int i = 0, j = 0;
 		int r = 0;
 
-		for (i = 0; i < comb.length; i++)//check BP
+		for (i = 0; i < NB_CASES_COMBI; i++)//check BP
 		{
-			if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[i] > -1 && copieProp[i] < 10)
+			if (i < NB_CASES_COMBI && copieComb[i] > -1 && copieComb[i] < 10 && copieProp[i] > -1 && copieProp[i] < 10)
 			{
 				if (copieComb[i] == copieProp[i])
 				{
@@ -443,9 +463,9 @@ public class Mastermind extends JeuDeLogique
 			}
 		}
 		i = 0;
-		while (i < comb.length) // i est l'indice de comb[]
+		while (i < NB_CASES_COMBI) // i est l'indice de comb[]
 		{
-			for (j = 0; j < copieComb.length; j++)
+			for (j = 0; j < NB_CASES_COMBI; j++)
 			{
 				if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[j] > -1 && copieProp[j] < 10)
 				{

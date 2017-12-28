@@ -2,8 +2,9 @@ package Utilisateur;
 
 import java.util.Random;
 
-import Tables.ConfigJeu;
-import Tables.Configuration;
+import Configurations.ConfigMMD;
+import Configurations.ConfigurationMMD;
+import Tables.Propo;
 
 public class Utilisateur
 {
@@ -11,7 +12,7 @@ public class Utilisateur
 	 * VARIABLES
 	 *****************************************************************************************/
 	//Attributs des properties
-	Configuration config = ConfigJeu.loadConfig();
+	ConfigurationMMD config = ConfigMMD.loadConfig();
 	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
 	Integer NB_ESSAIS = config.getEssais();
 	Integer NB_COULEURS = config.getNombreCouleurs();
@@ -21,6 +22,7 @@ public class Utilisateur
 
 	private Integer combiTab[] = new Integer[NB_CASES_COMBI];
 	private Integer propositionTab[] = new Integer[NB_CASES_COMBI];
+	private Propo propoTab = new Propo(NB_CASES_COMBI);
 
 	private Integer miniBorneTab[] = new Integer[NB_CASES_COMBI];
 	private Integer maxiBorneTab[] = new Integer[NB_CASES_COMBI];
@@ -123,6 +125,11 @@ public class Utilisateur
 		return this.choixSur[i];
 	}
 
+	public Propo getPropoTab()
+	{
+		return propoTab;
+	}
+
 	/****** SETTERS ******/
 
 	public void setCombi(Integer comb)
@@ -203,6 +210,11 @@ public class Utilisateur
 	public void setChoixSur(Integer indice, boolean valeur)
 	{
 		this.choixSur[indice] = valeur;
+	}
+
+	public void setPropoTab(Propo propoTab)
+	{
+		this.propoTab = propoTab;
 	}
 
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/

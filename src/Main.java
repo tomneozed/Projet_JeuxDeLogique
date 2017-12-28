@@ -1,10 +1,17 @@
 import java.util.Scanner;
 
+import Configurations.MotherOfMothers;
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
 
-public class Main
+public class Main extends MotherOfMothers
 {
+
+	public Main()
+	{
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public static void main(String[] args)
 	{
@@ -36,10 +43,11 @@ public class Main
 
 		do
 		{
-			System.out.println("\n\n************************* MENU *************************");
+			System.out.println("\n\n******************** MENU PRINCIPAL ********************");
 			System.out.println("\t1. Recherche +/-");
 			System.out.println("\t2. Mastermind");
-			System.out.println("\t3. Quitter");
+			System.out.println("\t3. Réglages & Mode Développeur");
+			System.out.println("\t4. Quitter");
 			System.out.println("\nVotre choix : ");
 
 			choixMenu = scan.nextInt();
@@ -57,13 +65,17 @@ public class Main
 				break;
 
 			case 3:
+				ModeDeveloppeur md = new ModeDeveloppeur();
+				md.menuMD();
 				break;
 
+			case 4:
+				break;
 			default:
 				break;
 
 			}
-		} while (choixMenu != 3);
+		} while (choixMenu != 4);
 
 		System.out.println("Au revoir ! :)");
 	}

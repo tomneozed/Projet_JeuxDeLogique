@@ -100,41 +100,39 @@ public class JeuDeLogique
 
 			switch (c)
 			{
-			case 1:
-				if (getMode() == 0)
+			case 0:									//RecherchePlusMoins
+				if (getMode() == 1)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.challengerMode();
-				} else if (getMode() == 1)
-				{
-					Mastermind m = new Mastermind();
-					m.challengerMode();
-				}
-				break;
-
-			case 2:
-				if (getMode() == 0)
+				} else if (getMode() == 2)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.defenseurMode();
-				} else if (getMode() == 1)
-				{
-					Mastermind m = new Mastermind();
-					m.defenseurMode();
-				}
-				break;
-
-			case 3:
-				if (getMode() == 0)
+				} else if (getMode() == 3)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.duelMode();
-				} else if (getMode() == 1)
+				}
+				break;
+
+			case 1:									//Mastermind
+				if (getMode() == 1)
+				{
+					Mastermind m = new Mastermind();
+					m.challengerMode();
+
+				} else if (getMode() == 2)
+				{
+					Mastermind m = new Mastermind();
+					m.defenseurMode();
+				} else if (getMode() == 3)
 				{
 					Mastermind m = new Mastermind();
 					//m.duelMode();
 				}
 				break;
+
 			default:
 				break;
 
