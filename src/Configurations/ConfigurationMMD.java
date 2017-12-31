@@ -1,6 +1,6 @@
 package Configurations;
 
-public class ConfigurationMMD extends MotherOfMothers
+public class ConfigurationMMD extends ConfigG
 {
 	//Attributs
 	private Integer nombreCouleursMastermind;

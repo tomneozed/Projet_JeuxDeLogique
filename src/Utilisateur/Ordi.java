@@ -2,15 +2,13 @@ package Utilisateur;
 
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 public class Ordi extends Utilisateur
 {
-	/*******
-	 * VARIABLES
-	 *****************************************************************************************/
 
-	/*******
-	 * FONCTIONS
-	 *****************************************************************************************/
+	private static Logger logger = Logger.getLogger(Ordi.class);
+
 	/********************
 	 * Constructeur *
 	 *******************/
@@ -21,7 +19,7 @@ public class Ordi extends Utilisateur
 
 	public void analyse()
 	{
-		for (int cpt = 0; cpt < 4; cpt++)
+		for (int cpt = 0; cpt < NB_CASES_COMBI; cpt++)
 		{
 			if (this.getComparaisonTab(cpt) == "+")
 			{
@@ -69,26 +67,25 @@ public class Ordi extends Utilisateur
 	{
 		Random hasard = new Random();
 
-		// analyse();
-		for (Integer k = 0; k < 4; k++)
+		//Affichage des limites de propositions dans le fichier de logs
+		for (Integer k = 0; k < NB_CASES_COMBI; k++)
 		{
-			System.out.println("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k) + " ; "
+			logger.debug("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k) + " ; "
 					+ this.getMaxiBorneTab(k) + "]");
 		}
 
-		for (Integer j = 0; j < 4; j++)
+		//Ajout des nouvelles propositions de réponse
+		for (Integer j = 0; j < NB_CASES_COMBI; j++)
 		{
 			if (getChoixSur(j) == false)
 			{
 				setPropositionTab(j, nombreAleatoire(this.getMiniBorneTab(j), this.getMaxiBorneTab(j), hasard));
-				// System.out.println("Nouveau tirage : [" + j + "] = " +
-				// this.getPropositionTab(j));
-
 			}
 		}
 
+		//Affichage de la nouvelle proposition
 		System.out.println("Nouvelle proposition : ");
-		for (Integer i = 0; i < 4; i++)
+		for (Integer i = 0; i < NB_CASES_COMBI; i++)
 		{
 			System.out.print(this.getPropositionTab(i));
 		}

@@ -2,19 +2,12 @@ package Tables;
 
 import java.util.Scanner;
 
-import Configurations.ConfigJeu;
-import Configurations.Configuration;
+import MOM.MotherOfMothers;
 
-public class TestTables
+public class TestTables extends MotherOfMothers
 {
 	//Attributs de classe
 	private int BP, MP;
-
-	//Attributs des properties
-	Configuration c = ConfigJeu.loadConfig();
-	Integer NB_CASES_COMBI = c.getNombreCasesCombi();
-	Integer NB_ESSAIS = c.getEssais();
-	Integer NB_COULEURS = c.getNombreCouleurs();
 
 	//Logger
 	//private static Logger logger = Logger.getLogger(TestTables.class);
@@ -24,10 +17,6 @@ public class TestTables
 	ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
 	MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
 	Propo propo = new Propo(NB_CASES_COMBI.intValue());
-
-	//Divers
-	int[] combi = new int[NB_CASES_COMBI.intValue()];
-	int[] jat = masterTable.jATrouver(colonneTerminee.getT());
 
 	//Constructeur
 	public TestTables()

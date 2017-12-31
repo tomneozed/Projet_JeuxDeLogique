@@ -2,34 +2,28 @@ package Utilisateur;
 
 import java.util.Random;
 
-import Configurations.ConfigMMD;
-import Configurations.ConfigurationMMD;
+import MOM.MotherOfMothers;
 import Tables.Propo;
 
-public class Utilisateur
+public class Utilisateur extends MotherOfMothers
 {
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
 	//Attributs des properties
-	ConfigurationMMD config = ConfigMMD.loadConfig();
-	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
-	Integer NB_ESSAIS = config.getEssais();
-	Integer NB_COULEURS = config.getNombreCouleurs();
-
 	private Integer vie, combi, proposition;
 	private String propositionString;
 
-	private Integer combiTab[] = new Integer[NB_CASES_COMBI];
-	private Integer propositionTab[] = new Integer[NB_CASES_COMBI];
-	private Propo propoTab = new Propo(NB_CASES_COMBI);
+	private Integer combiTab[] = new Integer[this.getNB_CASES_COMBI()];
+	private Integer propositionTab[] = new Integer[this.getNB_CASES_COMBI()];
+	private Propo propoTab = new Propo(this.getNB_CASES_COMBI());
 
-	private Integer miniBorneTab[] = new Integer[NB_CASES_COMBI];
-	private Integer maxiBorneTab[] = new Integer[NB_CASES_COMBI];
+	private Integer miniBorneTab[] = new Integer[this.getNB_CASES_COMBI()];
+	private Integer maxiBorneTab[] = new Integer[this.getNB_CASES_COMBI()];
 
-	private String comparaisonTab[] = new String[NB_CASES_COMBI];
+	private String comparaisonTab[] = new String[this.getNB_CASES_COMBI()];
 
-	private boolean choixSur[] = new boolean[NB_CASES_COMBI];
+	private boolean choixSur[] = new boolean[this.getNB_CASES_COMBI()];
 
 	/*******
 	 * FONCTIONS
@@ -226,7 +220,7 @@ public class Utilisateur
 		initMaxiMiniChoixSur();
 		setCombi(0);
 		setProposition(0);
-		setVie(NB_ESSAIS);
+		setVie(this.getNB_ESSAIS());
 	}
 
 	/****************************************************************************
@@ -235,7 +229,7 @@ public class Utilisateur
 	 ***************************************************************************/
 	public void initMaxiMiniChoixSur()
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < this.getNB_CASES_COMBI(); i++)
 		{
 			this.miniBorneTab[i] = 0;
 			this.maxiBorneTab[i] = 9;
@@ -403,7 +397,7 @@ public class Utilisateur
 	/****************************************
 	 * Demande de proposition de réponse *
 	 ***************************************/
-	public void cherche()
+	public void cherche(Integer x)
 	{
 		System.out.println("Proposition de réponse");
 	}

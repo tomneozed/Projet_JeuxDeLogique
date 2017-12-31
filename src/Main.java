@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-import Configurations.MotherOfMothers;
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
+import MOM.MotherOfMothers;
 
 public class Main extends MotherOfMothers
 {

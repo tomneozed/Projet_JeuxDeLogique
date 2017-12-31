@@ -1,18 +1,18 @@
 package Configurations;
 
-public class MotherOfMothers
+public class ConfigG
 {
 	//Attributs
 	private Integer essais, nombreCasesCombi, nombreCouleursMastermind;
 	private Boolean modeDeveloppeur;
 
 	//Constructeurs
-	public MotherOfMothers()
+	public ConfigG()
 	{
 
 	}
 
-	public MotherOfMothers(Integer essais, Integer nombreCasesCombi, Integer nombreCouleurs, Boolean modeDeveloppeur)
+	public ConfigG(Integer essais, Integer nombreCasesCombi, Integer nombreCouleurs, Boolean modeDeveloppeur)
 	{
 		super();
 		this.essais = essais;

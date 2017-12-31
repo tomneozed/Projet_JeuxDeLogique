@@ -1,6 +1,6 @@
 package Configurations;
 
-public class ConfigurationRPM extends MotherOfMothers
+public class ConfigurationRPM extends ConfigG
 {
 	public ConfigurationRPM()
 	{

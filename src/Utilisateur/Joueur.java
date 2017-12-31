@@ -4,13 +4,6 @@ import java.util.Scanner;
 
 public class Joueur extends Utilisateur
 {
-	/*******
-	 * VARIABLES
-	 *****************************************************************************************/
-
-	/*******
-	 * FONCTIONS
-	 *****************************************************************************************/
 	/********************
 	 * Constructeur *
 	 *******************/
@@ -27,8 +20,6 @@ public class Joueur extends Utilisateur
 		super.combi(x);
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Entrez une combinaison de " + x + " chiffres (0-9): ");
-		//setCombi(scan.nextInt());
-		//setCombiTab(decoupage(getCombi()));
 
 		do
 		{
@@ -53,15 +44,7 @@ public class Joueur extends Utilisateur
 	/****************************************
 	 * Demande de proposition de réponse *
 	 ***************************************/
-	public void cherche()
-	{
-		System.out.println("Entrez une proposition de 4 chiffres (0-9): ");
-		Scanner scan = new Scanner(System.in);
-		this.setProposition(scan.nextInt());
-		this.setPropositionTab(decoupage(this.getProposition()));
-	}
-
-	public void chercheMastermind(Integer x)
+	public void cherche(Integer x)
 	{
 		do
 		{
@@ -82,10 +65,5 @@ public class Joueur extends Utilisateur
 				this.setPropositionTab(i, Character.getNumericValue(c));
 			}
 		}
-
-		//this.setProposition(Integer.decode(this.getPropositionString()));
-		//this.setPropositionTab(decoupage(this.getProposition()));
-
 	}
-
 }

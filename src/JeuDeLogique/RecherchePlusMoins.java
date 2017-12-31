@@ -2,14 +2,18 @@ package JeuDeLogique;
 
 import java.util.Scanner;
 
+import Configurations.ConfigRPM;
+import Configurations.ConfigurationRPM;
 import Utilisateur.Joueur;
 import Utilisateur.Ordi;
+import Utilisateur.Utilisateur;
 
 public class RecherchePlusMoins extends JeuDeLogique
 {
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
+	ConfigurationRPM config = ConfigRPM.loadConfig();
 
 	/*******
 	 * FONCTIONS
@@ -21,6 +25,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	public RecherchePlusMoins()
 	{
 		super();
+
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
@@ -30,11 +35,11 @@ public class RecherchePlusMoins extends JeuDeLogique
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
 
 	/*
-	 * 
+	 * Tour du joueur
 	 */
 	public void tourDuJoueur(Ordi o, Joueur j)
 	{
-		j.cherche();
+		j.cherche(config.getNombreCasesCombi());
 
 		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropositionTab())));	//On compare les réponses
 
@@ -43,7 +48,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	}
 
 	/*
-	 * 
+	 * Tour de l'ordinateur
 	 */
 	public void tourDeLOrdi(Ordi o, Joueur j)
 	{
@@ -55,6 +60,20 @@ public class RecherchePlusMoins extends JeuDeLogique
 		o.analyse();
 		if (getGagneOrdi() == false)
 			o.setVie(o.getVie() - 1);
+	}
+
+	/**
+	 * Affiche la réponse si le mode développeur est activé
+	 */
+	public void reponse(Utilisateur u)
+	{
+		super.reponse();
+		System.out.print("\t\t");
+		for (int i = 0; i < config.getNombreCasesCombi(); i++)
+		{
+			System.out.print(u.getCombiTab(i) + " ");
+		}
+		System.out.println("\n# # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
 	}
 
 	/*--------------------------------------------Mode Challenger----------------------------------------------*/
@@ -75,12 +94,9 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//L'ordi créé un nombre aléatoire
-			ordi.combi(4);
-			/*
-			 * System.out.println("Combinaison créée par l'ordi : ");
-			 * System.out.println(ordi.getCombiTab(0) + " " +ordi.getCombiTab(1) + " "
-			 * +ordi.getCombiTab(2) + " " +ordi.getCombiTab(3));
-			 */
+			ordi.combi(config.getNombreCasesCombi());
+
+			reponse(ordi);
 
 			do
 			{
@@ -93,8 +109,11 @@ public class RecherchePlusMoins extends JeuDeLogique
 				System.out.println("Bravo ! Vous avez gagné :)");
 			} else if (getGagneJoueur() == false)
 			{
-				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : "
-						+ ordi.getCombiTab(0) + ordi.getCombiTab(1) + ordi.getCombiTab(2) + ordi.getCombiTab(3));
+				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
+				for (int i = 0; i < config.getNombreCasesCombi(); i++)
+				{
+					System.out.print(ordi.getCombiTab(i));
+				}
 			}
 
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
@@ -116,6 +135,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 		Scanner scan = new Scanner(System.in);
 		Ordi ordi = new Ordi();
 		Joueur joueur = new Joueur();
+		int x = 0;
 
 		//Début de la boucle "Rejouer"
 		do
@@ -125,11 +145,13 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//Le joueur enre la combianison à trouver
-			joueur.combi(4);
+			joueur.combi(config.getNombreCasesCombi());
 
 			//C'est le tour de l'ordi	
 			do
 			{
+				x++;
+				System.out.println("\n---- Tour " + x + " ----\n");
 				tourDeLOrdi(ordi, joueur);
 
 			} while (!getGagneOrdi() && ordi.getVie() > 0);
@@ -159,23 +181,13 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//Le joueur entre sa combinaison :
-			joueur.combi(4);
+			joueur.combi(config.getNombreCasesCombi());
 
 			//L'ordi entre sa combianaison :
-			ordi.combi(4);
+			ordi.combi(config.getNombreCasesCombi());
 
 			//On regarde les 2 combianaisons :
-			System.out.println("Combinaison joueur : ");
-			for (Integer i = 0; i < 4; i++)
-			{
-				System.out.print(joueur.getCombiTab(i));
-			}
-
-			System.out.println("\nCombinaison ordi : ");
-			for (Integer i = 0; i < 4; i++)
-			{
-				System.out.print(ordi.getCombiTab(i));
-			}
+			reponse(ordi);
 
 			System.out.println("\n\n");
 			do

@@ -100,6 +100,10 @@ public class Mastermind extends JeuDeLogique
 				System.out.println("\nNombre d'essais restants : " + joueur.getVie());
 			} while (BP != NB_CASES_COMBI && joueur.getVie() != 0);
 
+			if (BP == NB_CASES_COMBI)
+			{
+				System.out.println("Bravo , vous avez gagné !");
+			}
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
 
@@ -149,6 +153,8 @@ public class Mastermind extends JeuDeLogique
 			{
 				System.out.println("Bravo ordi, vous avez gagné !");
 			}
+			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
+			setRejouer(scan.nextInt());
 		} while (getRejouer() == 1);
 
 	}
@@ -165,7 +171,7 @@ public class Mastermind extends JeuDeLogique
 	 */
 	public void tourDuJoueur(Joueur j, Ordi o)
 	{
-		joueur.chercheMastermind(NB_CASES_COMBI.intValue());
+		joueur.cherche(NB_CASES_COMBI.intValue());
 
 		bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
 		System.out.println("BP : " + getBP());

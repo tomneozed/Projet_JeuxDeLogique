@@ -2,7 +2,11 @@ package JeuDeLogique;
 
 import java.util.Scanner;
 
-public class JeuDeLogique
+import Configurations.ConfigMMD;
+import Configurations.ConfigurationMMD;
+import MOM.MotherOfMothers;
+
+public class JeuDeLogique extends MotherOfMothers
 {
 	/*******
 	 * VARIABLES
@@ -12,6 +16,8 @@ public class JeuDeLogique
 	private Integer mode = 0;
 
 	private Boolean gagneOrdi, gagneJoueur;
+
+	ConfigurationMMD config = ConfigMMD.loadConfig();
 
 	/*******
 	 * FONCTIONS
@@ -155,9 +161,9 @@ public class JeuDeLogique
 	public String[] compareTab(Integer[] combiTab, Integer[] propositionTab)
 	{
 		setTrouve(0);
-		String[] compa = new String[4];
+		String[] compa = new String[config.getNombreCasesCombi()];
 		System.out.println("\nComparaison : ");
-		for (Integer i = 0; i < 4; i++)
+		for (Integer i = 0; i < config.getNombreCasesCombi(); i++)
 		{
 			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
 			compa[i] = compare(combiTab[i], propositionTab[i]);
@@ -174,7 +180,7 @@ public class JeuDeLogique
 	 */
 	public boolean analyseTrouve(String[] comp)
 	{
-		for (Integer i = 0; i < 4; i++)
+		for (Integer i = 0; i < config.getNombreCasesCombi(); i++)
 		{
 			if (comp[i] == "=")
 			{
@@ -182,7 +188,7 @@ public class JeuDeLogique
 			}
 		}
 		System.out.println("");
-		if (getTrouve() == 4)
+		if (getTrouve() == config.getNombreCasesCombi())
 		{
 			return true;
 		} else
@@ -210,4 +216,16 @@ public class JeuDeLogique
 
 		return comparaison;
 	}
+
+	/**
+	 * Affiche la réponse si le mode développeur est activé
+	 */
+	public void reponse()
+	{
+		if (this.getMODE_DEVELOPPEUR() == true)
+		{
+			System.out.println("\n# # # # # Mode développeur activé , réponse : # # # # #");
+		}
+	}
+
 }
