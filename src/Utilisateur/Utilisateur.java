@@ -2,10 +2,9 @@ package Utilisateur;
 
 import java.util.Random;
 
-import MOM.MotherOfMothers;
 import Tables.Propo;
 
-public class Utilisateur extends MotherOfMothers
+public class Utilisateur
 {
 	/*******
 	 * VARIABLES
@@ -14,16 +13,16 @@ public class Utilisateur extends MotherOfMothers
 	private Integer vie, combi, proposition;
 	private String propositionString;
 
-	private Integer combiTab[] = new Integer[this.getNB_CASES_COMBI()];
-	private Integer propositionTab[] = new Integer[this.getNB_CASES_COMBI()];
-	private Propo propoTab = new Propo(this.getNB_CASES_COMBI());
+	protected Integer combiTab[];
+	protected Integer propositionTab[];
+	protected Propo propoTab;
 
-	private Integer miniBorneTab[] = new Integer[this.getNB_CASES_COMBI()];
-	private Integer maxiBorneTab[] = new Integer[this.getNB_CASES_COMBI()];
+	protected Integer miniBorneTab[];
+	protected Integer maxiBorneTab[];
 
-	private String comparaisonTab[] = new String[this.getNB_CASES_COMBI()];
+	protected String comparaisonTab[];
 
-	private boolean choixSur[] = new boolean[this.getNB_CASES_COMBI()];
+	protected boolean choixSur[];
 
 	/*******
 	 * FONCTIONS
@@ -220,7 +219,6 @@ public class Utilisateur extends MotherOfMothers
 		initMaxiMiniChoixSur();
 		setCombi(0);
 		setProposition(0);
-		setVie(this.getNB_ESSAIS());
 	}
 
 	/****************************************************************************

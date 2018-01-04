@@ -13,7 +13,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
-	ConfigurationRPM config = ConfigRPM.loadConfig();
+	ConfigurationRPM configRPM = ConfigRPM.loadConfigRPM();
 
 	/*******
 	 * FONCTIONS
@@ -25,6 +25,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	public RecherchePlusMoins()
 	{
 		super();
+		ordi = new Ordi(configRPM.getNbrCasesCombiRPM());
 
 	}
 
@@ -39,7 +40,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	 */
 	public void tourDuJoueur(Ordi o, Joueur j)
 	{
-		j.cherche(config.getNombreCasesCombi());
+		j.cherche(configRPM.getNbrCasesCombiRPM());
 
 		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropositionTab())));	//On compare les réponses
 
@@ -69,7 +70,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		super.reponse();
 		System.out.print("\t\t");
-		for (int i = 0; i < config.getNombreCasesCombi(); i++)
+		for (int i = 0; i < configRPM.getNbrCasesCombiRPM(); i++)
 		{
 			System.out.print(u.getCombiTab(i) + " ");
 		}
@@ -84,8 +85,8 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
 		Scanner scan = new Scanner(System.in);
-		Ordi ordi = new Ordi();
-		Joueur joueur = new Joueur();
+		//Ordi ordi = new Ordi();
+		//Joueur joueur = new Joueur();
 
 		do
 		{
@@ -94,7 +95,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//L'ordi créé un nombre aléatoire
-			ordi.combi(config.getNombreCasesCombi());
+			ordi.combi(configRPM.getNbrCasesCombiRPM());
 
 			reponse(ordi);
 
@@ -110,7 +111,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			} else if (getGagneJoueur() == false)
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
-				for (int i = 0; i < config.getNombreCasesCombi(); i++)
+				for (int i = 0; i < configRPM.getNbrCasesCombiRPM(); i++)
 				{
 					System.out.print(ordi.getCombiTab(i));
 				}
@@ -133,8 +134,8 @@ public class RecherchePlusMoins extends JeuDeLogique
 		//Création des objets Scanner, Ordi et Joueur dont nous auront besoin:
 
 		Scanner scan = new Scanner(System.in);
-		Ordi ordi = new Ordi();
-		Joueur joueur = new Joueur();
+		//Ordi ordi = new Ordi();
+		//Joueur joueur = new Joueur();
 		int x = 0;
 
 		//Début de la boucle "Rejouer"
@@ -145,7 +146,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//Le joueur enre la combianison à trouver
-			joueur.combi(config.getNombreCasesCombi());
+			joueur.combi(configRPM.getNbrCasesCombiRPM());
 
 			//C'est le tour de l'ordi	
 			do
@@ -172,8 +173,8 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Duel !");
 		Scanner scan = new Scanner(System.in);
-		Ordi ordi = new Ordi();
-		Joueur joueur = new Joueur();
+		//Ordi ordi = new Ordi();
+		//Joueur joueur = new Joueur();
 
 		do
 		{
@@ -181,10 +182,10 @@ public class RecherchePlusMoins extends JeuDeLogique
 			joueur.initialisation();
 
 			//Le joueur entre sa combinaison :
-			joueur.combi(config.getNombreCasesCombi());
+			joueur.combi(configRPM.getNbrCasesCombiRPM());
 
 			//L'ordi entre sa combianaison :
-			ordi.combi(config.getNombreCasesCombi());
+			ordi.combi(configRPM.getNbrCasesCombiRPM());
 
 			//On regarde les 2 combianaisons :
 			reponse(ordi);

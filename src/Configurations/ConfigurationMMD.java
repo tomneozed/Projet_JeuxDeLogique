@@ -3,7 +3,7 @@ package Configurations;
 public class ConfigurationMMD extends ConfigG
 {
 	//Attributs
-	private Integer nombreCouleursMastermind;
+	private Integer nbrCouleursMMD, nbrEssaisMMD, nbrCasesCombiMMD;
 
 	//Constructeur
 	public ConfigurationMMD()
@@ -12,14 +12,34 @@ public class ConfigurationMMD extends ConfigG
 	}
 
 	//Getters & Setters
-	public Integer getNombreCouleursMMD()
+	public Integer getNbrCouleursMMD()
 	{
-		return nombreCouleursMastermind;
+		return nbrCouleursMMD;
 	}
 
-	public void setNombreCouleursMMD(Integer nombreCouleurs)
+	public void setNbrCouleursMMD(Integer nbrCouleursMMD)
 	{
-		this.nombreCouleursMastermind = nombreCouleurs;
+		this.nbrCouleursMMD = nbrCouleursMMD;
+	}
+
+	public Integer getNbrEssaisMMD()
+	{
+		return nbrEssaisMMD;
+	}
+
+	public void setNbrEssaisMMD(Integer nbrEssaisMMD)
+	{
+		this.nbrEssaisMMD = nbrEssaisMMD;
+	}
+
+	public Integer getNbrCasesCombiMMD()
+	{
+		return nbrCasesCombiMMD;
+	}
+
+	public void setNbrCasesCombiMMD(Integer nbrCasesCombiMMD)
+	{
+		this.nbrCasesCombiMMD = nbrCasesCombiMMD;
 	}
 
 }

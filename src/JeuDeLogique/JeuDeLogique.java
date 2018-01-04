@@ -2,11 +2,16 @@ package JeuDeLogique;
 
 import java.util.Scanner;
 
+import Configurations.ConfigG;
 import Configurations.ConfigMMD;
+import Configurations.ConfigurationG;
 import Configurations.ConfigurationMMD;
-import MOM.MotherOfMothers;
+import Parametres.ParametresMMD;
+import Parametres.ParametresRPM;
+import Utilisateur.Joueur;
+import Utilisateur.Ordi;
 
-public class JeuDeLogique extends MotherOfMothers
+public class JeuDeLogique
 {
 	/*******
 	 * VARIABLES
@@ -17,7 +22,11 @@ public class JeuDeLogique extends MotherOfMothers
 
 	private Boolean gagneOrdi, gagneJoueur;
 
-	ConfigurationMMD config = ConfigMMD.loadConfig();
+	Ordi ordi;
+	Joueur joueur = new Joueur();
+
+	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
+	ConfigurationG configG = ConfigG.loadConfigG();
 
 	/*******
 	 * FONCTIONS
@@ -27,6 +36,7 @@ public class JeuDeLogique extends MotherOfMothers
 	 *******************/
 	public JeuDeLogique()
 	{
+		ordi = new Ordi();
 		setRejouer(0);
 		setMode(0);
 		setGagneOrdi(null);
@@ -93,6 +103,7 @@ public class JeuDeLogique extends MotherOfMothers
 	 ********************************************************/
 	public void choisirMode(Integer c)
 	{
+		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		do
 		{
@@ -100,7 +111,8 @@ public class JeuDeLogique extends MotherOfMothers
 			System.out.println("1. Challenger");
 			System.out.println("2. Défenseur");
 			System.out.println("3. Duel");
-			System.out.println("4. Quitter");
+			System.out.println("4. Parametres");
+			System.out.println("5. Quitter");
 
 			setMode(scan.nextInt());
 
@@ -119,6 +131,10 @@ public class JeuDeLogique extends MotherOfMothers
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
 					rpm.duelMode();
+				} else if (getMode() == 4)
+				{
+					ParametresRPM pRPM = new ParametresRPM();
+					pRPM.menuRPM();
 				}
 				break;
 
@@ -136,6 +152,10 @@ public class JeuDeLogique extends MotherOfMothers
 				{
 					Mastermind m = new Mastermind();
 					//m.duelMode();
+				} else if (getMode() == 4)
+				{
+					ParametresMMD pMMD = new ParametresMMD();
+					pMMD.menuMMD();
 				}
 				break;
 
@@ -144,7 +164,7 @@ public class JeuDeLogique extends MotherOfMothers
 
 			}
 		} while (getMode() != 4);
-
+		scan.close();
 	}
 
 	/********************************************************************
@@ -161,9 +181,9 @@ public class JeuDeLogique extends MotherOfMothers
 	public String[] compareTab(Integer[] combiTab, Integer[] propositionTab)
 	{
 		setTrouve(0);
-		String[] compa = new String[config.getNombreCasesCombi()];
+		String[] compa = new String[configMMD.getNbrCasesCombiMMD()];
 		System.out.println("\nComparaison : ");
-		for (Integer i = 0; i < config.getNombreCasesCombi(); i++)
+		for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
 		{
 			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
 			compa[i] = compare(combiTab[i], propositionTab[i]);
@@ -180,7 +200,7 @@ public class JeuDeLogique extends MotherOfMothers
 	 */
 	public boolean analyseTrouve(String[] comp)
 	{
-		for (Integer i = 0; i < config.getNombreCasesCombi(); i++)
+		for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
 		{
 			if (comp[i] == "=")
 			{
@@ -188,7 +208,7 @@ public class JeuDeLogique extends MotherOfMothers
 			}
 		}
 		System.out.println("");
-		if (getTrouve() == config.getNombreCasesCombi())
+		if (getTrouve() == configMMD.getNbrCasesCombiMMD())
 		{
 			return true;
 		} else
@@ -222,7 +242,7 @@ public class JeuDeLogique extends MotherOfMothers
 	 */
 	public void reponse()
 	{
-		if (this.getMODE_DEVELOPPEUR() == true)
+		if (configG.getModeDeveloppeur() == true)
 		{
 			System.out.println("\n# # # # # Mode développeur activé , réponse : # # # # #");
 		}

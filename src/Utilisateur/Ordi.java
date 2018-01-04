@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import Tables.Propo;
+
 public class Ordi extends Utilisateur
 {
 
@@ -12,14 +14,15 @@ public class Ordi extends Utilisateur
 	/********************
 	 * Constructeur *
 	 *******************/
-	public Ordi()
+	public Ordi(Integer i)
 	{
 		super();
+		init(i);
 	}
 
 	public void analyse()
 	{
-		for (int cpt = 0; cpt < NB_CASES_COMBI; cpt++)
+		for (int cpt = 0; cpt < ; cpt++)
 		{
 			if (this.getComparaisonTab(cpt) == "+")
 			{
@@ -47,6 +50,20 @@ public class Ordi extends Utilisateur
 				this.setChoixSur(cpt, true);
 			}
 		}
+	}
+
+	public void init(Integer i)
+	{
+		this.combiTab = new Integer[i];
+		this.propositionTab = new Integer[i];
+		this.propoTab = new Propo(i);
+		this.miniBorneTab = new Integer[i];
+		this.maxiBorneTab = new Integer[i];
+
+		this.choixSur = new boolean[i];
+		this.comparaisonTab = new String[i];
+		
+		this.setVie()
 	}
 
 	/********************************************

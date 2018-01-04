@@ -1,15 +1,13 @@
 package Tables;
 
-import MOM.MotherOfMothers;
-
-public abstract class Tables<T> extends MotherOfMothers
+public abstract class Tables<T>
 {
 	protected Integer taille;
 	protected T[] t;
 
 	public Tables()
 	{
-		setTaille(this.getNB_CASES_COMBI());
+
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/

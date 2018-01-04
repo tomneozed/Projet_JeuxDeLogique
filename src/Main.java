@@ -2,9 +2,8 @@ import java.util.Scanner;
 
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
-import MOM.MotherOfMothers;
 
-public class Main extends MotherOfMothers
+public class Main
 {
 
 	public Main()
@@ -46,7 +45,7 @@ public class Main extends MotherOfMothers
 			System.out.println("\n\n******************** MENU PRINCIPAL ********************");
 			System.out.println("\t1. Recherche +/-");
 			System.out.println("\t2. Mastermind");
-			System.out.println("\t3. Réglages & Mode Développeur");
+			System.out.println("\t3. Aide");
 			System.out.println("\t4. Quitter");
 			System.out.println("\nVotre choix : ");
 
@@ -65,8 +64,7 @@ public class Main extends MotherOfMothers
 				break;
 
 			case 3:
-				ModeDeveloppeur md = new ModeDeveloppeur();
-				md.menuMD();
+
 				break;
 
 			case 4:

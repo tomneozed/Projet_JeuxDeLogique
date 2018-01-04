@@ -26,10 +26,10 @@ public class Mastermind extends JeuDeLogique
 	Joueur joueur = new Joueur();
 
 	//Attributs des properties
-	ConfigurationMMD config = ConfigMMD.loadConfig();
-	Integer NB_CASES_COMBI = config.getNombreCasesCombi();
-	Integer NB_ESSAIS = config.getEssais();
-	Integer NB_COULEURS = config.getNombreCouleurs();
+	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
+	Integer NB_CASES_COMBI = configMMD.getNbrCasesCombiMMD();
+	Integer NB_ESSAIS = configMMD.getNbrEssaisMMD();
+	Integer NB_COULEURS = configMMD.getNbrCouleursMMD();
 
 	//Logger
 	private static Logger logger = Logger.getLogger(TestTables.class);
@@ -38,7 +38,6 @@ public class Mastermind extends JeuDeLogique
 	IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
 	ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
 	MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
-	//Propo propo = new Propo(NB_CASES_COMBI.intValue());
 
 	//Divers
 	Integer[] combi = new Integer[NB_CASES_COMBI.intValue()];
@@ -80,7 +79,7 @@ public class Mastermind extends JeuDeLogique
 	public void challengerMode()
 	{
 		System.out.println("Bienvenue dans le Mastermind mode Challenger !");
-		System.out.println("Paramètres : " + config.toString());
+		System.out.println("Paramètres : " + configMMD.toString());
 
 		Scanner scan = new Scanner(System.in);
 		do
@@ -108,6 +107,7 @@ public class Mastermind extends JeuDeLogique
 			setRejouer(scan.nextInt());
 
 		} while (getRejouer() == 1);
+		scan.close();
 	}
 
 	/*--------------------------------------------Mode Defenseur----------------------------------------------*/
@@ -156,6 +156,17 @@ public class Mastermind extends JeuDeLogique
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
 		} while (getRejouer() == 1);
+		scan.close();
+	}
+
+	/*--------------------------------------------Mode Duel----------------------------------------------*/
+	/***************************************
+	 * Programme de jeu en mode Duel *
+	 ***************************************/
+	public void duelMode()
+	{
+		System.out.println("Bienvenue dans le Mastermind mode Defenseur !");
+		Scanner scan = new Scanner(System.in);
 
 	}
 

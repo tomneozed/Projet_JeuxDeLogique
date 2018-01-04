@@ -7,14 +7,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class ConfigRPM
+public class ConfigRPM extends ConfigG
 {
 	static String CHEMIN_FICHIER = "src/config.properties";
-	static String ESSAIS = "application.configuration.essais";
-	static String NB_CASES_COMBI = "application.configuration.nombre.cases.combi";
+	static String ESSAIS = "application.configuration.recherchepm.essais";
+	static String NB_CASES_COMBI = "application.configuration.recherchepm.nombre.cases.combi";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
-	public static ConfigurationRPM loadConfig()
+	public static ConfigurationRPM loadConfigRPM()
 	{
 		ConfigurationRPM configRPM = new ConfigurationRPM();
 		final Properties prop = new Properties();
@@ -25,9 +25,8 @@ public class ConfigRPM
 			input = new FileInputStream(CHEMIN_FICHIER);
 			prop.load(input);
 
-			configRPM.setEssais(Integer.valueOf(prop.getProperty(ESSAIS)));
-			configRPM.setNombreCasesCombi(Integer.valueOf(prop.getProperty(NB_CASES_COMBI)));
-			configRPM.setModeDeveloppeur(Boolean.valueOf(prop.getProperty(MODE_DEVELOPPEUR)));
+			configRPM.setNbrEssaisRPM(Integer.valueOf(prop.getProperty(ESSAIS)));
+			configRPM.setNbrCasesCombiRPM(Integer.valueOf(prop.getProperty(NB_CASES_COMBI)));
 
 		} catch (IOException e)
 		{
@@ -48,7 +47,7 @@ public class ConfigRPM
 		return configRPM;
 	}
 
-	public static void saveConfig(ConfigurationRPM configRPM)
+	public static void saveConfigRPM(ConfigurationRPM configRPM)
 	{
 		final Properties prop = new Properties();
 		OutputStream output = null;
@@ -57,9 +56,8 @@ public class ConfigRPM
 		{
 			output = new FileOutputStream(CHEMIN_FICHIER);
 
-			prop.setProperty(ESSAIS, configRPM.getEssais().toString());
-			prop.setProperty(NB_CASES_COMBI, configRPM.getNombreCasesCombi().toString());
-			prop.setProperty(MODE_DEVELOPPEUR, configRPM.getModeDeveloppeur().toString());
+			prop.setProperty(ESSAIS, configRPM.getNbrEssaisRPM().toString());
+			prop.setProperty(NB_CASES_COMBI, configRPM.getNbrCasesCombiRPM().toString());
 			prop.store(output, null);
 
 		} catch (IOException e)

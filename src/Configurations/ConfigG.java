@@ -1,10 +1,17 @@
 package Configurations;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+
 public class ConfigG
 {
 	//Attributs
-	private Integer essais, nombreCasesCombi, nombreCouleursMastermind;
-	private Boolean modeDeveloppeur;
+	static String CHEMIN_FICHIER = "src/config.properties";
+	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
 	//Constructeurs
 	public ConfigG()
@@ -12,63 +19,64 @@ public class ConfigG
 
 	}
 
-	public ConfigG(Integer essais, Integer nombreCasesCombi, Integer nombreCouleurs, Boolean modeDeveloppeur)
+	public static ConfigurationG loadConfigG()
 	{
-		super();
-		this.essais = essais;
-		this.nombreCasesCombi = nombreCasesCombi;
-		this.nombreCouleursMastermind = nombreCouleurs;
-		this.modeDeveloppeur = modeDeveloppeur;
+		ConfigurationG configG = new ConfigurationG();
+		final Properties prop = new Properties();
+		InputStream input = null;
+
+		try
+		{
+			input = new FileInputStream(CHEMIN_FICHIER);
+			prop.load(input);
+			configG.setModeDeveloppeur(Boolean.valueOf(prop.getProperty(MODE_DEVELOPPEUR)));
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if (input != null)
+			{
+				try
+				{
+					input.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return configG;
 	}
 
-	//Getters & Setters
-	public Boolean getModeDeveloppeur()
+	public static void saveConfigG(ConfigurationG configG)
 	{
-		return modeDeveloppeur;
-	}
+		final Properties prop = new Properties();
+		OutputStream output = null;
 
-	public void setModeDeveloppeur(Boolean modeDeveloppeur)
-	{
-		this.modeDeveloppeur = modeDeveloppeur;
-	}
+		try
+		{
+			output = new FileOutputStream(CHEMIN_FICHIER);
+			prop.setProperty(MODE_DEVELOPPEUR, configG.getModeDeveloppeur().toString());
+			prop.store(output, null);
 
-	public Integer getEssais()
-	{
-		return essais;
-	}
-
-	public void setEssais(Integer essais)
-	{
-		this.essais = essais;
-	}
-
-	public Integer getNombreCasesCombi()
-	{
-		return nombreCasesCombi;
-	}
-
-	public void setNombreCasesCombi(Integer nombreCasesCombi)
-	{
-		this.nombreCasesCombi = nombreCasesCombi;
-	}
-
-	public Integer getNombreCouleurs()
-	{
-		return nombreCouleursMastermind;
-	}
-
-	public void setNombreCouleurs(Integer nombreCouleurs)
-	{
-		this.nombreCouleursMastermind = nombreCouleurs;
-	}
-
-	//Affichage
-	@Override
-	public String toString()
-	{
-		return "\n # Nombre de cases de la combinaison : " + nombreCasesCombi + "\n # Essais : " + essais
-				+ "\n # Nombre de couleurs : " + nombreCouleursMastermind + "\n # Mode developpeur : "
-				+ modeDeveloppeur;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if (output != null)
+			{
+				try
+				{
+					output.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }
