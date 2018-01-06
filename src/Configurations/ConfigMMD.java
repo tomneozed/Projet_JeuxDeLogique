@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
-public class ConfigMMD
+public class ConfigMMD extends ConfigG
 {
+	//static Properties prop = new Properties();
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String ESSAIS = "application.configuration.mastermind.essais";
 	static String NB_CASES_COMBI = "application.configuration.mastermind.nombre.cases.combi";
@@ -17,7 +17,7 @@ public class ConfigMMD
 	public static ConfigurationMMD loadConfigMMD()
 	{
 		ConfigurationMMD configMMD = new ConfigurationMMD();
-		final Properties prop = new Properties();
+		//final Properties prop = new Properties();
 		InputStream input = null;
 
 		try
@@ -28,6 +28,7 @@ public class ConfigMMD
 			configMMD.setNbrEssaisMMD(Integer.valueOf(prop.getProperty(ESSAIS)));
 			configMMD.setNbrCasesCombiMMD(Integer.valueOf(prop.getProperty(NB_CASES_COMBI)));
 			configMMD.setNbrCouleursMMD(Integer.valueOf(prop.getProperty(NB_COULEURS)));
+			configMMD.setModeDeveloppeur(Boolean.valueOf(prop.getProperty(MODE_DEVELOPPEUR)));
 
 		} catch (IOException e)
 		{
@@ -50,7 +51,7 @@ public class ConfigMMD
 
 	public static void saveConfigMMD(ConfigurationMMD configMMD)
 	{
-		final Properties prop = new Properties();
+
 		OutputStream output = null;
 
 		try

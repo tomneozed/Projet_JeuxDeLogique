@@ -56,11 +56,13 @@ public class Main
 			case 1:
 				RecherchePlusMoins rpm = new RecherchePlusMoins();
 				rpm.choisirMode(0);
+				//scan.close();
 				break;
 
 			case 2:
 				Mastermind m = new Mastermind();
 				m.choisirMode(1);
+				//scan.close();
 				break;
 
 			case 3:
@@ -74,6 +76,7 @@ public class Main
 
 			}
 		} while (choixMenu != 4);
+		//scan.close();
 
 		System.out.println("Au revoir ! :)");
 	}

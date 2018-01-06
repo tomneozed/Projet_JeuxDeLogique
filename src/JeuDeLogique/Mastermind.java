@@ -9,9 +9,9 @@ import Configurations.ConfigurationMMD;
 import Tables.ColonneTerminee;
 import Tables.IndiceTab;
 import Tables.MasterTable;
-import Tables.TestTables;
 import Utilisateur.Joueur;
 import Utilisateur.Ordi;
+import Utilisateur.Utilisateur;
 
 /**
  * @author Thomas Pelissier
@@ -19,11 +19,6 @@ import Utilisateur.Ordi;
  */
 public class Mastermind extends JeuDeLogique
 {
-	//Attributs de classe
-	private int BP, MP;
-
-	Ordi ordi = new Ordi();
-	Joueur joueur = new Joueur();
 
 	//Attributs des properties
 	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
@@ -31,8 +26,11 @@ public class Mastermind extends JeuDeLogique
 	Integer NB_ESSAIS = configMMD.getNbrEssaisMMD();
 	Integer NB_COULEURS = configMMD.getNbrCouleursMMD();
 
+	//Attributs de classe
+	private int BPj, MPj, BP, MP;
+
 	//Logger
-	private static Logger logger = Logger.getLogger(TestTables.class);
+	private static Logger logger = Logger.getLogger(Mastermind.class);
 
 	//Ajout des objets tables
 	IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
@@ -40,36 +38,58 @@ public class Mastermind extends JeuDeLogique
 	MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
 
 	//Divers
-	Integer[] combi = new Integer[NB_CASES_COMBI.intValue()];
+
 	Integer[] jat = masterTable.jATrouver(colonneTerminee.getT());
 
 	//Constructeur
 	public Mastermind()
 	{
 		super();
+		ordi = new Ordi(NB_CASES_COMBI);
+		joueur = new Joueur(NB_CASES_COMBI);
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
-	public int getBP()
+	public int getBPj()
 	{
-		return this.BP;
+		return this.BPj;
 	}
 
-	public int getMP()
+	public int getMPj()
 	{
-		return this.MP;
+		return this.MPj;
+	}
+
+	public int getBPo()
+	{
+		return BP;
+	}
+
+	public int getMPo()
+	{
+		return MP;
 	}
 
 	/****** SETTERS ******/
-	public void setBP(int b)
+	public void setBPj(int b)
 	{
-		this.BP = b;
+		this.BPj = b;
 	}
 
-	public void setMP(int m)
+	public void setMPj(int m)
 	{
-		this.MP = m;
+		this.MPj = m;
+	}
+
+	public void setBPo(int bPo)
+	{
+		BP = bPo;
+	}
+
+	public void setMPo(int mPo)
+	{
+		MP = mPo;
 	}
 
 	/*--------------------------------------------Mode Challenger----------------------------------------------*/
@@ -80,34 +100,43 @@ public class Mastermind extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Mastermind mode Challenger !");
 		System.out.println("Paramètres : " + configMMD.toString());
-
+		int tour = 0;
 		Scanner scan = new Scanner(System.in);
 		do
 		{
 			// On initialise les objets joueur et ordi
-			ordi.initialisation();
-			joueur.initialisation();
+			ordi.initialisation(NB_CASES_COMBI);
+			joueur.initialisation(NB_CASES_COMBI);
 			joueur.setVie(NB_ESSAIS);
 
 			// L'ordi créé une combinaison aléatoire
 			ordi.combi(NB_CASES_COMBI);
 			System.out.println("\n");
 
+			//Si le mode developpeur est activé, on donne la réponse
+			reponse(ordi, 1);
+
 			do
 			{
-				tourDuJoueur(joueur, ordi);
+				tour++;
+				System.out.println("\n---- Tour " + tour + " ----\n");
+				tourDuJoueur();
 				System.out.println("\nNombre d'essais restants : " + joueur.getVie());
-			} while (BP != NB_CASES_COMBI && joueur.getVie() != 0);
+			} while (!getGagneJoueur() && joueur.getVie() > 0);
 
-			if (BP == NB_CASES_COMBI)
+			if (BPj == NB_CASES_COMBI)
 			{
 				System.out.println("Bravo , vous avez gagné !");
+			} else
+			{
+				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
+				reponse(ordi, 0);
 			}
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
 
 		} while (getRejouer() == 1);
-		scan.close();
+		//scan.close();
 	}
 
 	/*--------------------------------------------Mode Defenseur----------------------------------------------*/
@@ -119,15 +148,22 @@ public class Mastermind extends JeuDeLogique
 		System.out.println("Bienvenue dans le Mastermind mode Defenseur !");
 		Scanner scan = new Scanner(System.in);
 		Integer[] tab = new Integer[NB_CASES_COMBI];
+		int tour = 0;
 		do
 		{
+			//Initialisation des tables
+			initTables();
+
 			// On initialise les objets joueur et ordi
-			ordi.initialisation();
-			joueur.initialisation();
+			ordi.initialisation(NB_CASES_COMBI);
+			joueur.initialisation(NB_CASES_COMBI);
 			ordi.setVie(NB_ESSAIS);
 
 			//On demande à l'utilisateur de créer une combi
 			joueur.combi(NB_CASES_COMBI);
+
+			//Si le mode developpeur est activé, on donne la réponse
+			reponse(joueur, 1);
 
 			for (int i = 0; i < NB_CASES_COMBI; i++)
 			{
@@ -135,28 +171,31 @@ public class Mastermind extends JeuDeLogique
 			}
 			ordi.getPropoTab().setT(tab);
 
-			//masterTable.afficheMT();
-			//indiceTable.afficheIT();
-
 			do
 			{
-				jat = masterTable.jATrouver(colonneTerminee.getT());
+				tour++;
+				System.out.println("\n---- Tour " + tour + " ----\n");
+				masterTable.afficheMT();
+				indiceTable.afficheIT();
 				tourDeLOrdi();
 
 				System.out.println("\n\tNouvelle proposition : ");
 				ordi.getPropoTab().affichePropo();
-				//bienMalPlace(this.combi, propo.getT());
 				logger.debug("Fin du tour");
-			} while (BP != NB_CASES_COMBI && ordi.getVie() != 0);
+			} while (!getGagneOrdi() && ordi.getVie() > 0);
 
 			if (BP == NB_CASES_COMBI)
 			{
 				System.out.println("Bravo ordi, vous avez gagné !");
+			} else
+			{
+				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
+				reponse(joueur, 0);
 			}
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
 		} while (getRejouer() == 1);
-		scan.close();
+		//scan.close();
 	}
 
 	/*--------------------------------------------Mode Duel----------------------------------------------*/
@@ -165,12 +204,110 @@ public class Mastermind extends JeuDeLogique
 	 ***************************************/
 	public void duelMode()
 	{
-		System.out.println("Bienvenue dans le Mastermind mode Defenseur !");
+		System.out.println("Bienvenue dans le Mastermind mode Duel !");
 		Scanner scan = new Scanner(System.in);
+		Integer[] tab = new Integer[NB_CASES_COMBI];
+		int tour = 0;
+		do
+		{
+			//Initialisation des tables
+			initTables();
 
+			// On initialise les objets joueur et ordi
+			ordi.initialisation(NB_CASES_COMBI);
+			joueur.initialisation(NB_CASES_COMBI);
+			ordi.setVie(NB_ESSAIS);
+			joueur.setVie(NB_ESSAIS);
+
+			//Le joueur entre sa combinaison :
+			joueur.combi(NB_CASES_COMBI);
+
+			//L'ordi entre sa combianaison :
+			ordi.combi(NB_CASES_COMBI);
+
+			//On regarde les 2 combianaisons :
+			reponse(ordi, 1);
+			reponse(joueur, 1);
+
+			for (int i = 0; i < NB_CASES_COMBI; i++)
+			{
+				tab[i] = 0;
+			}
+			ordi.getPropoTab().setT(tab);
+
+			do
+			{
+				tour++;
+				System.out.println("\n---- Tour " + tour + " ----\n");
+				//masterTable.afficheMT();
+				//indiceTable.afficheIT();
+
+				//Le joueur commence
+				System.out.println("*************Tour du joueur*********************");
+				tourDuJoueur();
+
+				//Tour de l'ordinateur:
+				System.out.println("*************Tour de l'ordi*********************");
+				tourDeLOrdi();
+
+				System.out.println("\n\tNouvelle proposition : ");
+				ordi.getPropoTab().affichePropo();
+				logger.debug("Fin du tour");
+			} while (!getGagneJoueur() && !getGagneOrdi() && ordi.getVie() > 0);
+
+			if (getGagneJoueur() && getGagneOrdi())
+			{
+				System.out.println("Egalité : vous et l'ordinateur avez gagné !");
+			} else if (!getGagneJoueur() && getGagneOrdi())
+			{
+				System.out.println("L'ordi a gagné ! La réponse était : ");
+				reponse(ordi, 0);
+			} else if (getGagneJoueur() && !getGagneOrdi())
+			{
+				System.out.println("Bravo ! Vous avez gagné !");
+			}
+			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
+			setRejouer(scan.nextInt());
+		} while (getRejouer() == 1);
 	}
 
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
+
+	//INITIALISATION & MAJ---------------------------------------------------------------------------------------
+
+	/**
+	 * Initialise BP et MP à 0
+	 */
+	public void initBPMP()
+	{
+		setBPj(0);
+		setMPj(0);
+		setMPo(0);
+		setBPo(0);
+	}
+
+	/**
+	 * Initialise les tables
+	 */
+	public void initTables()
+	{
+		indiceTable.init();
+		masterTable.initMT();
+		colonneTerminee.init();
+	}
+
+	/**
+	 * Met à jour les tables : MasterTable, IndiceTable, ColonneTerminee
+	 */
+	public void MAJTables()
+	{
+		masterTable.majMT();
+		indiceTable.majIT();
+		masterTable.initPremiereLigneMT(indiceTable.getT());
+		colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
+	}
+
+	//TOURS DES UTILISATEURS---------------------------------------------------------------------------------------
 
 	/**
 	 * Tour du joueur
@@ -180,52 +317,21 @@ public class Mastermind extends JeuDeLogique
 	 * @param o
 	 *            objet Ordi
 	 */
-	public void tourDuJoueur(Joueur j, Ordi o)
+	public void tourDuJoueur()
 	{
 		joueur.cherche(NB_CASES_COMBI.intValue());
 
 		bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
-		System.out.println("BP : " + getBP());
-		System.out.println("MP : " + getMP());
-		if (BP != NB_CASES_COMBI)
+		System.out.println("BP : " + getBPj());
+		System.out.println("MP : " + getMPj());
+		if (BPj == NB_CASES_COMBI)
 		{
+			setGagneJoueur(true);
+		} else
+		{
+			setGagneJoueur(false);
 			joueur.setVie(joueur.getVie() - 1);
 		}
-	}
-
-	/**
-	 * Renvoie le nombre de fois x contenue dans tab
-	 */
-	public int compteCombien(int x, int[] tab)
-	{
-		int nombre = 0;
-
-		for (int i = 0; i < tab.length; i++)
-		{
-			if (x == tab[i])
-			{
-				nombre++;
-			}
-		}
-		return nombre;
-	}
-
-	/**
-	 * Renvoie un tableau contenant les indices des positions de x dans tab
-	 */
-	public int[] getPos(int x, int[] tab)
-	{
-		int[] posTab = new int[compteCombien(x, tab)];
-		int j = 0;
-		for (int i = 0; i < tab.length; i++)
-		{
-			if (tab[i] == x)
-			{
-				posTab[j] = i;
-				j++;
-			}
-		}
-		return posTab;
 	}
 
 	/**
@@ -233,12 +339,16 @@ public class Mastermind extends JeuDeLogique
 	 */
 	public void tourDeLOrdi()
 	{
-
+		jat = masterTable.jATrouver(colonneTerminee.getT());
 		ordi.getPropoTab().propoXouXY();
 		bienMalPlace(joueur.getCombiTab(), ordi.getPropoTab().getT());
 
 		// On regarde si la proposition est de type X ou XY ou chercheY
-		if (ordi.getPropoTab().getY() != -1 && ordi.getPropoTab().getXouXY(0, 1) == ordi.getPropoTab().getTaille() - 1)	// propoXY
+		//if (ordi.getPropoTab().getY() != -1 && ordi.getPropoTab().getXouXY(0, 1) == ordi.getPropoTab().getTaille() - 1)	// propoXY
+		if (ordi.getPropoTab().getStructurePropo() == 1)
+		{
+			propoX();
+		} else if (ordi.getPropoTab().getStructurePropo() == 2)
 		{
 			propoXY();
 
@@ -247,20 +357,23 @@ public class Mastermind extends JeuDeLogique
 		{
 			propoChercheY();
 
-		} else	// propoX
-		{
-			propoX();
 		}
 		MAJTables();
 
-		System.out.println("BP : " + getBP());
-		System.out.println("MP : " + getMP());
-		if (BP != NB_CASES_COMBI)
+		System.out.println("BP : " + getBPo());
+		System.out.println("MP : " + getMPo());
+		if (BP == NB_CASES_COMBI)
 		{
+			setGagneOrdi(true);
+		} else
+		{
+			setGagneOrdi(false);
 			ordi.setVie(joueur.getVie() - 1);
 		}
 
 	}
+
+	//FONCTION DE TRAITEMENT DES PROPOSITIONS-------------------------------------------------------------------------------------
 
 	/**
 	 * Fonction si propo = propoX
@@ -268,7 +381,10 @@ public class Mastermind extends JeuDeLogique
 	public void propoX()
 	{
 		logger.debug("PropoX");
-		if (BP == 0)
+		if (BP == NB_CASES_COMBI)
+		{
+
+		} else if (BP == 0)
 		{
 			logger.debug("BP = 0");
 			indiceTable.setValeur(ordi.getPropoTab().getX(), 0);		// On remplit IT à la position X(XouXY[0][0]) 0 fois
@@ -285,7 +401,6 @@ public class Mastermind extends JeuDeLogique
 			this.masterTable.initPremiereLigneMT(indiceTable.getT());
 
 			jat = this.masterTable.jATrouver(colonneTerminee.getT());
-			System.out.println("jat : " + jat[0] + ", " + jat[1]);
 
 			indiceTable.setPremierNullIT(indiceTable.cherchePremierNull());
 			ordi.getPropoTab().setT(ordi.getPropoTab().propoXY(indiceTable.getPremierNullIT(),
@@ -372,7 +487,7 @@ public class Mastermind extends JeuDeLogique
 
 				int iy2MT = 0;
 
-				if (iy2MT < masterTable.getTaille())
+				if (iy2MT < masterTable.getLongueur())
 				{
 					while (this.masterTable.getValeur(iy2MT, 0) > -1 && this.masterTable.getValeur(iy2MT, 0) < 10)
 					{
@@ -429,82 +544,7 @@ public class Mastermind extends JeuDeLogique
 		}
 	}
 
-	/**
-	 * Met à jour les tables : MasterTable, IndiceTable, ColonneTerminee
-	 */
-	public void MAJTables()
-	{
-		masterTable.majMT();
-		indiceTable.majIT();
-		masterTable.initPremiereLigneMT(indiceTable.getT());
-		colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
-	}
-
-	/**
-	 * Compare les 2 tables en entrée et incrémente BP(rond noir) et MP(rond blanc)
-	 * selon la comparaison
-	 * 
-	 * @param comb
-	 *            combinaison
-	 * @param prop
-	 *            proposition
-	 */
-	public void bienMalPlace(Integer[] comb, Integer[] prop)
-	{
-		logger.debug("bienMalPlace()");
-		Integer[] copieProp = new Integer[NB_CASES_COMBI];
-		Integer[] copieComb = new Integer[NB_CASES_COMBI];
-
-		for (int i = 0; i < NB_CASES_COMBI; i++)
-		{
-			copieProp[i] = prop[i];
-			copieComb[i] = comb[i];
-		}
-
-		initBPMP();
-		System.out.println("\n");
-		int i = 0, j = 0;
-		int r = 0;
-
-		for (i = 0; i < NB_CASES_COMBI; i++)//check BP
-		{
-			if (i < NB_CASES_COMBI && copieComb[i] > -1 && copieComb[i] < 10 && copieProp[i] > -1 && copieProp[i] < 10)
-			{
-				if (copieComb[i] == copieProp[i])
-				{
-					//System.out.println("Combi[" + i + "] : " + copieComb[i] + " | Propo[" + i + "] : " + copieProp[i]);
-					this.BP++;
-					copieProp[i] = -1;
-					copieComb[i] = -1;
-				}
-			}
-		}
-		i = 0;
-		while (i < NB_CASES_COMBI) // i est l'indice de comb[]
-		{
-			for (j = 0; j < NB_CASES_COMBI; j++)
-			{
-				if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[j] > -1 && copieProp[j] < 10)
-				{
-					if (copieComb[i] == copieProp[j])
-					{
-						//System.out.println("Combi[" + i + "] : " + copieComb[i] + " | Propo[" + j + "] : " + copieProp[j]);
-						this.MP++;
-						copieProp[j] = -1;
-						copieComb[i] = -1;
-					}
-				}
-			}
-			i++;
-		}
-	}
-
-	public void initBPMP()
-	{
-		setBP(0);
-		setMP(0);
-	}
-
+	//FONCTIONS DE VERIFICATION DES VALEURS----------------------------------------------------------------------------------------
 	/**
 	 * Renvoie 'true' si : - la table 'colonneTerminee' est remplie de 'true' ET -
 	 * il n'y a plus de Y à trouver (si la 1ere ligne de la MT est complète)
@@ -550,6 +590,120 @@ public class Mastermind extends JeuDeLogique
 
 		return ib;
 
+	}
+
+	//FONCTIONS COMMUNES A TOUTES LES TABLES-------------------------------------------------------------------
+
+	/**
+	 * Renvoie le nombre de fois x contenue dans tab
+	 */
+	public int compteCombien(int x, int[] tab)
+	{
+		int nombre = 0;
+
+		for (int i = 0; i < tab.length; i++)
+		{
+			if (x == tab[i])
+			{
+				nombre++;
+			}
+		}
+		return nombre;
+	}
+
+	/**
+	 * Renvoie un tableau contenant les indices des positions de x dans tab
+	 */
+	public int[] getPos(int x, int[] tab)
+	{
+		int[] posTab = new int[compteCombien(x, tab)];
+		int j = 0;
+		for (int i = 0; i < tab.length; i++)
+		{
+			if (tab[i] == x)
+			{
+				posTab[j] = i;
+				j++;
+			}
+		}
+		return posTab;
+	}
+
+	/**
+	 * Compare les 2 tables en entrée et incrémente BP(rond noir) et MP(rond blanc)
+	 * selon la comparaison
+	 * 
+	 * @param comb
+	 *            combinaison
+	 * @param prop
+	 *            proposition
+	 */
+	public void bienMalPlace(Integer[] comb, Integer[] prop)
+	{
+		logger.debug("bienMalPlace()");
+		Integer[] copieProp = new Integer[NB_CASES_COMBI];
+		Integer[] copieComb = new Integer[NB_CASES_COMBI];
+
+		for (int i = 0; i < NB_CASES_COMBI; i++)
+		{
+			copieProp[i] = prop[i];
+			copieComb[i] = comb[i];
+		}
+
+		initBPMP();
+		System.out.println("\n");
+		int i = 0, j = 0;
+
+		for (i = 0; i < NB_CASES_COMBI; i++)//check BP
+		{
+			if (i < NB_CASES_COMBI && copieComb[i] > -1 && copieComb[i] < 10 && copieProp[i] > -1 && copieProp[i] < 10)
+			{
+				if (copieComb[i] == copieProp[i])
+				{
+					this.BPj++;
+					this.BP++;
+					copieProp[i] = -1;
+					copieComb[i] = -1;
+				}
+			}
+		}
+		i = 0;
+		while (i < NB_CASES_COMBI) // i est l'indice de comb[]
+		{
+			for (j = 0; j < NB_CASES_COMBI; j++)
+			{
+				if (copieComb[i] > -1 && copieComb[i] < 10 && copieProp[j] > -1 && copieProp[j] < 10)
+				{
+					if (copieComb[i] == copieProp[j])
+					{
+						this.MPj++;
+						this.MP++;
+						copieProp[j] = -1;
+						copieComb[i] = -1;
+					}
+				}
+			}
+			i++;
+		}
+	}
+
+	//AUTRES----------------------------------------------------------------------------------------------------
+	/**
+	 * Affiche la réponse si le mode développeur est activé
+	 */
+	public void reponse(Utilisateur u, int k)
+	{
+		if (k == 1)
+		{
+			super.reponse();
+		}
+
+		System.out.print("\t\t");
+		for (int i = 0; i < NB_CASES_COMBI; i++)
+		{
+			System.out.print(u.getCombiTab(i) + " ");
+		}
+		System.out.println("\n# # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
 	}
 
 }

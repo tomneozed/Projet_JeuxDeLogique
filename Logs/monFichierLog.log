@@ -1,35 +1,48 @@
-2018-01-02 10:09:41 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:41 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:41 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:41 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:41 DEBUG IndiceTab:70 - Init IndiceTab : -2
-2018-01-02 10:09:42 DEBUG MasterTable:95 - InitMT() : -2
-2018-01-02 10:09:42 DEBUG MasterTable:264 -  jATrouver() -> -1, -1
-2018-01-02 10:09:43 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:43 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:43 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:43 DEBUG Propo:81 - Init propo : -2
-2018-01-02 10:09:43 DEBUG IndiceTab:70 - Init IndiceTab : -2
-2018-01-02 10:09:43 DEBUG MasterTable:95 - InitMT() : -2
-2018-01-02 10:09:43 DEBUG MasterTable:264 -  jATrouver() -> -1, -1
-2018-01-02 10:14:45 DEBUG MasterTable:264 -  jATrouver() -> -1, -1
-2018-01-02 10:14:47 DEBUG Propo:328 - propoXouXY()
-2018-01-02 10:14:47 DEBUG Propo:329 - 0 | 10
-2018-01-02 10:14:47 DEBUG Propo:330 - -1 | -1
-2018-01-02 10:14:47 DEBUG Propo:336 - La proposition contient : 10 fois 0
-2018-01-02 10:14:47 DEBUG TestTables:455 - bienMalPlace()
-2018-01-02 10:17:45 DEBUG TestTables:271 - PropoX
-2018-01-02 10:17:45 DEBUG TestTables:284 - BP > 0
-2018-01-02 10:17:45 DEBUG MasterTable:181 - cherchePremierNullIndiceMT(0) -> 1
-2018-01-02 10:17:45 DEBUG MasterTable:264 -  jATrouver() -> 0, 1
-2018-01-02 10:17:45 DEBUG Propo:147 - PropoXY -> X = 1 | Y = 0 position 0
-2018-01-02 10:34:10 DEBUG MasterTable:491 -  majColonneTerminee() 
-2018-01-02 10:34:22 DEBUG TestTables:? - Fin du tour
-2018-01-02 10:34:23 DEBUG MasterTable:181 - cherchePremierNullIndiceMT(0) -> 1
-2018-01-02 10:34:23 DEBUG MasterTable:264 -  jATrouver() -> 0, 1
-2018-01-02 10:34:23 DEBUG Propo:328 - propoXouXY()
-2018-01-02 10:34:23 DEBUG Propo:329 - 1 | 9
-2018-01-02 10:34:23 DEBUG Propo:330 - 0 | 0
-2018-01-02 10:34:23 DEBUG Propo:336 - La proposition contient : 1 fois 0
-2018-01-02 10:34:23 DEBUG Propo:336 - La proposition contient : 9 fois 1
-2018-01-02 10:34:23 DEBUG TestTables:455 - bienMalPlace()
+2018-01-06 19:01:55 DEBUG IndiceTab:70 - Init IndiceTab : -2
+2018-01-06 19:01:55 DEBUG MasterTable:96 - InitMT() : -2
+2018-01-06 19:01:55 DEBUG MasterTable:265 -  jATrouver() -> -1, -1
+2018-01-06 19:01:55 DEBUG Propo:92 - Init propo : -2
+2018-01-06 19:01:55 DEBUG IndiceTab:70 - Init IndiceTab : -2
+2018-01-06 19:01:55 DEBUG MasterTable:96 - InitMT() : -2
+2018-01-06 19:01:55 DEBUG MasterTable:265 -  jATrouver() -> -1, -1
+2018-01-06 19:01:55 DEBUG Propo:92 - Init propo : -2
+2018-01-06 19:01:55 DEBUG IndiceTab:70 - Init IndiceTab : -2
+2018-01-06 19:01:55 DEBUG MasterTable:96 - InitMT() : -2
+2018-01-06 19:02:10 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:10 DEBUG MasterTable:265 -  jATrouver() -> -1, -1
+2018-01-06 19:02:10 DEBUG Propo:342 - propoXouXY()
+2018-01-06 19:02:10 DEBUG Propo:343 - 0 | 10
+2018-01-06 19:02:10 DEBUG Propo:344 - -1 | -1
+2018-01-06 19:02:10 DEBUG Propo:350 - La proposition contient : 10 fois 0
+2018-01-06 19:02:10 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:10 DEBUG Mastermind:383 - PropoX
+2018-01-06 19:02:10 DEBUG MasterTable:492 -  majColonneTerminee() 
+2018-01-06 19:02:10 DEBUG Mastermind:255 - Fin du tour
+2018-01-06 19:02:18 DEBUG IndiceTab:70 - Init IndiceTab : -2
+2018-01-06 19:02:18 DEBUG MasterTable:96 - InitMT() : -2
+2018-01-06 19:02:32 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:32 DEBUG MasterTable:265 -  jATrouver() -> -1, -1
+2018-01-06 19:02:32 DEBUG Propo:342 - propoXouXY()
+2018-01-06 19:02:32 DEBUG Propo:343 - 0 | 10
+2018-01-06 19:02:32 DEBUG Propo:344 - -1 | -1
+2018-01-06 19:02:32 DEBUG Propo:350 - La proposition contient : 10 fois 0
+2018-01-06 19:02:32 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:32 DEBUG Mastermind:383 - PropoX
+2018-01-06 19:02:32 DEBUG MasterTable:492 -  majColonneTerminee() 
+2018-01-06 19:02:32 DEBUG Mastermind:255 - Fin du tour
+2018-01-06 19:02:40 DEBUG IndiceTab:70 - Init IndiceTab : -2
+2018-01-06 19:02:40 DEBUG MasterTable:96 - InitMT() : -2
+2018-01-06 19:02:59 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:59 DEBUG MasterTable:265 -  jATrouver() -> -1, -1
+2018-01-06 19:02:59 DEBUG Propo:342 - propoXouXY()
+2018-01-06 19:02:59 DEBUG Propo:343 - 0 | 10
+2018-01-06 19:02:59 DEBUG Propo:344 - -1 | -1
+2018-01-06 19:02:59 DEBUG Propo:350 - La proposition contient : 10 fois 0
+2018-01-06 19:02:59 DEBUG Mastermind:643 - bienMalPlace()
+2018-01-06 19:02:59 DEBUG Mastermind:383 - PropoX
+2018-01-06 19:02:59 DEBUG Mastermind:399 - BP > 0
+2018-01-06 19:02:59 DEBUG MasterTable:182 - cherchePremierNullIndiceMT(0) -> 1
+2018-01-06 19:02:59 DEBUG MasterTable:265 -  jATrouver() -> 0, 1
+2018-01-06 19:02:59 DEBUG Propo:158 - PropoXY -> X = 1 | Y = 0 position 0
+2018-01-06 19:02:59 DEBUG MasterTable:492 -  majColonneTerminee() 
+2018-01-06 19:02:59 DEBUG Mastermind:255 - Fin du tour

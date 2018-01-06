@@ -9,6 +9,7 @@ import java.util.Properties;
 
 public class ConfigG
 {
+	static Properties prop = new Properties();
 	//Attributs
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
@@ -16,13 +17,13 @@ public class ConfigG
 	//Constructeurs
 	public ConfigG()
 	{
-
+		loadConfigG();
 	}
 
 	public static ConfigurationG loadConfigG()
 	{
 		ConfigurationG configG = new ConfigurationG();
-		final Properties prop = new Properties();
+		//final Properties prop = new Properties();
 		InputStream input = null;
 
 		try
@@ -52,7 +53,7 @@ public class ConfigG
 
 	public static void saveConfigG(ConfigurationG configG)
 	{
-		final Properties prop = new Properties();
+		//final Properties prop = new Properties();
 		OutputStream output = null;
 
 		try

@@ -2,14 +2,32 @@ package Utilisateur;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 public class Joueur extends Utilisateur
 {
+	private Integer tailleCombi;
+	private static Logger logger = Logger.getLogger(Joueur.class);
+
 	/********************
 	 * Constructeur *
 	 *******************/
-	public Joueur()
+	public Joueur(Integer i)
 	{
 		super();
+		initialisation(i);
+		setTailleCombi(i);
+	}
+
+	//GETTERS & SETTERS
+	public Integer getTailleCombi()
+	{
+		return tailleCombi;
+	}
+
+	public void setTailleCombi(Integer tailleCombi)
+	{
+		this.tailleCombi = tailleCombi;
 	}
 
 	/********************************************
@@ -66,4 +84,5 @@ public class Joueur extends Utilisateur
 			}
 		}
 	}
+
 }

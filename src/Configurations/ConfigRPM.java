@@ -5,19 +5,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
 public class ConfigRPM extends ConfigG
 {
+	//static Properties prop = new Properties();
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String ESSAIS = "application.configuration.recherchepm.essais";
 	static String NB_CASES_COMBI = "application.configuration.recherchepm.nombre.cases.combi";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
+	public ConfigRPM()
+	{
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public static ConfigurationRPM loadConfigRPM()
 	{
 		ConfigurationRPM configRPM = new ConfigurationRPM();
-		final Properties prop = new Properties();
+		//final Properties prop = new Properties();
 		InputStream input = null;
 
 		try
@@ -27,6 +33,7 @@ public class ConfigRPM extends ConfigG
 
 			configRPM.setNbrEssaisRPM(Integer.valueOf(prop.getProperty(ESSAIS)));
 			configRPM.setNbrCasesCombiRPM(Integer.valueOf(prop.getProperty(NB_CASES_COMBI)));
+			configRPM.setModeDeveloppeur(Boolean.valueOf(prop.getProperty(MODE_DEVELOPPEUR)));
 
 		} catch (IOException e)
 		{
@@ -49,7 +56,7 @@ public class ConfigRPM extends ConfigG
 
 	public static void saveConfigRPM(ConfigurationRPM configRPM)
 	{
-		final Properties prop = new Properties();
+		//final Properties prop = new Properties();
 		OutputStream output = null;
 
 		try
@@ -58,6 +65,7 @@ public class ConfigRPM extends ConfigG
 
 			prop.setProperty(ESSAIS, configRPM.getNbrEssaisRPM().toString());
 			prop.setProperty(NB_CASES_COMBI, configRPM.getNbrCasesCombiRPM().toString());
+			prop.setProperty(MODE_DEVELOPPEUR, configRPM.getModeDeveloppeur().toString());
 			prop.store(output, null);
 
 		} catch (IOException e)

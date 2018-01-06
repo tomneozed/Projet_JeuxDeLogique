@@ -10,11 +10,12 @@ public class Utilisateur
 	 * VARIABLES
 	 *****************************************************************************************/
 	//Attributs des properties
-	private Integer vie, combi, proposition;
+	private Integer vie;
 	private String propositionString;
 
 	protected Integer combiTab[];
 	protected Integer propositionTab[];
+
 	protected Propo propoTab;
 
 	protected Integer miniBorneTab[];
@@ -32,25 +33,25 @@ public class Utilisateur
 	 *******************/
 	public Utilisateur()
 	{
-		initialisation();
+		//initialisation();
 	}
 
 	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
 	/****** GETTERS ******/
 
-	public Integer getCombi()
+	public Integer[] getPropositionTab()
 	{
-		return this.combi;
+		return propositionTab;
+	}
+
+	public Integer getPropositionTab(Integer i)
+	{
+		return this.combiTab[i];
 	}
 
 	public String getPropositionString()
 	{
 		return propositionString;
-	}
-
-	public Integer getProposition()
-	{
-		return proposition;
 	}
 
 	public Integer getVie()
@@ -66,16 +67,6 @@ public class Utilisateur
 	public Integer getCombiTab(Integer i)
 	{
 		return this.combiTab[i];
-	}
-
-	public Integer[] getPropositionTab()
-	{
-		return this.propositionTab;
-	}
-
-	public Integer getPropositionTab(Integer i)
-	{
-		return this.propositionTab[i];
 	}
 
 	public Integer[] getMiniBorneTab()
@@ -125,19 +116,19 @@ public class Utilisateur
 
 	/****** SETTERS ******/
 
-	public void setCombi(Integer comb)
+	public void setPropositionTab(Integer[] propositionTab)
 	{
-		this.combi = comb;
+		this.propositionTab = propositionTab;
+	}
+
+	public void setPropositionTab(Integer indice, Integer valeur)
+	{
+		this.propositionTab[indice] = valeur;
 	}
 
 	public void setPropositionString(String prop)
 	{
 		this.propositionString = prop;
-	}
-
-	public void setProposition(Integer prop)
-	{
-		this.proposition = prop;
 	}
 
 	public void setVie(Integer vie)
@@ -153,16 +144,6 @@ public class Utilisateur
 	public void setCombiTab(Integer indice, Integer valeur)
 	{
 		this.combiTab[indice] = valeur;
-	}
-
-	public void setPropositionTab(Integer[] propTab)
-	{
-		this.propositionTab = propTab;
-	}
-
-	public void setPropositionTab(Integer indice, Integer valeur)
-	{
-		this.propositionTab[indice] = valeur;
 	}
 
 	public void setMiniBorneTab(Integer[] miniB)
@@ -214,20 +195,24 @@ public class Utilisateur
 	/********************************
 	 * Initialisation de l'objet *
 	 *******************************/
-	public void initialisation()
+	public void initialisation(Integer i)
 	{
-		initMaxiMiniChoixSur();
-		setCombi(0);
-		setProposition(0);
+		setMiniBorneTab(new Integer[i]);
+		setMaxiBorneTab(new Integer[i]);
+		setChoixSur(new boolean[i]);
+		initMaxiMiniChoixSur(i);
+
+		setCombiTab(new Integer[i]);
+		setPropositionTab(new Integer[i]);
 	}
 
 	/****************************************************************************
 	 * Initialise les bornes mini et maxi de la création de nombre aléatoire *
 	 * Initialise la valeur de "choixSur" *
 	 ***************************************************************************/
-	public void initMaxiMiniChoixSur()
+	public void initMaxiMiniChoixSur(Integer j)
 	{
-		for (int i = 0; i < this.getNB_CASES_COMBI(); i++)
+		for (int i = 0; i < j; i++)
 		{
 			this.miniBorneTab[i] = 0;
 			this.maxiBorneTab[i] = 9;
@@ -257,45 +242,6 @@ public class Utilisateur
 
 		return nombreHasard;
 
-	}
-
-	/****************************************************************
-	 * Décompose un nombre à 4 chiffres pour en remplir un tableau *
-	 * 
-	 * @param combi
-	 *            *
-	 * @return combiTab[] *
-	 ***************************************************************/
-	public static Integer[] decoupage(Integer combi)
-	{
-
-		Integer a, b, c, d, e, f, g, h, i, j, div = 1;
-		Integer length = String.valueOf(combi).length();
-		Integer combiTab[] = new Integer[length];
-
-		for (int z = 0; z < length - 1; z++)
-		{
-			div = div * 10;
-
-		}
-		System.out.println("div : " + div);
-
-		combiTab[0] = combi / div;
-		combiTab[1] = (combi % div) / (div / 10);
-		combiTab[2] = (combi % div) % (div / 10) / (div / 100);
-		combiTab[3] = ((combi % div) % (div / 10)) % (div / 100) / (div / 1000);
-		combiTab[4] = (((combi % div) % (div / 10)) % (div / 100)) % (div / 1000) / (div / 10000);
-		combiTab[5] = ((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000) / (div / 100000);
-		combiTab[6] = (((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000)) % (div / 100000)
-				/ (div / 1000000);
-		combiTab[7] = ((((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000)) % (div / 100000))
-				% (div / 1000000) / (div / 10000000);
-		combiTab[8] = (((((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000))
-				% (div / 100000)) % (div / 1000000)) % (div / 10000000) / (div / 100000000);
-		combiTab[9] = (((((((((combi % div) % (div / 10)) % (div / 100)) % (div / 1000)) % (div / 10000))
-				% (div / 100000)) % (div / 1000000)) % (div / 10000000)) % (div / 100000000)) % (div / 1000000000);
-
-		return combiTab;
 	}
 
 	/****************************************************

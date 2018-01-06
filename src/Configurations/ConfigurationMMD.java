@@ -1,6 +1,6 @@
 package Configurations;
 
-public class ConfigurationMMD extends ConfigG
+public class ConfigurationMMD extends ConfigurationG
 {
 	//Attributs
 	private Integer nbrCouleursMMD, nbrEssaisMMD, nbrCasesCombiMMD;

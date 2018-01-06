@@ -16,17 +16,17 @@ public class JeuDeLogique
 	/*******
 	 * VARIABLES
 	 *****************************************************************************************/
-	private Integer rejouer = 0;
-	private Integer trouve = 0;
-	private Integer mode = 0;
-
-	private Boolean gagneOrdi, gagneJoueur;
+	private Integer rejouer;
+	private Integer trouve;
+	private Integer mode;
 
 	Ordi ordi;
-	Joueur joueur = new Joueur();
+	Joueur joueur;
 
 	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
 	ConfigurationG configG = ConfigG.loadConfigG();
+
+	private Boolean gagneOrdi, gagneJoueur;
 
 	/*******
 	 * FONCTIONS
@@ -36,7 +36,6 @@ public class JeuDeLogique
 	 *******************/
 	public JeuDeLogique()
 	{
-		ordi = new Ordi();
 		setRejouer(0);
 		setMode(0);
 		setGagneOrdi(null);
@@ -62,12 +61,12 @@ public class JeuDeLogique
 
 	public Boolean getGagneOrdi()
 	{
-		return this.gagneOrdi;
+		return gagneOrdi;
 	}
 
 	public Boolean getGagneJoueur()
 	{
-		return this.gagneJoueur;
+		return gagneJoueur;
 	}
 
 	/****** SETTERS ******/
@@ -86,14 +85,14 @@ public class JeuDeLogique
 		this.mode = mode;
 	}
 
-	public void setGagneOrdi(Boolean gg)
+	public void setGagneOrdi(Boolean gagneOrdi)
 	{
-		this.gagneOrdi = gg;
+		this.gagneOrdi = gagneOrdi;
 	}
 
-	public void setGagneJoueur(Boolean gg)
+	public void setGagneJoueur(Boolean gagneJoueur)
 	{
-		this.gagneJoueur = gg;
+		this.gagneJoueur = gagneJoueur;
 	}
 
 	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
@@ -103,18 +102,22 @@ public class JeuDeLogique
 	 ********************************************************/
 	public void choisirMode(Integer c)
 	{
-		@SuppressWarnings("resource")
-		Scanner scan = new Scanner(System.in);
+		Integer choixMode = -1;
+		Scanner scanjdl = new Scanner(System.in);
+
 		do
 		{
+
 			System.out.println("\n********** Choix du mode **********");
 			System.out.println("1. Challenger");
 			System.out.println("2. Défenseur");
 			System.out.println("3. Duel");
 			System.out.println("4. Parametres");
 			System.out.println("5. Quitter");
+			System.out.println("\nVotre choix : ");
 
-			setMode(scan.nextInt());
+			choixMode = scanjdl.nextInt();
+			setMode(choixMode);
 
 			switch (c)
 			{
@@ -151,7 +154,7 @@ public class JeuDeLogique
 				} else if (getMode() == 3)
 				{
 					Mastermind m = new Mastermind();
-					//m.duelMode();
+					m.duelMode();
 				} else if (getMode() == 4)
 				{
 					ParametresMMD pMMD = new ParametresMMD();
@@ -163,8 +166,9 @@ public class JeuDeLogique
 				break;
 
 			}
+
 		} while (getMode() != 4);
-		scan.close();
+		//scanjdl.close();
 	}
 
 	/********************************************************************

@@ -53,7 +53,7 @@ public class ParametresMMD extends ParametresG
 
 			}
 		} while (choixMenu != 5);
-		scan.close();
+		//scan.close();
 		System.out.println("Au revoir ! :)");
 	}
 
@@ -74,7 +74,7 @@ public class ParametresMMD extends ParametresG
 		Integer nbrCombi = scan.nextInt();
 		this.configMMD.setNbrCasesCombiMMD(nbrCombi);
 		ConfigMMD.saveConfigMMD(configMMD);
-		scan.close();
+		//scan.close();
 	}
 
 	//Permet de changer le nombre de coups possibles
@@ -85,7 +85,7 @@ public class ParametresMMD extends ParametresG
 		Integer nbrEssais = scan.nextInt();
 		this.configMMD.setNbrEssaisMMD(nbrEssais);
 		ConfigMMD.saveConfigMMD(configMMD);
-		scan.close();
+		//scan.close();
 	}
 
 	//Permet de changer le nombre de couleurs disponibles
@@ -96,6 +96,6 @@ public class ParametresMMD extends ParametresG
 		Integer nbrCouleurs = scan.nextInt();
 		this.configMMD.setNbrCouleursMMD(nbrCouleurs);
 		ConfigMMD.saveConfigMMD(configMMD);
-		scan.close();
+		//scan.close();
 	}
 }

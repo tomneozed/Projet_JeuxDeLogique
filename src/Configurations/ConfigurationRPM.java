@@ -1,6 +1,6 @@
 package Configurations;
 
-public class ConfigurationRPM extends ConfigG
+public class ConfigurationRPM extends ConfigurationG
 {
 	private Integer nbrEssaisRPM, nbrCasesCombiRPM;
 
@@ -27,6 +27,13 @@ public class ConfigurationRPM extends ConfigG
 	public void setNbrCasesCombiRPM(Integer nbrCasesCombi)
 	{
 		this.nbrCasesCombiRPM = nbrCasesCombi;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "\n\t* nbrEssaisRPM = " + nbrEssaisRPM + "\n\t* nbrCasesCombiRPM = " + nbrCasesCombiRPM
+				+ "\n\t* modeDeveloppeur = " + getModeDeveloppeur().booleanValue();
 	}
 
 }

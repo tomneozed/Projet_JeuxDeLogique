@@ -26,7 +26,7 @@ public class ParametresRPM extends ParametresG
 		do
 		{
 
-			System.out.println("\n\n************** RECHERCHE +/- *************");
+			System.out.println("\n\n********************* RECHERCHE +/- ********************");
 			afficheConfig();
 			affichageMenuRPM();
 
@@ -50,7 +50,7 @@ public class ParametresRPM extends ParametresG
 
 			}
 		} while (choixMenu != 4);
-		scan.close();
+		//scan.close();
 		System.out.println("Au revoir ! :)");
 	}
 
@@ -69,8 +69,8 @@ public class ParametresRPM extends ParametresG
 	public void afficheConfig()
 	{
 		ConfigRPM.loadConfigRPM();
-		System.out.println("\n----Configuration courante----");
-		System.out.println(ConfigRPM.loadConfigRPM());
+		System.out.println("\n--------Configuration courante--------");
+		System.out.println(ConfigRPM.loadConfigRPM().toString());
 	}
 
 	//Permet de changer la taille de la combinaison à trouver
@@ -78,11 +78,12 @@ public class ParametresRPM extends ParametresG
 	{
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("\t* * * Entrez le nouveau nombre de cases de la combinaison secrète * * *");
+		System.out.println("* * * Entrez le nouveau nombre de cases de la combinaison secrète (Ancien : "
+				+ configRPM.getNbrCasesCombiRPM() + ")* * *");
 		Integer nbrCombi = scan.nextInt();
 		this.configRPM.setNbrCasesCombiRPM(nbrCombi);
 		ConfigRPM.saveConfigRPM(configRPM);
-		scan.close();
+		//scan.close();
 	}
 
 	//Permet de changer le nombre de coups possibles
@@ -93,6 +94,6 @@ public class ParametresRPM extends ParametresG
 		Integer nbrEssais = scan.nextInt();
 		this.configRPM.setNbrEssaisRPM(nbrEssais);
 		ConfigRPM.saveConfigRPM(configRPM);
-		scan.close();
+		//scan.close();
 	}
 }

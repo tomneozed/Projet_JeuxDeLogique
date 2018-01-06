@@ -5,6 +5,12 @@ public class ConfigurationG
 	//Attribut
 	private Boolean modeDeveloppeur;
 
+	//Constructeur
+	public ConfigurationG()
+	{
+		super();
+	}
+
 	//Getters & Setters
 	public Boolean getModeDeveloppeur()
 	{

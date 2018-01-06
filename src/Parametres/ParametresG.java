@@ -48,13 +48,13 @@ public class ParametresG
 		} while (modeDev != 1 && modeDev != 2);
 		if (modeDev == 1)
 		{
-			this.configG.setModeDeveloppeur(true);
+			configG.setModeDeveloppeur(true);
 		} else if (modeDev == 2)
 		{
-			this.configG.setModeDeveloppeur(false);
+			configG.setModeDeveloppeur(false);
 		}
 		ConfigG.saveConfigG(configG);
-		scan.close();
+		//scan.close();
 	}
 
 }

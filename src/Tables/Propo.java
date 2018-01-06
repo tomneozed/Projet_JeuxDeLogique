@@ -6,6 +6,7 @@ public class Propo extends Tables<Integer>
 {
 	private Integer[][] XouXY = new Integer[2][2];
 	private static Logger logger = Logger.getLogger(Propo.class);
+	private Integer structurePropo; // 1 : X, 2 : XY, 3 : XYZ
 
 	public Propo()
 	{
@@ -46,6 +47,11 @@ public class Propo extends Tables<Integer>
 		return this.XouXY[1][1];
 	}
 
+	public Integer getStructurePropo()
+	{
+		return structurePropo;
+	}
+
 	/****** SETTERS ******/
 	public void setXouXY(Integer[][] xouXY)
 	{
@@ -70,6 +76,11 @@ public class Propo extends Tables<Integer>
 	public void setIY(Integer iy)
 	{
 		this.XouXY[1][1] = iy;
+	}
+
+	public void setStructurePropo(Integer structurePropo)
+	{
+		this.structurePropo = structurePropo;
 	}
 
 	/*------------------------------------------------Methodes--------------------------------------------------*/
@@ -291,11 +302,13 @@ public class Propo extends Tables<Integer>
 
 		if (chiffresDifferents == 1)	//PropoX
 		{
+			setStructurePropo(1);
 			XouXY[0][0] = this.getValeur(0); // X
 			XouXY[0][1] = this.getTaille(); // nbx
 
 		} else if (chiffresDifferents == 2) // PropoXY
 		{
+			setStructurePropo(2);
 			j = 0;
 			while (j < 10 && chiffresDifferents > 0)
 			{
@@ -314,6 +327,7 @@ public class Propo extends Tables<Integer>
 			}
 		} else if (chiffresDifferents > 2)	//PropoXYZ
 		{
+			setStructurePropo(3);
 			while (j < 10 && chiffresDifferents > 0)
 			{
 				XouXY[0][0] = j; // X

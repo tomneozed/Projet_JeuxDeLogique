@@ -42,6 +42,7 @@ public class MasterTable extends Tables<Integer>
 	public Integer getValeur(Integer i, Integer j)
 	{
 		return this.mt[j][i];
+
 	}
 
 	public Integer[][] getMT()

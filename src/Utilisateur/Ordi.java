@@ -8,7 +8,7 @@ import Tables.Propo;
 
 public class Ordi extends Utilisateur
 {
-
+	private Integer tailleCombi;
 	private static Logger logger = Logger.getLogger(Ordi.class);
 
 	/********************
@@ -17,12 +17,41 @@ public class Ordi extends Utilisateur
 	public Ordi(Integer i)
 	{
 		super();
-		init(i);
+		initialisation(i);
+		setTailleCombi(i);
+		init(getTailleCombi());
 	}
 
+	//GETTERS & SETTERS 
+	public Integer getTailleCombi()
+	{
+		return tailleCombi;
+	}
+
+	public void setTailleCombi(Integer tailleCombi)
+	{
+		this.tailleCombi = tailleCombi;
+	}
+
+	public static Logger getLogger()
+	{
+		return logger;
+	}
+
+	public static void setLogger(Logger logger)
+	{
+		Ordi.logger = logger;
+	}
+
+	//METHODES 
+
+	/**
+	 * Définit les nouvelles bornes dans lesquelles chercher la combinaison à
+	 * trouver
+	 */
 	public void analyse()
 	{
-		for (int cpt = 0; cpt < ; cpt++)
+		for (int cpt = 0; cpt < getTailleCombi(); cpt++)
 		{
 			if (this.getComparaisonTab(cpt) == "+")
 			{
@@ -52,18 +81,16 @@ public class Ordi extends Utilisateur
 		}
 	}
 
+	/**
+	 * Initialise l'objet Ordi
+	 * 
+	 * @param i
+	 *            tailleCombi
+	 */
 	public void init(Integer i)
 	{
-		this.combiTab = new Integer[i];
-		this.propositionTab = new Integer[i];
 		this.propoTab = new Propo(i);
-		this.miniBorneTab = new Integer[i];
-		this.maxiBorneTab = new Integer[i];
-
-		this.choixSur = new boolean[i];
 		this.comparaisonTab = new String[i];
-		
-		this.setVie()
 	}
 
 	/********************************************
@@ -85,14 +112,14 @@ public class Ordi extends Utilisateur
 		Random hasard = new Random();
 
 		//Affichage des limites de propositions dans le fichier de logs
-		for (Integer k = 0; k < NB_CASES_COMBI; k++)
+		for (Integer k = 0; k < getTailleCombi(); k++)
 		{
 			logger.debug("Limites de proposition[" + k + "] : [" + this.getMiniBorneTab(k) + " ; "
 					+ this.getMaxiBorneTab(k) + "]");
 		}
 
 		//Ajout des nouvelles propositions de réponse
-		for (Integer j = 0; j < NB_CASES_COMBI; j++)
+		for (Integer j = 0; j < getTailleCombi(); j++)
 		{
 			if (getChoixSur(j) == false)
 			{
@@ -102,7 +129,7 @@ public class Ordi extends Utilisateur
 
 		//Affichage de la nouvelle proposition
 		System.out.println("Nouvelle proposition : ");
-		for (Integer i = 0; i < NB_CASES_COMBI; i++)
+		for (Integer i = 0; i < getTailleCombi(); i++)
 		{
 			System.out.print(this.getPropositionTab(i));
 		}
