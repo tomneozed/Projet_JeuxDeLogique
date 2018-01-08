@@ -1,13 +1,24 @@
 package Configurations;
 
+/**
+ * Classe fille de ConfiguartionG permettant de créer des objets décrivant le
+ * fonctionnement du Recherche+/-
+ * 
+ * @author Utilisateur
+ * @version 1.0
+ */
 public class ConfigurationRPM extends ConfigurationG
 {
+	//Attributs
 	private Integer nbrEssaisRPM, nbrCasesCombiRPM;
 
+	//Constructeur
 	public ConfigurationRPM()
 	{
 		super();
 	}
+
+	//Getters & Setters 
 
 	public Integer getNbrEssaisRPM()
 	{
@@ -29,7 +40,8 @@ public class ConfigurationRPM extends ConfigurationG
 		this.nbrCasesCombiRPM = nbrCasesCombi;
 	}
 
-	@Override
+	//Methodes 
+
 	public String toString()
 	{
 		return "\n\t* nbrEssaisRPM = " + nbrEssaisRPM + "\n\t* nbrCasesCombiRPM = " + nbrCasesCombiRPM

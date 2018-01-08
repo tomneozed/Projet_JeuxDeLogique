@@ -14,32 +14,31 @@ import Utilisateur.Ordi;
 import Utilisateur.Utilisateur;
 
 /**
+ * Classe fille de JeuDeLogique décrivant le fonctionnement du Mastermind
+ * 
  * @author Thomas Pelissier
- *
+ * @version 1.0
  */
 public class Mastermind extends JeuDeLogique
 {
+	//Attributs 
+	protected ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
+	protected Integer NB_CASES_COMBI = configMMD.getNbrCasesCombiMMD();
+	protected Integer NB_ESSAIS = configMMD.getNbrEssaisMMD();
+	protected Integer NB_COULEURS = configMMD.getNbrCouleursMMD();
 
-	//Attributs des properties
-	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
-	Integer NB_CASES_COMBI = configMMD.getNbrCasesCombiMMD();
-	Integer NB_ESSAIS = configMMD.getNbrEssaisMMD();
-	Integer NB_COULEURS = configMMD.getNbrCouleursMMD();
-
-	//Attributs de classe
 	private int BPj, MPj, BP, MP;
 
 	//Logger
 	private static Logger logger = Logger.getLogger(Mastermind.class);
 
 	//Ajout des objets tables
-	IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
-	ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
-	MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
+	protected IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
+	protected ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
+	protected MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
 
 	//Divers
-
-	Integer[] jat = masterTable.jATrouver(colonneTerminee.getT());
+	protected Integer[] jat = masterTable.jATrouver(colonneTerminee.getT());
 
 	//Constructeur
 	public Mastermind()
@@ -49,8 +48,7 @@ public class Mastermind extends JeuDeLogique
 		joueur = new Joueur(NB_CASES_COMBI);
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters
 	public int getBPj()
 	{
 		return this.BPj;
@@ -71,7 +69,6 @@ public class Mastermind extends JeuDeLogique
 		return MP;
 	}
 
-	/****** SETTERS ******/
 	public void setBPj(int b)
 	{
 		this.BPj = b;
@@ -92,14 +89,16 @@ public class Mastermind extends JeuDeLogique
 		MP = mPo;
 	}
 
-	/*--------------------------------------------Mode Challenger----------------------------------------------*/
-	/***************************************
-	 * Programme de jeu en mode Challenger *
-	 ***************************************/
+	//Methodes 
+
+	/**
+	 * Mode challenger : le joueur doit trouver la combinaison de l'ordinateur
+	 */
 	public void challengerMode()
 	{
+		logger.debug("Mode Challenger");
 		System.out.println("Bienvenue dans le Mastermind mode Challenger !");
-		System.out.println("Paramètres : " + configMMD.toString());
+
 		int tour = 0;
 		Scanner scan = new Scanner(System.in);
 		do
@@ -111,7 +110,6 @@ public class Mastermind extends JeuDeLogique
 
 			// L'ordi créé une combinaison aléatoire
 			ordi.combi(NB_CASES_COMBI);
-			System.out.println("\n");
 
 			//Si le mode developpeur est activé, on donne la réponse
 			reponse(ordi, 1);
@@ -119,7 +117,8 @@ public class Mastermind extends JeuDeLogique
 			do
 			{
 				tour++;
-				System.out.println("\n---- Tour " + tour + " ----\n");
+				logger.debug("Debut du tour " + tour);
+				System.out.println("\n------------------ Tour " + tour + " ------------------\n");
 				tourDuJoueur();
 				System.out.println("\nNombre d'essais restants : " + joueur.getVie());
 			} while (!getGagneJoueur() && joueur.getVie() > 0);
@@ -139,12 +138,12 @@ public class Mastermind extends JeuDeLogique
 		//scan.close();
 	}
 
-	/*--------------------------------------------Mode Defenseur----------------------------------------------*/
-	/***************************************
-	 * Programme de jeu en mode Defenseur *
-	 ***************************************/
+	/**
+	 * Mode defenseur : l'ordinateur doit trouver la combinaison du joueur
+	 */
 	public void defenseurMode()
 	{
+		logger.debug("Mode Defenseur");
 		System.out.println("Bienvenue dans le Mastermind mode Defenseur !");
 		Scanner scan = new Scanner(System.in);
 		Integer[] tab = new Integer[NB_CASES_COMBI];
@@ -174,7 +173,8 @@ public class Mastermind extends JeuDeLogique
 			do
 			{
 				tour++;
-				System.out.println("\n---- Tour " + tour + " ----\n");
+				logger.debug("Debut du tour " + tour);
+				System.out.println("\n------------------ Tour " + tour + " ------------------\n");
 				masterTable.afficheMT();
 				indiceTable.afficheIT();
 				tourDeLOrdi();
@@ -198,12 +198,12 @@ public class Mastermind extends JeuDeLogique
 		//scan.close();
 	}
 
-	/*--------------------------------------------Mode Duel----------------------------------------------*/
-	/***************************************
-	 * Programme de jeu en mode Duel *
-	 ***************************************/
+	/**
+	 * Mode duel : le joueur et l'ordinateur jouent l'un contre l'autre
+	 */
 	public void duelMode()
 	{
+		logger.debug("Mode Duel");
 		System.out.println("Bienvenue dans le Mastermind mode Duel !");
 		Scanner scan = new Scanner(System.in);
 		Integer[] tab = new Integer[NB_CASES_COMBI];
@@ -238,16 +238,22 @@ public class Mastermind extends JeuDeLogique
 			do
 			{
 				tour++;
-				System.out.println("\n---- Tour " + tour + " ----\n");
-				//masterTable.afficheMT();
-				//indiceTable.afficheIT();
+				logger.debug("Debut du tour " + tour);
+				System.out.println("\n------------------ Tour " + tour + " ------------------\n");
+
+				if (configMMD.getModeDeveloppeur())
+				{
+					System.out.println("Mode développeur activé :");
+					masterTable.afficheMT();
+					indiceTable.afficheIT();
+				}
 
 				//Le joueur commence
-				System.out.println("*************Tour du joueur*********************");
+				System.out.println("************* Tour du joueur *********************");
 				tourDuJoueur();
 
 				//Tour de l'ordinateur:
-				System.out.println("*************Tour de l'ordi*********************");
+				System.out.println("************* Tour de l'ordi *********************");
 				tourDeLOrdi();
 
 				System.out.println("\n\tNouvelle proposition : ");
@@ -271,9 +277,7 @@ public class Mastermind extends JeuDeLogique
 		} while (getRejouer() == 1);
 	}
 
-	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
-
-	//INITIALISATION & MAJ---------------------------------------------------------------------------------------
+	//Methodes 
 
 	/**
 	 * Initialise BP et MP à 0
@@ -307,23 +311,16 @@ public class Mastermind extends JeuDeLogique
 		colonneTerminee.setT(masterTable.majColonneTerminee(colonneTerminee.getT()));
 	}
 
-	//TOURS DES UTILISATEURS---------------------------------------------------------------------------------------
-
 	/**
 	 * Tour du joueur
-	 * 
-	 * @param j
-	 *            objet joueur
-	 * @param o
-	 *            objet Ordi
 	 */
 	public void tourDuJoueur()
 	{
 		joueur.cherche(NB_CASES_COMBI.intValue());
 
 		bienMalPlace(ordi.getCombiTab(), joueur.getPropositionTab());
-		System.out.println("BP : " + getBPj());
-		System.out.println("MP : " + getMPj());
+		System.out.println("Bien Placés 0 : " + getBPj());
+		System.out.println("Mal Placés O : " + getMPj());
 		if (BPj == NB_CASES_COMBI)
 		{
 			setGagneJoueur(true);
@@ -335,7 +332,7 @@ public class Mastermind extends JeuDeLogique
 	}
 
 	/**
-	 * Tour de l'ordi
+	 * Tour de l'ordi : fonctionnement de la recherche de la réponse
 	 */
 	public void tourDeLOrdi()
 	{
@@ -344,36 +341,38 @@ public class Mastermind extends JeuDeLogique
 		bienMalPlace(joueur.getCombiTab(), ordi.getPropoTab().getT());
 
 		// On regarde si la proposition est de type X ou XY ou chercheY
-		//if (ordi.getPropoTab().getY() != -1 && ordi.getPropoTab().getXouXY(0, 1) == ordi.getPropoTab().getTaille() - 1)	// propoXY
+		//PropoX
 		if (ordi.getPropoTab().getStructurePropo() == 1)
 		{
 			propoX();
-		} else if (ordi.getPropoTab().getStructurePropo() == 2)
+		} else
+		//PropoXY
+		if (ordi.getPropoTab().getStructurePropo() == 2)
 		{
 			propoXY();
 
-		} else if (ordi.getPropoTab().getY() == ordi.getPropoTab().getX()
-				&& ordi.getPropoTab().getXouXY(0, 1) != ordi.getPropoTab().getTaille() - 1)	//PropoChercheY
+		} else
+		//PropoChercheY
+		if (ordi.getPropoTab().getY() == ordi.getPropoTab().getX()
+				&& ordi.getPropoTab().getXouXY(0, 1) != ordi.getPropoTab().getTaille() - 1)
 		{
 			propoChercheY();
 
 		}
 		MAJTables();
 
-		System.out.println("BP : " + getBPo());
-		System.out.println("MP : " + getMPo());
+		System.out.println("Bien Placés 0 : " + getBPo());
+		System.out.println("Mal Placés O : " + getMPo());
 		if (BP == NB_CASES_COMBI)
 		{
 			setGagneOrdi(true);
 		} else
 		{
 			setGagneOrdi(false);
-			ordi.setVie(joueur.getVie() - 1);
+			ordi.setVie(ordi.getVie() - 1);
 		}
 
 	}
-
-	//FONCTION DE TRAITEMENT DES PROPOSITIONS-------------------------------------------------------------------------------------
 
 	/**
 	 * Fonction si propo = propoX
@@ -439,7 +438,6 @@ public class Mastermind extends JeuDeLogique
 
 	/**
 	 * Fonction si propo = propoXY
-	 * 
 	 */
 	public void propoXY()
 	{
@@ -504,7 +502,7 @@ public class Mastermind extends JeuDeLogique
 			}
 
 		} else
-
+		// 3eme cas : MP = 2
 		if (this.MP == 2)
 		{
 			masterTable.indiceBon(masterTable.indexOfY(ordi.getPropoTab().getX()),
@@ -513,7 +511,8 @@ public class Mastermind extends JeuDeLogique
 			if (this.BP == 0)
 			{
 				logger.debug("MP = 2	BP = 0");
-				masterTable.initPremiereLigneMT(indiceTable.getT());	// On remplit la premiere ligne de MT 'getIT(X)'
+				masterTable.initPremiereLigneMT(indiceTable.getT());
+				// On remplit la premiere ligne de MT 'getIT(X)'
 				// fois, càd de '0 à mt.length' fois
 				masterTable.indiceARayer(jat[0], jat[1]);
 			}
@@ -544,11 +543,12 @@ public class Mastermind extends JeuDeLogique
 		}
 	}
 
-	//FONCTIONS DE VERIFICATION DES VALEURS----------------------------------------------------------------------------------------
 	/**
-	 * Renvoie 'true' si : - la table 'colonneTerminee' est remplie de 'true' ET -
-	 * il n'y a plus de Y à trouver (si la 1ere ligne de la MT est complète)
+	 * Renvoie 'true' si : la table 'colonneTerminee' est remplie de 'true' ET si il
+	 * n'y a plus de Y à trouver (si la 1ere ligne de la MT est complète)
 	 * 
+	 * @return ct : true si la table colonneTerminee est terminee et si la premiere
+	 *         ligne de la masterTable est complète, false sinon
 	 */
 	public Boolean combiTrouvee()
 	{
@@ -565,7 +565,7 @@ public class Mastermind extends JeuDeLogique
 	/**
 	 * Renvoie 'true' si tous les indices ont étés trouvés
 	 * 
-	 * @return
+	 * @return ib
 	 */
 	public Boolean indiceBon()
 	{
@@ -592,10 +592,14 @@ public class Mastermind extends JeuDeLogique
 
 	}
 
-	//FONCTIONS COMMUNES A TOUTES LES TABLES-------------------------------------------------------------------
-
 	/**
 	 * Renvoie le nombre de fois x contenue dans tab
+	 * 
+	 * @param x
+	 *            nombre à compter
+	 * @param tab
+	 *            table dans laquelle compter
+	 * @return nombre
 	 */
 	public int compteCombien(int x, int[] tab)
 	{
@@ -613,6 +617,12 @@ public class Mastermind extends JeuDeLogique
 
 	/**
 	 * Renvoie un tableau contenant les indices des positions de x dans tab
+	 * 
+	 * @param x
+	 *            nombre à chercher
+	 * @param tab
+	 *            table dans laquelle chercher
+	 * @return posTab
 	 */
 	public int[] getPos(int x, int[] tab)
 	{
@@ -687,9 +697,13 @@ public class Mastermind extends JeuDeLogique
 		}
 	}
 
-	//AUTRES----------------------------------------------------------------------------------------------------
 	/**
-	 * Affiche la réponse si le mode développeur est activé
+	 * Affiche la réponse
+	 * 
+	 * @param u
+	 *            utilisateur dont la réponse doit etre affichée
+	 * @param k
+	 *            1 : mode developpeur, 0 : mode normal
 	 */
 	public void reponse(Utilisateur u, int k)
 	{

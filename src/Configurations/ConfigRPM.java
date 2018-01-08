@@ -6,24 +6,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Classe fille de ConfigG spécialisée dans la lecture/écriture des paramètres
+ * du Recherche +/-
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class ConfigRPM extends ConfigG
 {
-	//static Properties prop = new Properties();
+
+	//Attributs
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String ESSAIS = "application.configuration.recherchepm.essais";
 	static String NB_CASES_COMBI = "application.configuration.recherchepm.nombre.cases.combi";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
+	//Constructeur
 	public ConfigRPM()
 	{
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
+	//Methodes
+
+	/**
+	 * Récupère les valeurs "nombre d'essais", "nombre de cases de la combianison",
+	 * "nombre de couleurs" possibles, et "mode développeur" relatives au
+	 * Recherche+/- du fichier config.properties
+	 * 
+	 * @return configRPM
+	 * @see ConfigurationRPM
+	 */
 	public static ConfigurationRPM loadConfigRPM()
 	{
 		ConfigurationRPM configRPM = new ConfigurationRPM();
-		//final Properties prop = new Properties();
 		InputStream input = null;
 
 		try
@@ -54,9 +72,17 @@ public class ConfigRPM extends ConfigG
 		return configRPM;
 	}
 
+	/**
+	 * Ecrit les valeurs "nombre d'essais", "nombre de cases de la combianison",
+	 * "nombre de couleurs" possibles, et "mode développeur" relatives au
+	 * Recherche+/- dans le fichier config.properties
+	 * 
+	 * @param configRPM
+	 *            objet config recherche+/-
+	 * @see ConfigurationRPM
+	 */
 	public static void saveConfigRPM(ConfigurationRPM configRPM)
 	{
-		//final Properties prop = new Properties();
 		OutputStream output = null;
 
 		try

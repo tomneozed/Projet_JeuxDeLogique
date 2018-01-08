@@ -1,5 +1,12 @@
 package Configurations;
 
+/**
+ * Classe fille de ConfigurationG permettant de créer des objets décrivant le
+ * fonctionnement du Mastermind
+ * 
+ * @author Utilisateur
+ * @version 1.0
+ */
 public class ConfigurationMMD extends ConfigurationG
 {
 	//Attributs
@@ -40,6 +47,15 @@ public class ConfigurationMMD extends ConfigurationG
 	public void setNbrCasesCombiMMD(Integer nbrCasesCombiMMD)
 	{
 		this.nbrCasesCombiMMD = nbrCasesCombiMMD;
+	}
+
+	//Methodes
+
+	public String toString()
+	{
+		return "\n\t* nbrCouleursMMD = " + nbrCouleursMMD + "\n\t* nbrEssaisMMD = " + nbrEssaisMMD
+				+ "\n\t* nbrCasesCombiMMD = " + nbrCasesCombiMMD + "\n\t* modeDeveloppeur = "
+				+ getModeDeveloppeur().booleanValue();
 	}
 
 }

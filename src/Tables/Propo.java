@@ -2,11 +2,20 @@ package Tables;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Classe fille de Tables
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class Propo extends Tables<Integer>
 {
+	//Attributs
 	private Integer[][] XouXY = new Integer[2][2];
 	private static Logger logger = Logger.getLogger(Propo.class);
-	private Integer structurePropo; // 1 : X, 2 : XY, 3 : XYZ
+	private Integer structurePropo;
+
+	//Constructeurs
 
 	public Propo()
 	{
@@ -20,8 +29,7 @@ public class Propo extends Tables<Integer>
 		init();
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters 
 	public Integer[][] getXouXY()
 	{
 		return XouXY;
@@ -52,7 +60,6 @@ public class Propo extends Tables<Integer>
 		return structurePropo;
 	}
 
-	/****** SETTERS ******/
 	public void setXouXY(Integer[][] xouXY)
 	{
 		XouXY = xouXY;
@@ -83,7 +90,7 @@ public class Propo extends Tables<Integer>
 		this.structurePropo = structurePropo;
 	}
 
-	/*------------------------------------------------Methodes--------------------------------------------------*/
+	//Methodes
 	/**
 	 * Initialise propo à -2 partout
 	 */
@@ -100,6 +107,9 @@ public class Propo extends Tables<Integer>
 
 	/**
 	 * Initialise propo à x partout
+	 * 
+	 * @param x
+	 *            nombre qui remplit propo
 	 */
 	public void init(Integer x)
 	{
@@ -129,6 +139,7 @@ public class Propo extends Tables<Integer>
 	 * Renvoie un tableau rempli de x
 	 * 
 	 * @param x
+	 *            nombre qui remplit propo
 	 * @return propo
 	 */
 	public Integer[] propoX(Integer x)
@@ -151,6 +162,8 @@ public class Propo extends Tables<Integer>
 	 *            valeur dont on sait l'existance et dont on teste la position
 	 * @param jy
 	 *            position de Y à tester
+	 * @param mt
+	 *            masterTable
 	 * @return propo
 	 */
 	public Integer[] propoXY(Integer x, Integer y, Integer jy, Integer[][] mt)
@@ -170,7 +183,8 @@ public class Propo extends Tables<Integer>
 	 * Renvoie la proposition finale via la mastertable
 	 * 
 	 * @param table
-	 * @return
+	 *            masterTable
+	 * @return pf
 	 */
 	public Integer[] propoFinale(Integer[][] table)
 	{
@@ -209,8 +223,10 @@ public class Propo extends Tables<Integer>
 	 * Renvoie la proposition finale en testant la valeur du dernier y à trouver
 	 * 
 	 * @param table
+	 *            masterTable
 	 * @param it
-	 * @return
+	 *            table
+	 * @return pcy
 	 */
 	public Integer[] propoChercheY(Integer[][] table, Tables it)
 	{
@@ -268,8 +284,6 @@ public class Propo extends Tables<Integer>
 	 * Renvoie un tableau 2x2 contenant : [X,nbX] [Y,nbY]
 	 * 
 	 */
-
-	@SuppressWarnings("null")
 	public void propoXouXY()
 	{
 		Integer x = -1;
@@ -355,8 +369,9 @@ public class Propo extends Tables<Integer>
 	/**
 	 * Renvoie l'indice du premier Y de propo
 	 * 
-	 * @param aTrouver
-	 * @return
+	 * @param y
+	 *            nomre à rechercher
+	 * @return i
 	 */
 	public Integer indexOf(Integer y)
 	{

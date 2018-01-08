@@ -5,9 +5,15 @@ import java.util.Scanner;
 import Configurations.ConfigRPM;
 import Configurations.ConfigurationRPM;
 
+/**
+ * Classe fille de ParametresG qui fait appel aux fonctions relatives aux
+ * modifications des parametres du Recherche+/-
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class ParametresRPM extends ParametresG
 {
-
 	//Attributs
 	ConfigurationRPM configRPM = ConfigRPM.loadConfigRPM();
 
@@ -17,7 +23,11 @@ public class ParametresRPM extends ParametresG
 		super();
 	}
 
-	//Menu de choix des actions
+	//Methodes
+
+	/**
+	 * Menu de choix des actions
+	 */
 	public void menuRPM()
 	{
 		Integer choixMenu = 0;
@@ -25,8 +35,8 @@ public class ParametresRPM extends ParametresG
 
 		do
 		{
-
 			System.out.println("\n\n********************* RECHERCHE +/- ********************");
+
 			afficheConfig();
 			affichageMenuRPM();
 
@@ -54,6 +64,9 @@ public class ParametresRPM extends ParametresG
 		System.out.println("Au revoir ! :)");
 	}
 
+	/**
+	 * Affiche le menu des paramètres du Recherche+/-
+	 */
 	public void affichageMenuRPM()
 	{
 		System.out.println("\n\n************** REGLAGES & MODE DEVELOPPEUR *************");
@@ -65,15 +78,19 @@ public class ParametresRPM extends ParametresG
 		System.out.println("\nVotre choix : ");
 	}
 
-	//Affichage configuration courante
+	/**
+	 * Affichage configuration courante
+	 */
 	public void afficheConfig()
 	{
 		ConfigRPM.loadConfigRPM();
-		System.out.println("\n--------Configuration courante--------");
+		System.out.println("\n---------------- Configuration courante ----------------");
 		System.out.println(ConfigRPM.loadConfigRPM().toString());
 	}
 
-	//Permet de changer la taille de la combinaison à trouver
+	/**
+	 * Permet de changer la taille de la combinaison à trouver
+	 */
 	public void changeNombreCombi()
 	{
 		Scanner scan = new Scanner(System.in);
@@ -86,7 +103,9 @@ public class ParametresRPM extends ParametresG
 		//scan.close();
 	}
 
-	//Permet de changer le nombre de coups possibles
+	/**
+	 * Permet de changer le nombre de coups possibles
+	 */
 	public void changeNombreEssais()
 	{
 		Scanner scan = new Scanner(System.in);

@@ -5,6 +5,13 @@ import java.util.Scanner;
 import Configurations.ConfigMMD;
 import Configurations.ConfigurationMMD;
 
+/**
+ * Classe fille de ParametresG qui fait appel aux fonctions relatives aux
+ * modifications des parametres du Mastermind
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class ParametresMMD extends ParametresG
 {
 	//Attributs
@@ -16,7 +23,11 @@ public class ParametresMMD extends ParametresG
 		super();
 	}
 
-	//Menu de choix des actions
+	//Methodes 
+
+	/**
+	 * Menu de choix des actions
+	 */
 	public void menuMMD()
 	{
 		Integer choixMenu = 0;
@@ -24,7 +35,6 @@ public class ParametresMMD extends ParametresG
 
 		do
 		{
-
 			System.out.println("\n\n************** MASTERMIND *************");
 			afficheConfig();
 			affichageMenu();
@@ -57,15 +67,19 @@ public class ParametresMMD extends ParametresG
 		System.out.println("Au revoir ! :)");
 	}
 
-	//Affichage configuration courante
+	/**
+	 * Affichage configuration courante
+	 */
 	public void afficheConfig()
 	{
 		ConfigMMD.loadConfigMMD();
-		System.out.println("\n----Configuration courante----");
-		System.out.println(ConfigMMD.loadConfigMMD());
+		System.out.println("\n-------- Configuration courante -------");
+		System.out.println(ConfigMMD.loadConfigMMD().toString());
 	}
 
-	//Permet de changer la taille de la combinaison à trouver
+	/**
+	 * Permet de changer la taille de la combinaison à trouver
+	 */
 	public void changeNombreCombi()
 	{
 		Scanner scan = new Scanner(System.in);
@@ -77,7 +91,9 @@ public class ParametresMMD extends ParametresG
 		//scan.close();
 	}
 
-	//Permet de changer le nombre de coups possibles
+	/**
+	 * Permet de changer le nombre de coups possibles
+	 */
 	public void changeNombreEssais()
 	{
 		Scanner scan = new Scanner(System.in);
@@ -88,7 +104,9 @@ public class ParametresMMD extends ParametresG
 		//scan.close();
 	}
 
-	//Permet de changer le nombre de couleurs disponibles
+	/**
+	 * Permet de changer le nombre de couleurs disponibles
+	 */
 	public void changeNombreCouleurs()
 	{
 		Scanner scan = new Scanner(System.in);

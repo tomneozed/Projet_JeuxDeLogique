@@ -11,29 +11,28 @@ import Parametres.ParametresRPM;
 import Utilisateur.Joueur;
 import Utilisateur.Ordi;
 
+/**
+ * Classe mère des jeux permettant de capitaliser leurs attributs communs
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class JeuDeLogique
 {
-	/*******
-	 * VARIABLES
-	 *****************************************************************************************/
+	//Attributs
 	private Integer rejouer;
 	private Integer trouve;
 	private Integer mode;
 
-	Ordi ordi;
-	Joueur joueur;
-
-	ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
-	ConfigurationG configG = ConfigG.loadConfigG();
-
 	private Boolean gagneOrdi, gagneJoueur;
 
-	/*******
-	 * FONCTIONS
-	 *****************************************************************************************/
-	/********************
-	 * Constructeur *
-	 *******************/
+	protected Ordi ordi;
+	protected Joueur joueur;
+
+	protected ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
+	protected ConfigurationG configG = ConfigG.loadConfigG();
+
+	//Constructeur
 	public JeuDeLogique()
 	{
 		setRejouer(0);
@@ -42,8 +41,7 @@ public class JeuDeLogique
 		setGagneJoueur(null);
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters
 	public Integer getRejouer()
 	{
 		return this.rejouer;
@@ -69,7 +67,6 @@ public class JeuDeLogique
 		return gagneJoueur;
 	}
 
-	/****** SETTERS ******/
 	public void setRejouer(Integer rejoue)
 	{
 		this.rejouer = rejoue;
@@ -95,11 +92,21 @@ public class JeuDeLogique
 		this.gagneJoueur = gagneJoueur;
 	}
 
-	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
-	/********************************************************
-	 * Fonction d'initialisation de la variable "mode" : * - Challenger * -
-	 * Défenseur * - Duel *
-	 ********************************************************/
+	//Methodes
+
+	public String toString()
+	{
+		return "JeuDeLogique [rejouer=" + rejouer + ", trouve=" + trouve + ", mode=" + mode + ", gagneOrdi=" + gagneOrdi
+				+ ", gagneJoueur=" + gagneJoueur + ", ordi=" + ordi + ", joueur=" + joueur + ", configMMD=" + configMMD
+				+ ", configG=" + configG + "]";
+	}
+
+	/**
+	 * Menu permettant de choisir le mode de jeu
+	 * 
+	 * @param c
+	 *            qui sert à différencier les 2 jeux
+	 */
 	public void choisirMode(Integer c)
 	{
 		Integer choixMode = -1;
@@ -107,7 +114,6 @@ public class JeuDeLogique
 
 		do
 		{
-
 			System.out.println("\n********** Choix du mode **********");
 			System.out.println("1. Challenger");
 			System.out.println("2. Défenseur");
@@ -121,7 +127,8 @@ public class JeuDeLogique
 
 			switch (c)
 			{
-			case 0:									//RecherchePlusMoins
+			//RecherchePlusMoins
+			case 0:
 				if (getMode() == 1)
 				{
 					RecherchePlusMoins rpm = new RecherchePlusMoins();
@@ -141,7 +148,8 @@ public class JeuDeLogique
 				}
 				break;
 
-			case 1:									//Mastermind
+			//Mastermind
+			case 1:
 				if (getMode() == 1)
 				{
 					Mastermind m = new Mastermind();
@@ -171,35 +179,54 @@ public class JeuDeLogique
 		//scanjdl.close();
 	}
 
-	/********************************************************************
-	 * Compare les valeurs de 2 tableaux d'entiers * et renvoie la position de
-	 * chaque élément * du 1er tableau par rapport au 2eme * et compte le nombre de
-	 * valeurs exactes (le jeu est gagné à 4) *
+	/**
+	 * Compare les valeurs de 2 tableaux d'entiers et renvoie la position de chaque
+	 * élément du 1er tableau par rapport au 2eme et compte le nombre de valeurs
+	 * exactes
 	 * 
-	 * @param combi
-	 *            *
-	 * @param proposition
-	 *            *
-	 * @return true or false *
-	 *******************************************************************/
-	public String[] compareTab(Integer[] combiTab, Integer[] propositionTab)
+	 * @param combiTab
+	 *            table à tester
+	 * 
+	 * @param propositionTab
+	 *            table à tester
+	 * 
+	 * @param j
+	 *            0 : n'afiche pas la comparaison, 1 : affiche la comparaison
+	 * 
+	 * @return compa
+	 */
+	public String[] compareTab(Integer[] combiTab, Integer[] propositionTab, Integer j)
 	{
 		setTrouve(0);
 		String[] compa = new String[configMMD.getNbrCasesCombiMMD()];
-		System.out.println("\nComparaison : ");
-		for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+
+		if (j == 1)
 		{
-			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
-			compa[i] = compare(combiTab[i], propositionTab[i]);
+			System.out.println("\nComparaison : ");
+
+			afficheTab(propositionTab);
+			for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+			{
+				System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
+				compa[i] = compare(combiTab[i], propositionTab[i]);
+			}
+		} else if (j == 0)
+		{
+			for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+			{
+				compa[i] = compare(combiTab[i], propositionTab[i]);
+			}
 		}
+
 		return compa;
 
 	}
 
 	/**
-	 * Analyse si le résultat est correct dans son ensemble (= = = =)
+	 * Analyse si le résultat est correct dans son ensemble (= = = = ...)
 	 * 
 	 * @param comp
+	 *            comparaison à analyser
 	 * @return true or false
 	 */
 	public boolean analyseTrouve(String[] comp)
@@ -219,15 +246,17 @@ public class JeuDeLogique
 			return false;
 	}
 
-	/************************************************
-	 * Compare 2 entiers et renvoie "+", "-", "=" * en fonction du résultat *
+	/**
+	 * Compare 2 entiers et renvoie "+", "-", "=" * en fonction du résultat
 	 * 
 	 * @param a
-	 *            *
+	 *            operande 1
+	 * 
 	 * @param b
-	 *            *
-	 * @return comparaison *
-	 ***********************************************/
+	 *            operande 2
+	 * 
+	 * @return comparaison
+	 */
 	public String compare(Integer a, Integer b)
 	{
 		String comparaison = "";
@@ -239,6 +268,22 @@ public class JeuDeLogique
 			comparaison = "=";
 
 		return comparaison;
+	}
+
+	/**
+	 * Affiche la table passée en paramètres
+	 * 
+	 * @param tab
+	 *            table à afficher
+	 * 
+	 */
+	public void afficheTab(Integer[] tab)
+	{
+		for (Integer i = 0; i < tab.length; i++)
+		{
+			System.out.print(tab[i] + " ");
+		}
+		System.out.print("\n");
 	}
 
 	/**

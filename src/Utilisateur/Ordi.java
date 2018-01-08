@@ -6,14 +6,20 @@ import org.apache.log4j.Logger;
 
 import Tables.Propo;
 
+/**
+ * Classe fille de Utilisateur qui décrit le fonctionnement de l'ordinateur
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class Ordi extends Utilisateur
 {
+	//Attributs
 	private Integer tailleCombi;
 	private static Logger logger = Logger.getLogger(Ordi.class);
 
-	/********************
-	 * Constructeur *
-	 *******************/
+	//Constructeur
 	public Ordi(Integer i)
 	{
 		super();
@@ -22,7 +28,7 @@ public class Ordi extends Utilisateur
 		init(getTailleCombi());
 	}
 
-	//GETTERS & SETTERS 
+	//Getters & Setters
 	public Integer getTailleCombi()
 	{
 		return tailleCombi;
@@ -93,20 +99,20 @@ public class Ordi extends Utilisateur
 		this.comparaisonTab = new String[i];
 	}
 
-	/********************************************
-	 * Demande de création d'une combinaison *
+	/**
+	 * Demande de création d'une combinaison aléatoire de taille x
 	 * 
 	 * @param x
-	 *            taille de la combinaison *
-	 *******************************************/
+	 *            taille
+	 */
 	public void combi(Integer x)
 	{
 		setCombiTab(decoupageAleatoire(x));
 	}
 
-	/************************************************
-	 * Demande de proposition de réponse ALEATOIRE *
-	 ***********************************************/
+	/**
+	 * Demande de proposition de réponse ALEATOIRE (mais bornée)
+	 */
 	public void cherche()
 	{
 		Random hasard = new Random();
@@ -123,12 +129,12 @@ public class Ordi extends Utilisateur
 		{
 			if (getChoixSur(j) == false)
 			{
-				setPropositionTab(j, nombreAleatoire(this.getMiniBorneTab(j), this.getMaxiBorneTab(j), hasard));
+				this.setPropositionTab(j, nombreAleatoire(this.getMiniBorneTab(j), this.getMaxiBorneTab(j), hasard));
 			}
 		}
 
 		//Affichage de la nouvelle proposition
-		System.out.println("Nouvelle proposition : ");
+		System.out.print("Nouvelle proposition : ");
 		for (Integer i = 0; i < getTailleCombi(); i++)
 		{
 			System.out.print(this.getPropositionTab(i));

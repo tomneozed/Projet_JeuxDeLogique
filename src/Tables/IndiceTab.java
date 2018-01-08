@@ -2,11 +2,21 @@ package Tables;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Classe fille de Tables qui recense le nombre de fois qu'un chiffre appartient
+ * à la combinaison à trouver (Mastermind)
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class IndiceTab extends Tables<Integer>
 {
+	//Attributs
 	private Integer total, premierNullIT;
 	private static Logger logger = Logger.getLogger(IndiceTab.class);
 
+	//Constructeurs
 	public IndiceTab()
 	{
 		setTaille(10);
@@ -19,8 +29,7 @@ public class IndiceTab extends Tables<Integer>
 		init();
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters
 
 	public Integer getTotal()
 	{
@@ -31,8 +40,6 @@ public class IndiceTab extends Tables<Integer>
 	{
 		return this.premierNullIT;
 	}
-
-	/****** SETTERS ******/
 
 	public void setTotal(Integer t)
 	{
@@ -53,7 +60,8 @@ public class IndiceTab extends Tables<Integer>
 		}
 	}
 
-	/*------------------------------------------------Methodes--------------------------------------------------*/
+	//Methodes
+
 	/**
 	 * Initialise l'indiceTab à -2 partout
 	 */
@@ -86,7 +94,7 @@ public class IndiceTab extends Tables<Integer>
 	}
 
 	/**
-	 * complete IT si possible
+	 * Complete IT si possible
 	 */
 	public void majIT()
 	{

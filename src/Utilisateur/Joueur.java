@@ -4,14 +4,20 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Classe fille de Utilisateur qui décrit le fonctionnement d'un joueur
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class Joueur extends Utilisateur
 {
+	//Atributs
 	private Integer tailleCombi;
 	private static Logger logger = Logger.getLogger(Joueur.class);
 
-	/********************
-	 * Constructeur *
-	 *******************/
+	//Constructeur
 	public Joueur(Integer i)
 	{
 		super();
@@ -19,7 +25,7 @@ public class Joueur extends Utilisateur
 		setTailleCombi(i);
 	}
 
-	//GETTERS & SETTERS
+	//Getters & Setters
 	public Integer getTailleCombi()
 	{
 		return tailleCombi;
@@ -30,12 +36,15 @@ public class Joueur extends Utilisateur
 		this.tailleCombi = tailleCombi;
 	}
 
-	/********************************************
-	 * Demande de création d'une combinaison *
-	 *******************************************/
+	/**
+	 * Demande de création d'une combinaison de taille x
+	 * 
+	 * @param x
+	 *            taille
+	 */
 	public void combi(Integer x)
 	{
-		super.combi(x);
+
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Entrez une combinaison de " + x + " chiffres (0-9): ");
 
@@ -59,14 +68,17 @@ public class Joueur extends Utilisateur
 
 	}
 
-	/****************************************
-	 * Demande de proposition de réponse *
-	 ***************************************/
+	/**
+	 * Demande de proposition de réponse de taille x
+	 * 
+	 * @param x
+	 *            taille
+	 */
 	public void cherche(Integer x)
 	{
 		do
 		{
-			System.out.println("\nEntrez une proposition de " + x + " chiffres (couleurs) (0-9): ");
+			System.out.println("\nEntrez une proposition de " + x + " chiffres (0-9): ");
 			Scanner scan = new Scanner(System.in);
 			this.setPropositionString(scan.nextLine());
 			if (this.getPropositionString().length() != x)

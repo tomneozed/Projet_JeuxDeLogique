@@ -7,25 +7,38 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+/**
+ * Classe mère des Configs qui permet de lire/écrire le paramètre
+ * "modeDeveloppeur" dans le fichier config.properties
+ * 
+ * @author Thomas Pelissier
+ * @version v 1.0
+ * 
+ */
 public class ConfigG
 {
-	static Properties prop = new Properties();
 	//Attributs
+	static Properties prop = new Properties();
+
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
-	//Constructeurs
+	//Constructeur
 	public ConfigG()
 	{
 		loadConfigG();
 	}
 
+	/**
+	 * Récupère la valeur "modeDeveloppeur" du fichier config.properties
+	 * 
+	 * @return configG
+	 * @see ConfigurationG
+	 */
 	public static ConfigurationG loadConfigG()
 	{
 		ConfigurationG configG = new ConfigurationG();
-		//final Properties prop = new Properties();
 		InputStream input = null;
-
 		try
 		{
 			input = new FileInputStream(CHEMIN_FICHIER);
@@ -51,6 +64,13 @@ public class ConfigG
 		return configG;
 	}
 
+	/**
+	 * Ecrit la valeur "modeDeveloppeur" dans le fichier config.properties
+	 * 
+	 * @param configG
+	 *            objet config générale
+	 * @see ConfigurationG
+	 */
 	public static void saveConfigG(ConfigurationG configG)
 	{
 		//final Properties prop = new Properties();

@@ -2,8 +2,16 @@ package Tables;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Classe fille de Tables permettant à l'ordinateur de trouver des réponses au
+ * Mastermind
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class MasterTable extends Tables<Integer>
 {
+	//Attributs
 	private Integer[][] mt;
 	private Integer largeur, longueur;
 	private Integer[] jAT =
@@ -11,6 +19,7 @@ public class MasterTable extends Tables<Integer>
 
 	private static Logger logger = Logger.getLogger(MasterTable.class);
 
+	//Constructeurs
 	public MasterTable()
 	{
 		setLongeur(4);
@@ -27,8 +36,7 @@ public class MasterTable extends Tables<Integer>
 		initMT();
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters
 	public Integer getLargeur()
 	{
 		return this.largeur;
@@ -60,7 +68,6 @@ public class MasterTable extends Tables<Integer>
 		return jAT;
 	}
 
-	/****** SETTERS ******/
 	public void setLongeur(Integer l)
 	{
 		this.longueur = l;
@@ -86,7 +93,7 @@ public class MasterTable extends Tables<Integer>
 		this.jAT = jAT;
 	}
 
-	/*------------------------------------------------Methodes--------------------------------------------------*/
+	//Methodes
 
 	/**
 	 * Initialise la masterTable à -2 partout
@@ -98,7 +105,7 @@ public class MasterTable extends Tables<Integer>
 		{
 			for (Integer j = 0; j < this.getLongueur(); j++)
 			{
-				this.mt[i][j] = -2; // -2 = null
+				this.mt[i][j] = -2;
 			}
 		}
 	}
@@ -112,7 +119,14 @@ public class MasterTable extends Tables<Integer>
 		System.out.print("  ");
 		for (Integer i = 0; i < this.getLongueur(); i++)
 		{
-			System.out.print("  " + i + " ");
+			if (i < 10 && i > -1)
+			{
+				System.out.print("  " + i + " ");
+			} else if (i > 9 && i < 100)
+			{
+				System.out.print("  " + i);
+			}
+
 		}
 		System.out.print("\n");
 
@@ -134,9 +148,12 @@ public class MasterTable extends Tables<Integer>
 				} else if (this.mt[i][j] == -1)
 				{
 					System.out.print("| X ");
-				} else
+				} else if (this.mt[i][j] < 10 && this.mt[i][j] > -1)
 				{
 					System.out.print("| " + this.mt[i][j] + " ");
+				} else if (this.mt[i][j] > 9 && this.mt[i][j] < 100)
+				{
+					System.out.print("| " + this.mt[i][j]);
 				}
 			}
 			System.out.println("|");
@@ -146,8 +163,9 @@ public class MasterTable extends Tables<Integer>
 	/**
 	 * Renvoie l'indice du premier Y de la premiere ligne de MT
 	 * 
-	 * @param aTrouver
-	 * @return
+	 * @param y
+	 *            nombre à chercher
+	 * @return i
 	 */
 	public Integer indexOfY(Integer y)
 	{
@@ -165,9 +183,9 @@ public class MasterTable extends Tables<Integer>
 	/**
 	 * Renvoie l'indice du premier null (-2) de la colonne de la masterTable
 	 * 
-	 * @param mt
-	 * @param Y
-	 * @return
+	 * @param colonne
+	 *            indice de la colonne dans laquelle chercher
+	 * @return indiceAtester
 	 */
 	public Integer cherchePremierNullIndiceMT(Integer colonne)
 	{
@@ -192,7 +210,8 @@ public class MasterTable extends Tables<Integer>
 	 * @param p
 	 *            premiere ligne MT
 	 * @param colonneTerminee
-	 * @return
+	 *            table à tester
+	 * @return iyMT
 	 */
 	public Integer chercheIYMT(Integer jyP, Integer[] p, boolean[] colonneTerminee)
 	{
@@ -218,7 +237,6 @@ public class MasterTable extends Tables<Integer>
 	 * 
 	 * @return yAT
 	 */
-	@SuppressWarnings("null")
 	public boolean yATrouver()
 	{
 		boolean yAT = false;
@@ -238,7 +256,10 @@ public class MasterTable extends Tables<Integer>
 	}
 
 	/**
-	 * renvoie un couple de valeurs [iy,jy] d'indice à tester
+	 * Renvoie un couple de valeurs [iy,jy] d'indice à tester
+	 * 
+	 * @param colonneTerminee
+	 *            Table à tester pour connaitre la colonne à tester
 	 * 
 	 * @return jAT
 	 */
@@ -267,11 +288,12 @@ public class MasterTable extends Tables<Integer>
 	}
 
 	/**
-	 * On raye (-1) la case [iy,jy] de la masterTable
+	 * Raye (-1) la case [iy,jy] de la masterTable
 	 * 
-	 * @param Y
-	 * @param jy
-	 * @param mt
+	 * @param iyMT
+	 *            positon de iy dans MT
+	 * @param jyMT
+	 *            positon de jy dans MT
 	 */
 	public void indiceARayer(Integer iyMT, Integer jyMT)
 	{
@@ -281,7 +303,12 @@ public class MasterTable extends Tables<Integer>
 	}
 
 	/**
-	 * On raye (-1) les cases de valeur 'nombre' à l'indice jyMT
+	 * Raye (-1) les cases de valeur 'nombre' à l'indice jyMT
+	 * 
+	 * @param nombre
+	 *            nombre à rayer
+	 * @param jyMT
+	 *            positon de jy dans MT
 	 */
 	public void nombreARayer(Integer nombre, Integer jyMT)
 	{
@@ -299,9 +326,8 @@ public class MasterTable extends Tables<Integer>
 	 * Remplit la 1ere ligne de la masterTable : on ajoute 'nbr' fois 'Y' dans la
 	 * premiere ligne de la MT dans une case vide (-2)
 	 * 
-	 * @param Y
-	 * @param nbr
-	 * @param mt
+	 * @param integers
+	 *            indiceTab
 	 */
 	public void initPremiereLigneMT(Integer[] integers)
 	{
@@ -337,8 +363,6 @@ public class MasterTable extends Tables<Integer>
 
 	/**
 	 * Complete la/les ligne(s) si possible
-	 * 
-	 * @param mt
 	 */
 	public void completeHorizontal()
 	{
@@ -362,7 +386,6 @@ public class MasterTable extends Tables<Integer>
 			{
 				if (autre == -2)
 				{
-					// mt[cherchePremierNull(mt[j])][j] = j - 1;
 					indiceBon(cherchePremierNull(mt[j]), j);
 				}
 			}
@@ -371,8 +394,6 @@ public class MasterTable extends Tables<Integer>
 
 	/**
 	 * Complete la/les colonnes(s) si possible
-	 * 
-	 * @param mt
 	 */
 	public void completeVertical()
 	{
@@ -395,7 +416,6 @@ public class MasterTable extends Tables<Integer>
 			{
 				if (autre == -2)
 				{
-					// mt[i][cherchePremierNull(mt[i])] = cherchePremierNull(mt[i]) - 1;
 					indiceBon(i, cherchePremierNullIndiceMT(i));
 				}
 			}
@@ -441,7 +461,8 @@ public class MasterTable extends Tables<Integer>
 	 * Renvoie l'indice du premier null (-2) dans tab
 	 * 
 	 * @param tab
-	 * @return
+	 *            table dans laquelle chercher
+	 * @return x
 	 */
 	public Integer cherchePremierNull(Integer[] tab)
 	{
@@ -457,8 +478,6 @@ public class MasterTable extends Tables<Integer>
 
 	/**
 	 * Complete la masterTable si possible
-	 * 
-	 * @param mt
 	 */
 	public void majMT()
 	{
@@ -467,7 +486,11 @@ public class MasterTable extends Tables<Integer>
 	}
 
 	/**
+	 * Met à jour la table colonneTerminee par rapport à la masterTable
 	 * 
+	 * @param colonneTerminee
+	 *            table à mettre à jour
+	 * @return colonneTerminee
 	 */
 	public Boolean[] majColonneTerminee(Boolean[] colonneTerminee)
 	{

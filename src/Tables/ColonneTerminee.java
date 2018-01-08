@@ -2,11 +2,19 @@ package Tables;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Classe fille de Tables qui liste les colonnes remplies de la MasterTable
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class ColonneTerminee extends Tables<Boolean>
 {
-
+	//Attributs
 	private static Logger logger = Logger.getLogger(ColonneTerminee.class);
 
+	//Constructeurs
 	public ColonneTerminee()
 	{
 		setTaille(0);
@@ -19,13 +27,10 @@ public class ColonneTerminee extends Tables<Boolean>
 		init();
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
-	/****** SETTERS ******/
+	//Methodes
 
-	/*------------------------------------------------Methodes--------------------------------------------------*/
 	/**
-	 * Initialisation de CT à false
+	 * Initialisation des valeurs de CT à false
 	 */
 	public void init()
 	{
@@ -50,6 +55,8 @@ public class ColonneTerminee extends Tables<Boolean>
 
 	/**
 	 * Retourne true si toutes les cases sont 'true' Retourne false sinon
+	 * 
+	 * @return t
 	 */
 	public Boolean terminee()
 	{

@@ -4,12 +4,17 @@ import java.util.Random;
 
 import Tables.Propo;
 
+/**
+ * Classe mère des Utilisateur permettant de capitaliser leurs
+ * methodes/attributs communs
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class Utilisateur
 {
-	/*******
-	 * VARIABLES
-	 *****************************************************************************************/
-	//Attributs des properties
+	//Attributs
 	private Integer vie;
 	private String propositionString;
 
@@ -25,19 +30,13 @@ public class Utilisateur
 
 	protected boolean choixSur[];
 
-	/*******
-	 * FONCTIONS
-	 *****************************************************************************************/
-	/********************
-	 * Constructeur *
-	 *******************/
+	//Contructeur
 	public Utilisateur()
 	{
-		//initialisation();
+
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters
 
 	public Integer[] getPropositionTab()
 	{
@@ -46,7 +45,7 @@ public class Utilisateur
 
 	public Integer getPropositionTab(Integer i)
 	{
-		return this.combiTab[i];
+		return this.propositionTab[i];
 	}
 
 	public String getPropositionString()
@@ -113,8 +112,6 @@ public class Utilisateur
 	{
 		return propoTab;
 	}
-
-	/****** SETTERS ******/
 
 	public void setPropositionTab(Integer[] propositionTab)
 	{
@@ -191,10 +188,14 @@ public class Utilisateur
 		this.propoTab = propoTab;
 	}
 
-	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
-	/********************************
-	 * Initialisation de l'objet *
-	 *******************************/
+	//Methodes 
+
+	/**
+	 * Initialise les attributs (la taille des tables à i)
+	 * 
+	 * @param i
+	 *            taille tables
+	 */
 	public void initialisation(Integer i)
 	{
 		setMiniBorneTab(new Integer[i]);
@@ -206,10 +207,12 @@ public class Utilisateur
 		setPropositionTab(new Integer[i]);
 	}
 
-	/****************************************************************************
-	 * Initialise les bornes mini et maxi de la création de nombre aléatoire *
-	 * Initialise la valeur de "choixSur" *
-	 ***************************************************************************/
+	/**
+	 * Remplit les tables mini, maxi et choixSur afin de les initialiser
+	 * 
+	 * @param j
+	 *            taille des tables
+	 */
 	public void initMaxiMiniChoixSur(Integer j)
 	{
 		for (int i = 0; i < j; i++)
@@ -220,17 +223,20 @@ public class Utilisateur
 		}
 	}
 
-	/********************************************************
-	 * Retourne un nombre aléatoire entre min et max *
+	/**
+	 * Retourne un nombre aléatoire entre min et max
 	 * 
 	 * @param min
-	 *            *
+	 *            borne minimum
+	 * 
 	 * @param max
-	 *            *
+	 *            borne maximum
+	 * 
 	 * @param hasard
-	 *            *
-	 * @return nombreHasard *
-	 *******************************************************/
+	 *            permet la création d'un nombre au hasard
+	 * 
+	 * @return nombreHasard
+	 */
 	public Integer nombreAleatoire(Integer min, Integer max, Random hasard)
 	{
 		if (min > max)
@@ -241,16 +247,15 @@ public class Utilisateur
 		Integer nombreHasard = (int) (fraction + min);
 
 		return nombreHasard;
-
 	}
 
-	/****************************************************
-	 * remplit un tableau de x chiffres aléatoirement *
+	/**
+	 * Remplit un tableau de x chiffres aléatoires
 	 * 
 	 * @param x
 	 *            taille du tableau
-	 * @return combiTab[] *
-	 ***************************************************/
+	 * @return aleatoireTab[]
+	 */
 	public Integer[] decoupageAleatoire(Integer x)
 	{
 		Integer aleatoireTab[] = new Integer[x];
@@ -263,15 +268,18 @@ public class Utilisateur
 		return aleatoireTab;
 	}
 
-	/****************************************************
-	 * remplit un tableau de 4 chiffres aléatoirement *
+	/**
+	 * Remplit un tableau de x chiffres aleatoires
 	 * 
+	 * @param x
+	 *            taille du tableau
 	 * @param mini
-	 *            borne mini *
+	 *            borne mini
 	 * @param maxi
-	 *            borne maxi *
-	 * @return aleatoireTab[] *
-	 ***************************************************/
+	 *            borne maxi
+	 * @return aleatoireTab[]
+	 */
+
 	public Integer[] decoupageAleatoire(Integer x, Integer[] mini, Integer[] maxi)
 	{
 		Random hasard = new Random();
@@ -284,63 +292,23 @@ public class Utilisateur
 		return aleatoireTab;
 	}
 
-	/********************************************************************
-	 * Compare les valeurs de 2 tableaux d'entiers * et renvoie la position de
-	 * chaque élément * du 1er tableau par rapport au 2eme * et compte le nombre de
-	 * valeurs exactes (le jeu est gagné à 4) *
+	/**
+	 * Demande de création d'une combinaison de taille x
 	 * 
-	 * @param combi
-	 *            *
-	 * @param proposition
-	 *            *
-	 * @return true or false *
-	 *******************************************************************/
-	public String compareTab(Integer[] combiTab, Integer[] propositionTab)
-	{
-		String compa = "";
-		System.out.println("Comparaison : ");
-		for (Integer i = 0; i < 4; i++)
-		{
-			System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
-			compa += compare(combiTab[i], propositionTab[i]);
-		}
-		return compa;
-
-	}
-
-	/************************************************
-	 * Compare 2 entiers et renvoie "+", "-", "=" * en fonction du résultat *
-	 * 
-	 * @param a
-	 *            *
-	 * @param b
-	 *            *
-	 * @return comparaison *
-	 ***********************************************/
-	public String compare(Integer a, Integer b)
-	{
-		String comparaison = "";
-		if (a > b)
-			comparaison = "+";
-		else if (a < b)
-			comparaison = "-";
-		else if (a == b)
-			comparaison = "=";
-
-		return comparaison;
-	}
-
-	/********************************************
-	 * Demande de création d'une combinaison *
-	 *******************************************/
+	 * @param x
+	 *            taille
+	 */
 	public void combi(Integer x)
 	{
 		System.out.println("Création de la combinaison à trouver");
 	}
 
-	/****************************************
-	 * Demande de proposition de réponse *
-	 ***************************************/
+	/**
+	 * Demande de proposition de réponse
+	 * 
+	 * @param x
+	 *            taille
+	 */
 	public void cherche(Integer x)
 	{
 		System.out.println("Proposition de réponse");

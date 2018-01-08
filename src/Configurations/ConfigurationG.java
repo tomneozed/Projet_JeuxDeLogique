@@ -1,7 +1,16 @@
 package Configurations;
 
+/**
+ * Classe mère de @see ConfigurationG permettant de créer des objets décrivant
+ * le fonctionnement des differents jeux
+ * 
+ * @author Utilisateur
+ * @version 1.0
+ *
+ */
 public class ConfigurationG
 {
+
 	//Attribut
 	private Boolean modeDeveloppeur;
 
@@ -21,4 +30,12 @@ public class ConfigurationG
 	{
 		this.modeDeveloppeur = modeDeveloppeur;
 	}
+
+	//Methodes
+
+	public String toString()
+	{
+		return "ConfigurationG [modeDeveloppeur=" + modeDeveloppeur + "]";
+	}
+
 }

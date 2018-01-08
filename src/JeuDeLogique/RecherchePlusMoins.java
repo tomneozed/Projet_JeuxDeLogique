@@ -8,22 +8,21 @@ import Utilisateur.Joueur;
 import Utilisateur.Ordi;
 import Utilisateur.Utilisateur;
 
+/**
+ * Classe fille de JeuDeLogique décrivant le fonctionnement du Recherche+/-
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ *
+ */
 public class RecherchePlusMoins extends JeuDeLogique
 {
-	/*******
-	 * VARIABLES
-	 *****************************************************************************************/
-	ConfigurationRPM configRPM = ConfigRPM.loadConfigRPM();
-	Integer NB_CASES_COMBI = configRPM.getNbrCasesCombiRPM();
-	Integer NB_ESSAIS = configRPM.getNbrEssaisRPM();
+	//Attributs
+	protected ConfigurationRPM configRPM = ConfigRPM.loadConfigRPM();
+	protected Integer NB_CASES_COMBI = configRPM.getNbrCasesCombiRPM();
+	protected Integer NB_ESSAIS = configRPM.getNbrEssaisRPM();
 
-	/*******
-	 * FONCTIONS
-	 *****************************************************************************************/
-
-	/********************
-	 * Constructeur *
-	 *******************/
+	//Constructeur
 	public RecherchePlusMoins()
 	{
 		super();
@@ -31,15 +30,13 @@ public class RecherchePlusMoins extends JeuDeLogique
 		joueur = new Joueur(NB_CASES_COMBI);
 	}
 
-	/*--------------------------------------------Mode Challenger----------------------------------------------*/
-	/***************************************
-	 * Programme de jeu en mode Challenger *
-	 ***************************************/
+	/**
+	 * Mode challenger : le joueur doit trouver la combinaison de l'ordinateur
+	 */
 	public void challengerMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
 		Scanner scan = new Scanner(System.in);
-
 		do
 		{
 			//On initialise les objets joueur et ordi
@@ -76,30 +73,22 @@ public class RecherchePlusMoins extends JeuDeLogique
 		//scan.close();
 	}
 
-	/*--------------------------------------------Mode Defenseur-----------------------------------------------*/
-	/****************************************
-	 * Programme de jeu en mode Défenseur *
-	 ****************************************/
+	/**
+	 * Mode defenseur : l'ordinateur doit trouver la combinaison du joueur
+	 */
 	public void defenseurMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Défenseur !");
-
-		//Création des objets Scanner, Ordi et Joueur dont nous auront besoin:
-
 		Scanner scan = new Scanner(System.in);
-		//Ordi ordi = new Ordi();
-		//Joueur joueur = new Joueur();
 		int x = 0;
 
 		//Début de la boucle "Rejouer"
 		do
 		{
 			x = 0;
-
 			//On initialialise les attributs de l'ordi et du joueur
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
-
 			ordi.setVie(NB_ESSAIS);
 
 			//Le joueur enre la combianison à trouver
@@ -111,13 +100,11 @@ public class RecherchePlusMoins extends JeuDeLogique
 			//C'est le tour de l'ordi	
 			do
 			{
-
 				x++;
-				System.out.println("\n---- Tour " + x + " ----\n");
-				tourDeLOrdi(ordi, joueur);
+				System.out.println("\n--------------- Tour " + x + " ---------------\n");
+				tourDeLOrdi(ordi, joueur, 1);
 				try
 				{
-
 					Thread.sleep(2000);
 				} catch (Exception e)
 				{
@@ -134,6 +121,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
 				reponse(ordi, 0);
 			}
+
 			//Fin de la partie, on demande si le joueur veut rejouer			
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
@@ -142,17 +130,13 @@ public class RecherchePlusMoins extends JeuDeLogique
 		//scan.close();
 	}
 
-	/*--------------------------------------------Mode Duel----------------------------------------------*/
-
-	/****************************************
-	 * Programme de jeu en mode Duel *
-	 ***************************************/
+	/**
+	 * Mode duel : le joueur et l'ordinateur jouent l'un contre l'autre
+	 */
 	public void duelMode()
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Duel !");
 		Scanner scan = new Scanner(System.in);
-		//Ordi ordi = new Ordi();
-		//Joueur joueur = new Joueur();
 
 		do
 		{
@@ -178,19 +162,19 @@ public class RecherchePlusMoins extends JeuDeLogique
 			{
 				try
 				{
-
 					Thread.sleep(1000);
 				} catch (Exception e)
 				{
 					System.out.println(e);
 				}
+
 				//Le joueur commence
-				System.out.println("*************Tour du joueur*********************");
+				System.out.println("\n************* Tour du joueur *********************\n");
 				tourDuJoueur(ordi, joueur);
 
 				//Tour de l'ordinateur:
-				System.out.println("*************Tour de l'ordi*********************");
-				tourDeLOrdi(ordi, joueur);
+				System.out.println("\n************* Tour de l'ordi *********************\n");
+				tourDeLOrdi(ordi, joueur, 0);
 
 			} while (!getGagneOrdi() && !getGagneJoueur());
 
@@ -214,40 +198,55 @@ public class RecherchePlusMoins extends JeuDeLogique
 		//scan.close();
 	}
 
-	/*------------------------------------------Fonctions commmunes--------------------------------------------*/
+	//Methodes
 
-	//TOURS DES UTILISATEURS------------------------------------------------------------------------------------
-	/*
+	/**
 	 * Tour du joueur
+	 * 
+	 * @param o
+	 *            ordinateur
+	 * @param j
+	 *            joueur
 	 */
 	public void tourDuJoueur(Ordi o, Joueur j)
 	{
 		j.cherche(NB_CASES_COMBI);
 
-		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropoTab().getT())));	//On compare les réponses
+		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropositionTab(), 1)));	//On compare les réponses
 
 		if (getGagneJoueur() == false)														//Si c'est faux ...
 			j.setVie(j.getVie() - 1);															//...l'utilisateur perd 1 essai
 	}
 
-	/*
-	 * Tour de l'ordinateur
+	/**
+	 * Tour de l'ordinateur : fonctionnement de recherche de la réponse
+	 * 
+	 * @param o
+	 *            ordinateur
+	 * @param j
+	 *            joueur
+	 * @param i
+	 *            0 : n'affiche pas la comparaison, 1 : affiche la comparaison
 	 */
-	public void tourDeLOrdi(Ordi o, Joueur j)
+	public void tourDeLOrdi(Ordi o, Joueur j, Integer i)
 	{
 		System.out.println("Je cherche ...");
 
 		o.cherche();
-		o.setComparaisonTab(compareTab(j.getCombiTab(), o.getPropoTab().getT()));
+		o.setComparaisonTab(compareTab(j.getCombiTab(), o.getPropositionTab(), i));
 		setGagneOrdi(analyseTrouve(o.getComparaisonTab()));
 		o.analyse();
 		if (getGagneOrdi() == false)
 			o.setVie(o.getVie() - 1);
 	}
 
-	//AUTRES----------------------------------------------------------------------------------------------------
 	/**
-	 * Affiche la réponse si le mode développeur est activé
+	 * Affiche la combinaison de l'utilisateur
+	 * 
+	 * @param u
+	 *            utilisateur
+	 * @param k
+	 *            0 : mode normal, 1 : mode développeur
 	 */
 	public void reponse(Utilisateur u, int k)
 	{

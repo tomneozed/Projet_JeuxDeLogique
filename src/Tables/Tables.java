@@ -1,17 +1,26 @@
 package Tables;
 
+/**
+ * Classe Mère des Tables
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ * @param <T>
+ *            type de la table
+ */
 public abstract class Tables<T>
 {
+	//Attributs
 	protected Integer taille;
 	protected T[] t;
 
+	//Constructeur
 	public Tables()
 	{
 
 	}
 
-	/*----------------------------------------Accesseurs et mutateurs------------------------------------------*/
-	/****** GETTERS ******/
+	//Getters & Setters 
 	public Integer getTaille()
 	{
 		return this.taille;
@@ -42,7 +51,6 @@ public abstract class Tables<T>
 		return pos;
 	}
 
-	/****** SETTERS ******/
 	public void setTaille(Integer t)
 	{
 		this.taille = t;
@@ -58,18 +66,16 @@ public abstract class Tables<T>
 		this.t = it;
 	}
 
-	/*------------------------------------------------Methodes--------------------------------------------------*/
-	public void init()
-	{
-
-	}
+	//Methodes
 
 	/**
 	 * Renvoie le nombre de x dans tab
 	 * 
 	 * @param x
+	 *            nombre à compter
 	 * @param tab
-	 * @return
+	 *            table dans laquelle compter
+	 * @return le nombre de x dans tab
 	 */
 	public Integer compteCombien(T x, T[] tab)
 	{
@@ -88,7 +94,7 @@ public abstract class Tables<T>
 	/**
 	 * Renvoie l'indice du premier null (-2) dans tab
 	 * 
-	 * @return
+	 * @return x
 	 */
 	public Integer cherchePremierNull()
 	{
@@ -96,7 +102,6 @@ public abstract class Tables<T>
 
 		while (x < t.length && (int) t[x] != -2)
 		{
-			//System.out.println(t.length);
 			x++;
 		}
 
@@ -111,7 +116,9 @@ public abstract class Tables<T>
 	/**
 	 * Renvoie l'indice du premier a dans tab
 	 * 
-	 * @return
+	 * @param a
+	 *            nombre à trouver
+	 * @return x
 	 */
 	public Integer cherchePremier(Integer a)
 	{
@@ -119,7 +126,6 @@ public abstract class Tables<T>
 
 		while (x < t.length && (int) t[x] != a)
 		{
-			//System.out.println(t.length);
 			x++;
 		}
 
@@ -135,8 +141,10 @@ public abstract class Tables<T>
 	 * Renvoie le ou les indice(s) de nbr dans tab
 	 * 
 	 * @param nbr
+	 *            nombre à chercher
 	 * @param tab
-	 * @return
+	 *            table dans laquelle cherche
+	 * @return indexFinal
 	 */
 	public Integer[] indexOf(T nbr, T[] tab)
 	{

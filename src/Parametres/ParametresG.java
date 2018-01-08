@@ -5,8 +5,16 @@ import java.util.Scanner;
 import Configurations.ConfigG;
 import Configurations.ConfigurationG;
 
+/**
+ * Classe mère des Parametres qui propose un menu permettant de modifier les
+ * paramètres du fichier config.properties
+ * 
+ * @author Thomas Pelissier
+ * @version 1.0
+ */
 public class ParametresG
 {
+	//Attributs
 	ConfigurationG configG = ConfigG.loadConfigG();
 
 	//Consructeur
@@ -15,11 +23,20 @@ public class ParametresG
 
 	}
 
-	//Affcihage menu
+	//Methodes 
+
+	public String toString()
+	{
+		return "ParametresG [configG=" + configG + "]";
+	}
+
+	/**
+	 * Affcihe le menu
+	 */
 	public void affichageMenu()
 	{
-		System.out.println("\n\n************** REGLAGES & MODE DEVELOPPEUR *************");
-		System.out.println("\n\n**** Changer les paramètres ****");
+		System.out.println("\n\n* * * REGLAGES & MODE DEVELOPPEUR * * *");
+		System.out.println("\n**** Changer les paramètres ****");
 		System.out.println("  1. Nombre de cases de la combinaison secrète");
 		System.out.println("  2. Nombre d'essais");
 		System.out.println("  3. Nombre de couleurs utilisables");
@@ -28,7 +45,9 @@ public class ParametresG
 		System.out.println("\nVotre choix : ");
 	}
 
-	//Permet d'activer/désactiver le mode Développeur
+	/**
+	 * Permet d'activer/désactiver le mode Développeur
+	 */
 	public void changeModeDeveloppeur()
 	{
 		Scanner scan = new Scanner(System.in);

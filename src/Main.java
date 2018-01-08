@@ -15,24 +15,6 @@ public class Main
 	public static void main(String[] args)
 	{
 		menu();
-		// test t = new test();
-		// TestMasterTable tmt = new TestMasterTable();
-		// MasterTable mt1 = new MasterTable(10);
-		// mt1.afficheMT();
-		//TestTables tt = new TestTables();
-
-		//System.out.println(ConfigJeu.loadConfig());
-
-		//Configuration c = ConfigJeu.loadConfig();
-
-		//c.setEssais(5);
-
-		//ConfigJeu.saveConfig(c);
-
-		//System.out.println(ConfigJeu.loadConfig());
-
-		//ModeDeveloppeur mdv = new ModeDeveloppeur();
-
 	}
 
 	public static void menu()
@@ -45,8 +27,7 @@ public class Main
 			System.out.println("\n\n******************** MENU PRINCIPAL ********************");
 			System.out.println("\t1. Recherche +/-");
 			System.out.println("\t2. Mastermind");
-			System.out.println("\t3. Aide");
-			System.out.println("\t4. Quitter");
+			System.out.println("\t3. Quitter");
 			System.out.println("\nVotre choix : ");
 
 			choixMenu = scan.nextInt();
@@ -69,13 +50,11 @@ public class Main
 
 				break;
 
-			case 4:
-				break;
 			default:
 				break;
 
 			}
-		} while (choixMenu != 4);
+		} while (choixMenu != 3);
 		//scan.close();
 
 		System.out.println("Au revoir ! :)");
