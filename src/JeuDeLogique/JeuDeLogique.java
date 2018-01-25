@@ -175,14 +175,14 @@ public class JeuDeLogique
 
 			}
 
-		} while (getMode() != 4);
+		} while (getMode() != 5);
 		//scanjdl.close();
 	}
 
 	/**
 	 * Compare les valeurs de 2 tableaux d'entiers et renvoie la position de chaque
 	 * élément du 1er tableau par rapport au 2eme et compte le nombre de valeurs
-	 * exactes
+	 * égales
 	 * 
 	 * @param combiTab
 	 *            table à tester
@@ -217,7 +217,6 @@ public class JeuDeLogique
 				compa[i] = compare(combiTab[i], propositionTab[i]);
 			}
 		}
-
 		return compa;
 
 	}
@@ -294,6 +293,9 @@ public class JeuDeLogique
 		if (configG.getModeDeveloppeur() == true)
 		{
 			System.out.println("\n# # # # # Mode développeur activé , réponse : # # # # #");
+		} else
+		{
+			System.out.println("\n# # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
 		}
 	}
 

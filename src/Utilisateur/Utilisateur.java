@@ -15,7 +15,7 @@ import Tables.Propo;
 public class Utilisateur
 {
 	//Attributs
-	private Integer vie;
+	private Integer essais;
 	private String propositionString;
 
 	protected Integer combiTab[];
@@ -53,9 +53,9 @@ public class Utilisateur
 		return propositionString;
 	}
 
-	public Integer getVie()
+	public Integer getEssais()
 	{
-		return vie;
+		return essais;
 	}
 
 	public Integer[] getCombiTab()
@@ -128,9 +128,9 @@ public class Utilisateur
 		this.propositionString = prop;
 	}
 
-	public void setVie(Integer vie)
+	public void setEssais(Integer essais)
 	{
-		this.vie = vie;
+		this.essais = essais;
 	}
 
 	public void setCombiTab(Integer[] combTab)
@@ -288,6 +288,30 @@ public class Utilisateur
 		for (int i = 0; i < x; i++)
 		{
 			aleatoireTab[i] = nombreAleatoire(mini[0], maxi[0], hasard);
+		}
+		return aleatoireTab;
+	}
+
+	/**
+	 * Remplit un tableau de x chiffres aleatoires
+	 * 
+	 * @param x
+	 *            taille du tableau
+	 * @param mini
+	 *            borne mini
+	 * @param maxi
+	 *            borne maxi
+	 * @return aleatoireTab[]
+	 */
+
+	public Integer[] decoupageAleatoire(Integer x, Integer mini, Integer maxi)
+	{
+		Random hasard = new Random();
+		Integer aleatoireTab[] = new Integer[x];
+
+		for (int i = 0; i < x; i++)
+		{
+			aleatoireTab[i] = nombreAleatoire(mini, maxi, hasard);
 		}
 		return aleatoireTab;
 	}

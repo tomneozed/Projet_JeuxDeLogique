@@ -127,7 +127,6 @@ public class Propo extends Tables<Integer>
 	 */
 	public void affichePropo()
 	{
-		System.out.println("\nPropo : ");
 		for (Integer i = 0; i < this.getTaille(); i++)
 		{
 			System.out.print(this.getValeur(i) + " | ");
@@ -281,7 +280,7 @@ public class Propo extends Tables<Integer>
 	}
 
 	/**
-	 * Renvoie un tableau 2x2 contenant : [X,nbX] [Y,nbY]
+	 * Renvoie un tableau 2x2 contenant : [X,nbX] [Y,iY]
 	 * 
 	 */
 	public void propoXouXY()

@@ -92,7 +92,7 @@ public abstract class Tables<T>
 	}
 
 	/**
-	 * Renvoie l'indice du premier null (-2) dans tab
+	 * Renvoie le premier null (-2) dans tab
 	 * 
 	 * @return x
 	 */

@@ -100,7 +100,7 @@ public class Ordi extends Utilisateur
 	}
 
 	/**
-	 * Demande de création d'une combinaison aléatoire de taille x
+	 * Demande de création d'une combinaison aléatoire de taille x (Recherche+/-)
 	 * 
 	 * @param x
 	 *            taille
@@ -108,6 +108,43 @@ public class Ordi extends Utilisateur
 	public void combi(Integer x)
 	{
 		setCombiTab(decoupageAleatoire(x));
+	}
+
+	/**
+	 * Demande de création d'une combinaison aléatoire de taille x et composé de
+	 * 'nbCouleurs' chiffres différents (Mastermind)
+	 * 
+	 * @param x
+	 * @param nbCouleurs
+	 */
+	public void combi(Integer x, Integer nbCouleurs)
+	{
+		Random hasard = new Random();
+		Integer mini = 0;
+		Integer maxi = 9;
+
+		Integer borneA = nombreAleatoire(0, 9, hasard);
+		Integer borneB = borneA + nbCouleurs - 1;
+
+		if (borneB > 9)
+		{
+			borneB = nbCouleurs - (9 - borneA + 1);
+		}
+
+		if (borneA == borneB)
+		{
+			setCombiTab(decoupageAleatoire(x, mini, maxi));
+		} else if (borneA > borneB)
+		{
+			maxi = borneA;
+			mini = borneB;
+		} else
+		{
+			maxi = borneB;
+			mini = borneA;
+		}
+		setCombiTab(decoupageAleatoire(x, mini, maxi));
+
 	}
 
 	/**

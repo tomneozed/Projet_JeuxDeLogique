@@ -21,7 +21,6 @@ public class ConfigRPM extends ConfigG
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String ESSAIS = "application.configuration.recherchepm.essais";
 	static String NB_CASES_COMBI = "application.configuration.recherchepm.nombre.cases.combi";
-	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
 	//Constructeur
 	public ConfigRPM()

@@ -73,7 +73,6 @@ public class ConfigG
 	 */
 	public static void saveConfigG(ConfigurationG configG)
 	{
-		//final Properties prop = new Properties();
 		OutputStream output = null;
 
 		try

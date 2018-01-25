@@ -5,7 +5,6 @@ import JeuDeLogique.RecherchePlusMoins;
 
 public class Main
 {
-
 	public Main()
 	{
 		super();
@@ -37,17 +36,14 @@ public class Main
 			case 1:
 				RecherchePlusMoins rpm = new RecherchePlusMoins();
 				rpm.choisirMode(0);
-				//scan.close();
 				break;
 
 			case 2:
 				Mastermind m = new Mastermind();
 				m.choisirMode(1);
-				//scan.close();
 				break;
 
 			case 3:
-
 				break;
 
 			default:

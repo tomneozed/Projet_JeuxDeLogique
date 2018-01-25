@@ -17,6 +17,10 @@ public class Joueur extends Utilisateur
 	private Integer tailleCombi;
 	private static Logger logger = Logger.getLogger(Joueur.class);
 
+	private String entreeUtil;
+
+	private boolean entreeCorrecte = false;
+
 	//Constructeur
 	public Joueur(Integer i)
 	{
@@ -31,9 +35,29 @@ public class Joueur extends Utilisateur
 		return tailleCombi;
 	}
 
+	public boolean getEntreeCorrecte()
+	{
+		return entreeCorrecte;
+	}
+
+	public String getEntreeUtil()
+	{
+		return entreeUtil;
+	}
+
 	public void setTailleCombi(Integer tailleCombi)
 	{
 		this.tailleCombi = tailleCombi;
+	}
+
+	public void setEntreeCorrecte(boolean entree)
+	{
+		this.entreeCorrecte = entree;
+	}
+
+	public void setEntreeUtil(String entreeUtil)
+	{
+		this.entreeUtil = entreeUtil;
 	}
 
 	/**
@@ -44,18 +68,17 @@ public class Joueur extends Utilisateur
 	 */
 	public void combi(Integer x)
 	{
-
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Entrez une combinaison de " + x + " chiffres (0-9): ");
-
 		do
 		{
-			this.setPropositionString(scan.nextLine());
-			if (this.getPropositionString().length() != x)
-			{
-				System.out.println("\nAttention, vous n'avez pas entré le bon nombre de chiffre ! ");
-			}
-		} while (this.getPropositionString().length() != x);
+			System.out.println("Entrez une combinaison de " + x + " chiffres (0-9): ");
+
+			setEntreeUtil(scan.nextLine());
+			setEntreeCorrecte(isNumeric(getEntreeUtil()));
+
+		} while (!getEntreeCorrecte() || !testLongueur(getEntreeUtil(), x));
+
+		setPropositionString(getEntreeUtil());
 
 		for (int i = 0; i < this.getPropositionString().length(); i++)
 		{
@@ -80,12 +103,11 @@ public class Joueur extends Utilisateur
 		{
 			System.out.println("\nEntrez une proposition de " + x + " chiffres (0-9): ");
 			Scanner scan = new Scanner(System.in);
-			this.setPropositionString(scan.nextLine());
-			if (this.getPropositionString().length() != x)
-			{
-				System.out.println("\nAttention, vous n'avez pas entré le bon nombre de chiffre ! ");
-			}
-		} while (this.getPropositionString().length() != x);
+			setEntreeUtil(scan.nextLine());
+			setEntreeCorrecte(isNumeric(getEntreeUtil()));
+		} while (!getEntreeCorrecte() || !testLongueur(getEntreeUtil(), x));
+
+		setPropositionString(getEntreeUtil());
 
 		for (int i = 0; i < this.getPropositionString().length(); i++)
 		{
@@ -94,6 +116,49 @@ public class Joueur extends Utilisateur
 				char c = this.getPropositionString().charAt(i);
 				this.setPropositionTab(i, Character.getNumericValue(c));
 			}
+		}
+	}
+
+	/**
+	 * Renvoie true si le string est composé uniquement de chiffres/nombre, else
+	 * sinon
+	 * 
+	 * @param str
+	 *            cdc à tester
+	 * @return true or false
+	 */
+	public boolean isNumeric(String str)
+	{
+		try
+		{
+			double d = Double.parseDouble(str);
+		} catch (NumberFormatException nfe)
+		{
+			System.out.println("\nAttention, vous n'avez pas entré les bons caractères , il faut des chiffres ! ");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Teste la longueur de str et renvoie true si elle est égale à taille, false
+	 * sinon
+	 * 
+	 * @param str
+	 *            cdc à tester
+	 * @param taille
+	 *            taille attendue
+	 * @return true or false
+	 */
+	public boolean testLongueur(String str, Integer taille)
+	{
+		if (str.length() == taille)
+		{
+			return true;
+		} else
+		{
+			System.out.println("\nAttention, vous n'avez pas entré le bon nombre de chiffre ! ");
+			return false;
 		}
 	}
 

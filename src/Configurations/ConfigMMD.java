@@ -16,7 +16,6 @@ import java.io.OutputStream;
  */
 public class ConfigMMD extends ConfigG
 {
-
 	//Attributs
 	static String CHEMIN_FICHIER = "src/config.properties";
 	static String ESSAIS = "application.configuration.mastermind.essais";

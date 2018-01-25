@@ -33,7 +33,7 @@ public class Mastermind extends JeuDeLogique
 	private static Logger logger = Logger.getLogger(Mastermind.class);
 
 	//Ajout des objets tables
-	protected IndiceTab indiceTable = new IndiceTab(NB_COULEURS.intValue());
+	protected IndiceTab indiceTable = new IndiceTab(10);
 	protected ColonneTerminee colonneTerminee = new ColonneTerminee(NB_CASES_COMBI.intValue());
 	protected MasterTable masterTable = new MasterTable(NB_CASES_COMBI.intValue());
 
@@ -103,16 +103,20 @@ public class Mastermind extends JeuDeLogique
 		Scanner scan = new Scanner(System.in);
 		do
 		{
+			tour = 0;
 			// On initialise les objets joueur et ordi
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
-			joueur.setVie(NB_ESSAIS);
+			joueur.setEssais(NB_ESSAIS);
 
 			// L'ordi créé une combinaison aléatoire
-			ordi.combi(NB_CASES_COMBI);
+			ordi.combi(NB_CASES_COMBI, NB_COULEURS);
 
 			//Si le mode developpeur est activé, on donne la réponse
-			reponse(ordi, 1);
+			if (configMMD.getModeDeveloppeur())
+			{
+				reponse(ordi);
+			}
 
 			do
 			{
@@ -120,8 +124,8 @@ public class Mastermind extends JeuDeLogique
 				logger.debug("Debut du tour " + tour);
 				System.out.println("\n------------------ Tour " + tour + " ------------------\n");
 				tourDuJoueur();
-				System.out.println("\nNombre d'essais restants : " + joueur.getVie());
-			} while (!getGagneJoueur() && joueur.getVie() > 0);
+				System.out.println("\nNombre d'essais restants : " + joueur.getEssais());
+			} while (!getGagneJoueur() && joueur.getEssais() > 0);
 
 			if (BPj == NB_CASES_COMBI)
 			{
@@ -129,7 +133,7 @@ public class Mastermind extends JeuDeLogique
 			} else
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
-				reponse(ordi, 0);
+				reponse(ordi);
 			}
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
@@ -150,19 +154,23 @@ public class Mastermind extends JeuDeLogique
 		int tour = 0;
 		do
 		{
+			tour = 0;
 			//Initialisation des tables
 			initTables();
 
 			// On initialise les objets joueur et ordi
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
-			ordi.setVie(NB_ESSAIS);
+			ordi.setEssais(NB_ESSAIS);
 
 			//On demande à l'utilisateur de créer une combi
 			joueur.combi(NB_CASES_COMBI);
 
 			//Si le mode developpeur est activé, on donne la réponse
-			reponse(joueur, 1);
+			if (configMMD.getModeDeveloppeur())
+			{
+				reponse(joueur);
+			}
 
 			for (int i = 0; i < NB_CASES_COMBI; i++)
 			{
@@ -172,17 +180,30 @@ public class Mastermind extends JeuDeLogique
 
 			do
 			{
+				try
+				{
+					Thread.sleep(2000);
+				} catch (Exception e)
+				{
+					System.out.println(e);
+				}
 				tour++;
 				logger.debug("Debut du tour " + tour);
 				System.out.println("\n------------------ Tour " + tour + " ------------------\n");
-				masterTable.afficheMT();
-				indiceTable.afficheIT();
+				System.out.println("\tCombinaison : ");
+				afficheTabMMD(joueur.getCombiTab());
+				System.out.println("\tProposition : ");
+				ordi.getPropoTab().affichePropo();
 				tourDeLOrdi();
 
-				System.out.println("\n\tNouvelle proposition : ");
-				ordi.getPropoTab().affichePropo();
+				if (configMMD.getModeDeveloppeur())
+				{
+					masterTable.afficheMT();
+					indiceTable.afficheIT();
+				}
+
 				logger.debug("Fin du tour");
-			} while (!getGagneOrdi() && ordi.getVie() > 0);
+			} while (!getGagneOrdi() && ordi.getEssais() > 0);
 
 			if (BP == NB_CASES_COMBI)
 			{
@@ -190,7 +211,7 @@ public class Mastermind extends JeuDeLogique
 			} else
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
-				reponse(joueur, 0);
+				reponse(joueur);
 			}
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
 			setRejouer(scan.nextInt());
@@ -210,24 +231,28 @@ public class Mastermind extends JeuDeLogique
 		int tour = 0;
 		do
 		{
+			tour = 0;
 			//Initialisation des tables
 			initTables();
 
 			// On initialise les objets joueur et ordi
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
-			ordi.setVie(NB_ESSAIS);
-			joueur.setVie(NB_ESSAIS);
+			ordi.setEssais(NB_ESSAIS);
+			joueur.setEssais(NB_ESSAIS);
 
 			//Le joueur entre sa combinaison :
 			joueur.combi(NB_CASES_COMBI);
 
 			//L'ordi entre sa combianaison :
-			ordi.combi(NB_CASES_COMBI);
+			ordi.combi(NB_CASES_COMBI, NB_COULEURS);
 
 			//On regarde les 2 combianaisons :
-			reponse(ordi, 1);
-			reponse(joueur, 1);
+			if (configMMD.getModeDeveloppeur())
+			{
+				reponse(ordi);
+				reponse(joueur);
+			}
 
 			for (int i = 0; i < NB_CASES_COMBI; i++)
 			{
@@ -251,15 +276,15 @@ public class Mastermind extends JeuDeLogique
 				//Le joueur commence
 				System.out.println("************* Tour du joueur *********************");
 				tourDuJoueur();
+				System.out.println("\nNombre d'essais restants : " + joueur.getEssais());
 
 				//Tour de l'ordinateur:
 				System.out.println("************* Tour de l'ordi *********************");
+				ordi.getPropoTab().affichePropo();
 				tourDeLOrdi();
 
-				System.out.println("\n\tNouvelle proposition : ");
-				ordi.getPropoTab().affichePropo();
 				logger.debug("Fin du tour");
-			} while (!getGagneJoueur() && !getGagneOrdi() && ordi.getVie() > 0);
+			} while (!getGagneJoueur() && !getGagneOrdi() && ordi.getEssais() > 0);
 
 			if (getGagneJoueur() && getGagneOrdi())
 			{
@@ -267,7 +292,7 @@ public class Mastermind extends JeuDeLogique
 			} else if (!getGagneJoueur() && getGagneOrdi())
 			{
 				System.out.println("L'ordi a gagné ! La réponse était : ");
-				reponse(ordi, 0);
+				reponse(ordi);
 			} else if (getGagneJoueur() && !getGagneOrdi())
 			{
 				System.out.println("Bravo ! Vous avez gagné !");
@@ -327,7 +352,7 @@ public class Mastermind extends JeuDeLogique
 		} else
 		{
 			setGagneJoueur(false);
-			joueur.setVie(joueur.getVie() - 1);
+			joueur.setEssais(joueur.getEssais() - 1);
 		}
 	}
 
@@ -369,7 +394,7 @@ public class Mastermind extends JeuDeLogique
 		} else
 		{
 			setGagneOrdi(false);
-			ordi.setVie(ordi.getVie() - 1);
+			ordi.setEssais(ordi.getEssais() - 1);
 		}
 
 	}
@@ -705,12 +730,9 @@ public class Mastermind extends JeuDeLogique
 	 * @param k
 	 *            1 : mode developpeur, 0 : mode normal
 	 */
-	public void reponse(Utilisateur u, int k)
+	public void reponse(Utilisateur u)
 	{
-		if (k == 1)
-		{
-			super.reponse();
-		}
+		super.reponse();
 
 		System.out.print("\t\t");
 		for (int i = 0; i < NB_CASES_COMBI; i++)
@@ -718,6 +740,18 @@ public class Mastermind extends JeuDeLogique
 			System.out.print(u.getCombiTab(i) + " ");
 		}
 		System.out.println("\n# # # # # # # # # # # # # # # # # # # # # # # # # # # # ");
+	}
+
+	/**
+	 * Affiche table
+	 */
+	public void afficheTabMMD(Integer[] tab)
+	{
+		for (Integer i = 0; i < tab.length; i++)
+		{
+			System.out.print(tab[i] + " | ");
+		}
+		System.out.println("\n");
 	}
 
 }

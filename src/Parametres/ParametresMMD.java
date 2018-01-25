@@ -110,8 +110,13 @@ public class ParametresMMD extends ParametresG
 	public void changeNombreCouleurs()
 	{
 		Scanner scan = new Scanner(System.in);
-		System.out.println("\t* * * Entrez le nouveau nombre de couleurs possibles * * *");
-		Integer nbrCouleurs = scan.nextInt();
+		Integer nbrCouleurs = 0;
+		do
+		{
+			System.out.println("\t* * * Entrez le nouveau nombre de couleurs possibles (4 à 10) * * *");
+			nbrCouleurs = scan.nextInt();
+		} while (nbrCouleurs < 4 && nbrCouleurs > 10);
+
 		this.configMMD.setNbrCouleursMMD(nbrCouleurs);
 		ConfigMMD.saveConfigMMD(configMMD);
 		//scan.close();

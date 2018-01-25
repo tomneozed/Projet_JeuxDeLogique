@@ -37,25 +37,33 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Challenger !");
 		Scanner scan = new Scanner(System.in);
+		int tour = 0;
 		do
 		{
+			tour = 0;
 			//On initialise les objets joueur et ordi
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
 
-			joueur.setVie(NB_ESSAIS);
+			joueur.setEssais(NB_ESSAIS);
 
 			//L'ordi créé un nombre aléatoire
 			ordi.combi(NB_CASES_COMBI);
 
 			//Si le mode developpeur est activé, on donne la réponse
-			reponse(ordi, 1);
+			if (configRPM.getModeDeveloppeur())
+			{
+				reponse(ordi);
+			}
 
 			do
 			{
+				tour++;
+				System.out.println("\n--------------- Tour " + tour + " ---------------\n");
 				tourDuJoueur(ordi, joueur);
+				System.out.println("\nNombre d'essais restants : " + joueur.getEssais());
 
-			} while (!getGagneJoueur() && joueur.getVie() > 0);	//On tourne jusqu'a ce que l'utilisateur gagne ou perde toutes ses vies	
+			} while (!getGagneJoueur() && joueur.getEssais() > 0);	//On tourne jusqu'a ce que l'utilisateur gagne ou perde toutes ses vies	
 
 			if (getGagneJoueur() == true)
 			{
@@ -63,7 +71,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			} else if (getGagneJoueur() == false)
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
-				reponse(ordi, 0);
+				reponse(ordi);
 			}
 
 			System.out.println("\nVoulez-vous rejouer ? \n\n\t1. oui \t\t2.non");
@@ -80,38 +88,41 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Défenseur !");
 		Scanner scan = new Scanner(System.in);
-		int x = 0;
+		int tour = 0;
 
 		//Début de la boucle "Rejouer"
 		do
 		{
-			x = 0;
+			tour = 0;
 			//On initialialise les attributs de l'ordi et du joueur
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
-			ordi.setVie(NB_ESSAIS);
+			ordi.setEssais(NB_ESSAIS);
 
 			//Le joueur enre la combianison à trouver
 			joueur.combi(NB_CASES_COMBI);
 
 			//Si le mode developpeur est activé, on donne la réponse
-			reponse(joueur, 1);
+			if (configRPM.getModeDeveloppeur())
+			{
+				reponse(joueur);
+			}
 
 			//C'est le tour de l'ordi	
 			do
 			{
-				x++;
-				System.out.println("\n--------------- Tour " + x + " ---------------\n");
+				tour++;
+				System.out.println("\n--------------- Tour " + tour + " ---------------\n");
 				tourDeLOrdi(ordi, joueur, 1);
 				try
 				{
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 				} catch (Exception e)
 				{
 					System.out.println(e);
 				}
 
-			} while (!getGagneOrdi() && ordi.getVie() > 0);
+			} while (!getGagneOrdi() && ordi.getEssais() > 0);
 
 			if (getGagneOrdi() == true)
 			{
@@ -119,7 +130,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 			} else if (getGagneOrdi() == false)
 			{
 				System.out.println("Dommage, meilleures chances la prochaine fois ! \nLa réponse était : ");
-				reponse(ordi, 0);
+				reponse(ordi);
 			}
 
 			//Fin de la partie, on demande si le joueur veut rejouer			
@@ -137,15 +148,16 @@ public class RecherchePlusMoins extends JeuDeLogique
 	{
 		System.out.println("Bienvenue dans le Recherche +/- mode Duel !");
 		Scanner scan = new Scanner(System.in);
-
+		int tour = 0;
 		do
 		{
+			tour = 0;
 			// On initialise les objets joueur et ordi
 			ordi.initialisation(NB_CASES_COMBI);
 			joueur.initialisation(NB_CASES_COMBI);
 
-			ordi.setVie(NB_ESSAIS);
-			joueur.setVie(NB_ESSAIS);
+			ordi.setEssais(NB_ESSAIS);
+			joueur.setEssais(NB_ESSAIS);
 
 			//Le joueur entre sa combinaison :
 			joueur.combi(NB_CASES_COMBI);
@@ -154,34 +166,33 @@ public class RecherchePlusMoins extends JeuDeLogique
 			ordi.combi(NB_CASES_COMBI);
 
 			//On regarde les 2 combianaisons :
-			reponse(ordi, 0);
-			reponse(joueur, 0);
+			if (configRPM.getModeDeveloppeur())
+			{
+				reponse(ordi);
+				reponse(joueur);
+			}
 
 			System.out.println("\n\n");
 			do
 			{
-				try
-				{
-					Thread.sleep(1000);
-				} catch (Exception e)
-				{
-					System.out.println(e);
-				}
+				tour++;
+				System.out.println("\n------------------- Tour " + tour + " -------------------\n");
 
 				//Le joueur commence
-				System.out.println("\n************* Tour du joueur *********************\n");
+				System.out.println("\t* * * Tour du joueur * * *\n");
 				tourDuJoueur(ordi, joueur);
 
 				//Tour de l'ordinateur:
-				System.out.println("\n************* Tour de l'ordi *********************\n");
+				System.out.println("\n\t* * * Tour de l'ordi * * *\n");
 				tourDeLOrdi(ordi, joueur, 0);
 
 			} while (!getGagneOrdi() && !getGagneJoueur());
 
+			System.out.println("\n\n\n------------------- Fin de partie -------------------");
 			if (getGagneJoueur() == false && getGagneOrdi() == true)
 			{
 				System.out.println("L'ordi a gagné ! La réponse était : ");
-				reponse(ordi, 0);
+				reponse(ordi);
 			} else if (getGagneJoueur() == true && getGagneOrdi() == false)
 			{
 				System.out.println("Vous avez gagné !");
@@ -215,7 +226,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 		setGagneJoueur(analyseTrouve(compareTab(o.getCombiTab(), j.getPropositionTab(), 1)));	//On compare les réponses
 
 		if (getGagneJoueur() == false)														//Si c'est faux ...
-			j.setVie(j.getVie() - 1);															//...l'utilisateur perd 1 essai
+			j.setEssais(j.getEssais() - 1);															//...l'utilisateur perd 1 essai
 	}
 
 	/**
@@ -237,7 +248,7 @@ public class RecherchePlusMoins extends JeuDeLogique
 		setGagneOrdi(analyseTrouve(o.getComparaisonTab()));
 		o.analyse();
 		if (getGagneOrdi() == false)
-			o.setVie(o.getVie() - 1);
+			o.setEssais(o.getEssais() - 1);
 	}
 
 	/**
@@ -248,12 +259,9 @@ public class RecherchePlusMoins extends JeuDeLogique
 	 * @param k
 	 *            0 : mode normal, 1 : mode développeur
 	 */
-	public void reponse(Utilisateur u, int k)
+	public void reponse(Utilisateur u)
 	{
-		if (k == 1)
-		{
-			super.reponse();
-		}
+		super.reponse();
 
 		System.out.print("\t\t");
 		for (int i = 0; i < NB_CASES_COMBI; i++)
