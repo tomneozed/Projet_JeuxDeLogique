@@ -8,8 +8,8 @@ IHM : console
 
 Lancement : 
   - Ouvrir une console
-  - Se placer dans le dossier de l'application : "Projet_JeuxDeLogique/Projet_JeuxDeLogique" 
+  - Se placer dans le dossier de l'application : "Projet_JeuxDeLogique" 
   - Commande "java -jar projet3_jeuxDeLogique.jar"
 
-(Une documentation du projet est incluse dans le dossier de l'application)
+(Une documentation du projet est incluse dans src/main/resources : "Rapport de projet mastermind")
   
