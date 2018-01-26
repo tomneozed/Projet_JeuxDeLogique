@@ -20,7 +20,7 @@ public class ConfigG
 	//Attributs
 	static Properties prop = new Properties();
 
-	static String CHEMIN_FICHIER = "src/config.properties";
+	static String CHEMIN_FICHIER = "src/main/resources/config.properties";
 	static String MODE_DEVELOPPEUR = "application.configuration.mode.developpeur";
 
 	//Constructeur

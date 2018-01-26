@@ -17,7 +17,7 @@ import java.io.OutputStream;
 public class ConfigMMD extends ConfigG
 {
 	//Attributs
-	static String CHEMIN_FICHIER = "src/config.properties";
+	static String CHEMIN_FICHIER = "src/main/resources/config.properties";
 	static String ESSAIS = "application.configuration.mastermind.essais";
 	static String NB_CASES_COMBI = "application.configuration.mastermind.nombre.cases.combi";
 	static String NB_COULEURS = "application.configuration.mastermind.nombre.couleurs";
@@ -49,7 +49,6 @@ public class ConfigMMD extends ConfigG
 	public static ConfigurationMMD loadConfigMMD()
 	{
 		ConfigurationMMD configMMD = new ConfigurationMMD();
-		//final Properties prop = new Properties();
 		InputStream input = null;
 
 		try

@@ -18,7 +18,7 @@ public class ConfigRPM extends ConfigG
 {
 
 	//Attributs
-	static String CHEMIN_FICHIER = "src/config.properties";
+	static String CHEMIN_FICHIER = "src/main/resources/config.properties";
 	static String ESSAIS = "application.configuration.recherchepm.essais";
 	static String NB_CASES_COMBI = "application.configuration.recherchepm.nombre.cases.combi";
 

@@ -1,8 +1,8 @@
 package Configurations;
 
 /**
- * Classe mère de @see ConfigurationG permettant de créer des objets décrivant
- * le fonctionnement des differents jeux
+ * Classe mère de ConfigurationG permettant de créer des objets décrivant le
+ * fonctionnement des differents jeux
  * 
  * @author Utilisateur
  * @version 1.0
