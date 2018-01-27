@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 import Configurations.ConfigG;
 import Configurations.ConfigMMD;
+import Configurations.ConfigRPM;
 import Configurations.ConfigurationG;
 import Configurations.ConfigurationMMD;
+import Configurations.ConfigurationRPM;
 import Parametres.ParametresMMD;
 import Parametres.ParametresRPM;
 import Utilisateur.Joueur;
@@ -30,6 +32,7 @@ public class JeuDeLogique
 	protected Joueur joueur;
 
 	protected ConfigurationMMD configMMD = ConfigMMD.loadConfigMMD();
+	protected ConfigurationRPM configRPM = ConfigRPM.loadConfigRPM();
 	protected ConfigurationG configG = ConfigG.loadConfigG();
 
 	//Constructeur
@@ -198,21 +201,21 @@ public class JeuDeLogique
 	public String[] compareTab(Integer[] combiTab, Integer[] propositionTab, Integer j)
 	{
 		setTrouve(0);
-		String[] compa = new String[configMMD.getNbrCasesCombiMMD()];
+		String[] compa = new String[configRPM.getNbrCasesCombiRPM()];
 
 		if (j == 1)
 		{
 			System.out.println("\nComparaison : ");
 
 			afficheTab(propositionTab);
-			for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+			for (Integer i = 0; i < configRPM.getNbrCasesCombiRPM(); i++)
 			{
 				System.out.print(compare(combiTab[i], propositionTab[i]) + " ");
 				compa[i] = compare(combiTab[i], propositionTab[i]);
 			}
 		} else if (j == 0)
 		{
-			for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+			for (Integer i = 0; i < configRPM.getNbrCasesCombiRPM(); i++)
 			{
 				compa[i] = compare(combiTab[i], propositionTab[i]);
 			}
@@ -230,7 +233,7 @@ public class JeuDeLogique
 	 */
 	public boolean analyseTrouve(String[] comp)
 	{
-		for (Integer i = 0; i < configMMD.getNbrCasesCombiMMD(); i++)
+		for (Integer i = 0; i < configRPM.getNbrCasesCombiRPM(); i++)
 		{
 			if (comp[i] == "=")
 			{
@@ -238,7 +241,7 @@ public class JeuDeLogique
 			}
 		}
 		System.out.println("");
-		if (getTrouve() == configMMD.getNbrCasesCombiMMD())
+		if (getTrouve() == configRPM.getNbrCasesCombiRPM())
 		{
 			return true;
 		} else
