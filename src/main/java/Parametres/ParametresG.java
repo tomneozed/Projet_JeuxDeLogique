@@ -76,4 +76,21 @@ public class ParametresG
 		//scan.close();
 	}
 
+	/**
+	 * Permet d'activer/désactiver le mode Développeur avec valeur en paramètres
+	 */
+	public void changeModeDeveloppeur(Integer modeDev)
+	{
+		Scanner scan = new Scanner(System.in);
+		if (modeDev == 1)
+		{
+			configG.setModeDeveloppeur(true);
+		} else
+		{
+			configG.setModeDeveloppeur(false);
+		}
+		ConfigG.saveConfigG(configG);
+		//scan.close();
+	}
+
 }

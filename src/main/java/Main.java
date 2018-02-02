@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import JeuDeLogique.Mastermind;
 import JeuDeLogique.RecherchePlusMoins;
+import Parametres.ParametresG;
 
 public class Main
 {
@@ -13,6 +14,13 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		ParametresG pG = new ParametresG();
+		pG.changeModeDeveloppeur(Integer.parseInt(args[1]));
+
+		if (Integer.parseInt(args[1]) == 1)
+		{
+			System.out.println("\n\n * * * * * * * * Bienvenue Développeur * * * * * * * * *");
+		}
 		menu();
 	}
 
